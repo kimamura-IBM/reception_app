@@ -8,9 +8,9 @@ class TwilioController < ApplicationController
   ]
 
   # Define our Twilio credentials as instance variables for later use
-  @@twilio_sid = ENV['AC2791363715b8f1abc21fc62cd21bc279']
-  @@twilio_token = ENV['100b1d7a8374e3286b944ae391d278fc']
-  @@twilio_number = ENV['+81345895605']
+  @@twilio_sid = 'AC2791363715b8f1abc21fc62cd21bc279'
+  @@twilio_token = '100b1d7a8374e3286b944ae391d278fc'
+  @@twilio_number = '+81345895605'
 
   # Render home page
   def index
