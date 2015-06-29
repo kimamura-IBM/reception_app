@@ -171,6 +171,7 @@
     <orderEntry type="library" scope="PROVIDED" name="twilio-ruby (v3.12.0, rbenv: 2.0.0-p353) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="tzinfo (v1.2.2, rbenv: 2.0.0-p353) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="uglifier (v2.5.3, rbenv: 2.0.0-p353) [gem]" level="application" />
+    <orderEntry type="library" name="jquery" level="application" />
   </component>
   <component name="RModuleSettingsStorage">
     <LOAD_PATH number="0" />

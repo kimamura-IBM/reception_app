@@ -20,9 +20,9 @@ $(function() {
             method:'POST',
             data: $form.serialize()
         }).done(function(data) {
-            alert(data.message);
+            alert('呼び出し中です。しばらくお待ちください。');
         }).fail(function() {
-            alert('There was a problem calling you - please try again later.');
+            alert('エラーが発生しました。');
         }).always(function() {
             $submit.removeAttr('disabled');
         });
