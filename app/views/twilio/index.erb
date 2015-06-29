@@ -20,7 +20,8 @@
           <h3>N2P呼び出し</h3>
           <p>画面をタップして担当者を呼び出してください</p>
           <hr />
-          <form id="contactform" class="form-horizontal" role="form" action="#" method="POST">
+          <%= form_tag({action: "call"}, method: "POST", class: "form-horizontal", id: "contactform" , role: "form") do %>
+          <!-- <form id="contactform" class="form-horizontal" role="form" action="#" method="POST"> -->
             <% @users.each do |user| %>
             <div class="form-group">
               <div class="col-md-12 col-sm-12">
@@ -35,9 +36,11 @@
             <% end %>
             <hr />
             <div class="form-group">
-            <button type="submit" class="btn btn-success btn-lg">呼び出し</button>
+            <!-- <button type="submit" class="btn btn-success btn-lg">呼び出し</button> -->
+            <%= submit_tag("呼び出し", class: "btn btn-success btn-lg") %>
             </div>
-          </form>
+          <!-- </form> -->
+          <% end %>
         </div>
       </div>
 
