@@ -14,6 +14,7 @@ class TwilioController < ApplicationController
 
   # Render home page
   def index
+    @users = User.all
   	render 'index'
   end
 

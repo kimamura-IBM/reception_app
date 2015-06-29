@@ -21,36 +21,18 @@
           <p class="help-block">画面をタップして担当者を呼び出してください</p>
           <hr />
           <form id="contactform" class="form-horizontal" role="form" action="#" method="POST">
-            <div class="form-group">
-              <div class="col-md-12 col-sm-12">
-                <div class="radio">
-                <label>
-                    <input type="radio" name="phone" value="+819061137395">
-                    <img src="http://www.herrokkin.jp/images/Icon.jpg" alt="" class="img-rounded" width="36" height="36" />担当者01
-                </label>
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="col-md-12 col-sm-12">
-                <div class="radio">
-                <label>
-                    <input type="radio" name="phone" value="+819016049687">
-                    <img src="http://t1200.jp/img/t1200_logo.png" alt="" class="img-rounded" width="36" height="36" />担当者02
-                </label>
-                </div>
-              </div>
-            </div>
+            <% @users.each do |user| %>
             <div class="form-group">
               <div class="col-md-12 col-sm-12">
                 <div class="radio">
                   <label>
-                    <input type="radio" name="phone" value="">
-                    <img src="http://n2p.co.jp/wp/wp-content/uploads/2013/10/n2plogp14.png" alt="" class="img-rounded" width="36" height="36" />担当者...
+                    <input type="radio" name="phone" value=" <%= user.phonenumber %> ">
+                    <img src=" <%= user.profilepicture %> " alt="" class="img-rounded" width="36" height="36" /><%= user.username %>
                   </label>
                 </div>
               </div>
             </div>
+            <% end %>
             <hr />
             <div class="form-group">
             <button type="submit" class="btn btn-success btn-lg">呼び出し</button>
