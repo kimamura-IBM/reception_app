@@ -3,42 +3,53 @@
 	<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	  <title>Click To Call Tutorial</title>
+	  <title>Twilio</title>
     <link rel="icon" type="image/png" href="/img/favicon.png">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" type="text/css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" type="text/css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.5/paper/bootstrap.min.css" type="text/css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <%= stylesheet_link_tag 'application' %>
   </head>
   <body>
-    <div class="container">
+    <div class="container text-center">
       <div class="row">
         <div class="col-md-12">
-          <form id="contactform" role="form" action="#" method="POST">
+          <form id="contactform" class="form-horizontal" role="form" action="#" method="POST">
             <div class="form-group">
               <h3>電話</h3>
+
               <p class="help-block">
                 選択してください
               </p>
             </div>
             <div class="form-group">
-              <div class="radio">
+              <div class="col-sm-10">
+                <div class="radio">
                 <label>
-                    <input class="form-control" type="radio" name="phone" value="+819061137395">
+                    <input type="radio" name="phone" value="+819061137395">
                     電話番号01
                 </label>
-              </div>
-              <div class="radio">
-                <label>
-                    <input class="form-control" type="radio" name="phone" value="+819016049687">
-                    電話番号02
-                </label>
+                </div>
               </div>
             </div>
-            <button type="submit" class="btn btn-default">CALL</button>
+            <div class="form-group">
+              <div class="col-sm-10">
+                <div class="radio">
+                <label>
+                    <input type="radio" name="phone" value="+819016049687">
+                    電話番号02
+                </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+            <button type="submit" class="btn btn-primary">CALL</button>
+            </div>
           </form>
-
         </div>
       </div>
+
 	  </div><!-- /page -->
 	</body>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
