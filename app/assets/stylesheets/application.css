@@ -19,7 +19,7 @@
     margin-top: 30px;
 }
 
-#contactform .form-group {
+#contactform .radio, #contactform .text {
     font-size: 1.5em;
     text-align: left;
     padding-left: 25%;
