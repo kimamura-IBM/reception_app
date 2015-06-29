@@ -20,7 +20,6 @@ class TwilioController < ApplicationController
 
   # Hande a POST from our web form and connect a call via REST API
   def call
-    SlackBot.notify
     contact = Contact.new
     contact.phone = params[:phone]
    
@@ -38,6 +37,7 @@ class TwilioController < ApplicationController
 
       # Lets respond to the ajax call with some positive reinforcement
       @msg = { :message => 'Phone call incoming!', :status => 'ok' }
+      SlackBot.notify
 
     else
 
