@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  http_basic_authenticate_with :name => 'noname', :password => 'weblio' if Rails.env == "production"
+  http_basic_authenticate_with :name => 'noname', :password => 'twilio' if Rails.env == "production"
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
