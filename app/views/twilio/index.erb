@@ -17,8 +17,8 @@
     <div class="container text-center">
       <div class="row">
         <div class="col-md-12 col-sm-12">
-          <h3>呼び出し</h3>
-          <p class="help-block">画面をタップして担当者を呼び出してください</p>
+          <h3>N2P呼び出し</h3>
+          <p>画面をタップして担当者を呼び出してください</p>
           <hr />
           <form id="contactform" class="form-horizontal" role="form" action="#" method="POST">
             <% @users.each do |user| %>
@@ -26,8 +26,8 @@
               <div class="col-md-12 col-sm-12">
                 <div class="radio">
                   <label>
-                    <input type="radio" name="phone" value=" <%= user.phonenumber %> ">
-                    <img src=" <%= user.profilepicture %> " alt="" class="img-rounded" width="36" height="36" /><%= user.username %>
+                    <input type="radio" name="phone" value="<%= user.phonenumber %>">
+                    <img src="<%= user.profilepicture %>" alt="" class="img-rounded" width="36" height="36" /><%= user.username %>
                   </label>
                 </div>
               </div>
