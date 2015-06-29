@@ -22,6 +22,7 @@ class TwilioController < ApplicationController
   def call
     contact = Contact.new
     contact.phone = params[:phone]
+    SlackBot.notify
    
     # Validate contact
     if contact.valid?
@@ -37,7 +38,6 @@ class TwilioController < ApplicationController
 
       # Lets respond to the ajax call with some positive reinforcement
       @msg = { :message => 'Phone call incoming!', :status => 'ok' }
-      SlackBot.notify
 
     else
 
