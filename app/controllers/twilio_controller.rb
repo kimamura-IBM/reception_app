@@ -14,7 +14,7 @@ class TwilioController < ApplicationController
 
   # Render home page
   def index
-    @users = User.all
+    @users = User.all.reverse_order
   	render 'index'
   end
 
