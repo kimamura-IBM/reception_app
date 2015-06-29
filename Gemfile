@@ -17,6 +17,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'phony_rails'
 # Twilio REST API. 
 gem 'twilio-ruby'
+# SlackBot
+gem 'slack_bot'
 
 
 group :development, :test do
