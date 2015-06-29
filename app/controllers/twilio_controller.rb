@@ -27,7 +27,7 @@ class TwilioController < ApplicationController
     # Validate contact
     if contact.valid?
       SlackBot.notify(
-        body += issue
+        body = body + issue
       ) #SlackBotからメッセージ送信
 
       @client = Twilio::REST::Client.new @@twilio_sid, @@twilio_token
