@@ -22,10 +22,13 @@ class TwilioController < ApplicationController
   def call
     contact = Contact.new
     contact.phone = params[:phone]
-    SlackBot.notify
+    issue = params[:issue]
    
     # Validate contact
     if contact.valid?
+      SlackBot.notify(
+        :body => issue
+      ) #SlackBotからメッセージ送信
 
       @client = Twilio::REST::Client.new @@twilio_sid, @@twilio_token
       # Connect an outbound call to the number submitted
