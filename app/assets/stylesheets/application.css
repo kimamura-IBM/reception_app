@@ -16,11 +16,15 @@
  */
 
 .container {
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 #contactform .radio {
     font-size: 1.5em;
     text-align: left;
     padding-left: 30%;
+}
+
+#contactform .radio img {
+    margin: 0 1em;
 }
