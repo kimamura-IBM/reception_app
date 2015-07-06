@@ -24,13 +24,13 @@ $(function() {
             $('#alert_success').show();
             setTimeout(function(){
                 $('#alert_success').hide();
-            },5000);
+            },10000);
         }).fail(function() {
             //alert('エラーが発生しました。');
             $('#alert_warning').show();
             setTimeout(function(){
                 $('#alert_warning').hide();
-            },5000);
+            },10000);
         }).always(function() {
             $submit.removeAttr('disabled');
         });
