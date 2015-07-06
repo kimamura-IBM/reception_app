@@ -28,13 +28,14 @@ class TwilioController < ApplicationController
   def call
     contact = Contact.new
     contact.phone = params[:phone]
-    @@namae = params[:namae]
-    @@issue = params[:issue]
+    # @@namae = params[:namae]
+    # @@issue = params[:issue]
    
     # Validate contact
     if contact.valid?
       SlackBot.notify(
-        body: "受付Webアプリからの送信です。#{@@namae}さんから送信 - ご用件：#{@@issue} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/ https://damp-reaches-2263.herokuapp.com/"
+        # body: "受付Webアプリからの送信です。#{@@namae}さんから送信 - ご用件：#{@@issue} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/ https://damp-reaches-2263.herokuapp.com/"
+          body: "受付Webアプリからの送信です。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/ https://damp-reaches-2263.herokuapp.com/"
       ) #SlackBotからメッセージ送信
 
       @client = Twilio::REST::Client.new @@twilio_sid, @@twilio_token
@@ -67,8 +68,9 @@ class TwilioController < ApplicationController
     # format. Our Ruby library provides a helper for generating one
     # of these documents
     response = Twilio::TwiML::Response.new do |r|
-      r.Say "こちらは,受付アプリです.#{@@namae}さんから,#{@@issue}の件で呼び出しがありました.", :voice => 'alice', :language => 'ja-jp'
-      #r.Say 'If this were a real click to call implementation, you would be connected to an agent at this point.', :voice => 'alice'
+      # r.Say "こちらは,受付アプリです.#{@@namae}さんから,#{@@issue}の件で呼び出しがありました.", :voice => 'alice', :language => 'ja-jp'
+      r.Say "こちらは,受付アプリです.呼び出しがありました.", :voice => 'alice', :language => 'ja-jp'
+      # r.Say 'If this were a real click to call implementation, you would be connected to an agent at this point.', :voice => 'alice'
     end
     render text: response.text
   end
