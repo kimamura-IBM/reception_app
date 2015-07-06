@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>受付 | N2P</title>
     <link rel="icon" type="image/png" href="http://n2p.co.jp/favicon.ico">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" type="text/css">
+    <!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" type="text/css">-->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" type="text/css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.5/paper/bootstrap.min.css" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -19,6 +19,8 @@
         <div class="col-md-12 col-sm-12">
           <h1>受付</h1>
           <p>画面をタップして担当者を呼び出してください</p>
+          <div id="alert_success" class="alert alert-success col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8" role="alert"><strong>呼び出し中です。しばらくお待ちください</strong>。</div>
+          <div id="alert_warning" class="alert alert-warning col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8" role="alert"><strong>エラーが発生しました。もう一度やり直してみてください。</strong></div>
           <hr />
           <%= form_tag({action: "call"}, method: "POST", class: "form-horizontal", id: "contactform" , role: "form") do %>
           <!-- <form id="contactform" class="form-horizontal" role="form" action="#" method="POST"> -->
@@ -53,7 +55,6 @@
           <% end %>
         </div>
       </div>
-
 	  </div><!-- /page -->
 	</body>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>

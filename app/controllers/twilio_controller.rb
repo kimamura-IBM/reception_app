@@ -8,9 +8,15 @@ class TwilioController < ApplicationController
   ]
 
   # Define our Twilio credentials as instance variables for later use
-  @@twilio_sid = 'AC2791363715b8f1abc21fc62cd21bc279'
-  @@twilio_token = '100b1d7a8374e3286b944ae391d278fc'
-  @@twilio_number = '+81345895605'
+  ###### Herrokkin #####
+  # @@twilio_sid = 'AC2791363715b8f1abc21fc62cd21bc279'
+  # @@twilio_token = '100b1d7a8374e3286b944ae391d278fc'
+  # @@twilio_number = '+81345895605'
+
+  ###### n2p #####
+  @@twilio_sid = 'AC2be2f6548663497c67056293e1cf885a'
+  @@twilio_token = 'b2e54961e22bc77ab25c3f555dd3d054'
+  @@twilio_number = '+815031353908'
 
   # Render home page
   def index
@@ -61,7 +67,8 @@ class TwilioController < ApplicationController
     # format. Our Ruby library provides a helper for generating one
     # of these documents
     response = Twilio::TwiML::Response.new do |r|
-      r.Say 'If this were a real click to call implementation, you would be connected to an agent at this point.', :voice => 'alice'
+      r.Say "#{namae}さんから呼び出しがありました.用件は,#{issue}です.", :voice => 'alice', :language => 'ja-jp'
+      #r.Say 'If this were a real click to call implementation, you would be connected to an agent at this point.', :voice => 'alice'
     end
     render text: response.text
   end
