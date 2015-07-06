@@ -20,9 +20,17 @@ $(function() {
             method:'POST',
             data: $form.serialize()
         }).done(function(data) {
-            alert('呼び出し中です。しばらくお待ちください。');
+            //alert('呼び出し中です。しばらくお待ちください。');
+            $('#alert_success').show();
+            setTimeout(function(){
+                $('#alert_success').hide();
+            },5000);
         }).fail(function() {
-            alert('エラーが発生しました。');
+            //alert('エラーが発生しました。');
+            $('#alert_warning').show();
+            setTimeout(function(){
+                $('#alert_warning').hide();
+            },5000);
         }).always(function() {
             $submit.removeAttr('disabled');
         });

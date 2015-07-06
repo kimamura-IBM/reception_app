@@ -28,3 +28,17 @@
 #contactform .radio img {
     margin: 0 1em;
 }
+
+#alert_success, #alert_warning {
+    display: none;
+}
+
+.alert-success {
+    color: #468847;
+    background-color: #dff0d8;
+}
+
+.alert-warning {
+    color: #c09853;
+    background-color: #fcf8e3;
+}
