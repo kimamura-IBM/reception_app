@@ -34,7 +34,7 @@ class TwilioController < ApplicationController
     # Validate contact
     if contact.valid?
       SlackBot.notify(
-        body: "受付Webアプリのテスト送信です。https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/ #{@@namae}さんから送信 - ご用件：#{@@issue}"
+        body: "受付Webアプリからの送信です。#{@@namae}さんから送信 - ご用件：#{@@issue} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/ https://damp-reaches-2263.herokuapp.com/"
       ) #SlackBotからメッセージ送信
 
       @client = Twilio::REST::Client.new @@twilio_sid, @@twilio_token
