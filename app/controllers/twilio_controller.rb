@@ -67,7 +67,7 @@ class TwilioController < ApplicationController
     # format. Our Ruby library provides a helper for generating one
     # of these documents
     response = Twilio::TwiML::Response.new do |r|
-      r.Say "#{namae}さんから呼び出しがありました.用件は,#{issue}です.", :voice => 'alice', :language => 'ja-jp'
+      r.Say "呼び出しがありました.", :voice => 'alice', :language => 'ja-jp'
       #r.Say 'If this were a real click to call implementation, you would be connected to an agent at this point.', :voice => 'alice'
     end
     render text: response.text
