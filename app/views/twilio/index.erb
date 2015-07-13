@@ -146,10 +146,10 @@
           <h1>受付</h1>
           <p>画面をタップして担当者を呼び出してください</p>
           <div id="alert_success" class="alert alert-success col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8" role="alert">
-            <% if @call_status == "呼び出し中" %>
-                <strong><%= @contact_to %> を呼び出しています。</strong>。
-            <% else @call_status == "完了" %>
-                <strong>おっと、 <%= @contact_to %> が気付いたようです。いましばらくお待ちください</strong>。
+            <% if "#{@call_status}" == "呼び出し中" %>
+                <strong><%= "#{@contact_to}" %> を呼び出しています。</strong>。
+            <% else "#{@call_status}" == "完了" %>
+                <strong>おっと、 <%= "#{@contact_to}" %> が気付いたようです。いましばらくお待ちください</strong>。
             <% end %>
           </div>
           <div id="alert_warning" class="alert alert-warning col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8" role="alert"><strong>エラーが発生しました。もう一度やり直してみてください。</strong></div>
