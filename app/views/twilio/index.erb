@@ -13,12 +13,26 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <%= stylesheet_link_tag 'application' %>
     <style>
+
+      #waiting{
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+      }
+
 /*基本画面*/
       * {
         margin: 0;
         padding: 0;
         border: 0;
         box-sizing: border-box;
+      }
+
+      .container{
+        position: relative;
+        z-index: 2;
+        margin: 0;
       }
 
       h1{
@@ -78,11 +92,11 @@
         border-radius: 50%;
       }
 
-      #submitBtn{
+      #submit_btn{
         visibility: hidden;
       }
 
-      #radioArea{
+      #radio_area{
         overflow: scroll;
       }
 
@@ -96,12 +110,6 @@
         top: 0;
         left: 0;
         z-index: 1;
-      }
-
-      .container{
-        position: relative;
-        z-index: 2;
-        margin: 0;
       }
 
       .rect {
@@ -182,6 +190,7 @@
         background: linear-gradient(136.94deg, #fefef6 0%, #877003 100%);
         filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefef6',endColorstr='#877003' , GradientType=1);
       }
+
 
 /*呼び出し中*/
       .loader {
@@ -273,8 +282,26 @@
     </style>
     <script>
       (function () {
-//タップ起動用スクリプト
+//共通タイマー（5秒）
+/*
+        var waitTime = 50000;
+        var waitTimer;
+        function startTimer(){
+          waitTimer=setInterval(function(){
+            $('#form_main').fadeOut(500);
+            $('#waiting').fadeIn(500);
+          } , waitTime);
+        }
+
+        function stopTimer(){
+          clearInterval(waitTimer);
+        }
+*/
+
+
         $(function() {
+
+//メイン画面　タップ起動用スクリプト
           $('.form-group label').on('touchstart', function(e) {
             if(window.confirm('呼び出しますか？')){
               $('#contactform').submit();
@@ -282,57 +309,36 @@
             }
           });
 
-  //背景用スクリプト
+//画面組み立て用スクリプト
           var wid = $(window).width() + "px";
           var hei = $(window).height();
           var headh = $('#header').height();
           var radioh = hei - headh;
-          console.log(headh);
 
           hei = hei + "px";
           radioh = radioh + "px";
 
+          var waiting = $('#waiting');
+          waiting.css('width', wid);
+          waiting.css('height', hei);
+
           var wrapper = $('#wrapper');
           wrapper.css('width', wid);
           wrapper.css('height', hei);
-          $('#radioArea').css('height', radioh);
-          console.log(wrapper);
+          $('#radio_area').css('height', radioh);
 
           var rects = document.getElementsByClassName("rect");
 
+//読み込み時の処理
           window.onload = function() {
             for(var i=0; i<rects.length; i++) {
               $(rects[i]).css('width', wid);
               $(rects[i]).css('height', hei);
             }
             $('.rect').show();
+            $('#waiting').hide();
           };
         });
-//背景用スクリプト
-        var wid = $(window).width() + "px";
-        var hei = $(window).height();
-        var radioh = hei - 760;
-
-        hei = hei + "px";
-        radioh = radioh + "px";
-        console.log(radioh);
-
-//スクロールはなぜだか動かないので保留
-        var wrapper = $('#wrapper');
-        wrapper.css('width', wid);
-        wrapper.css('height', hei);
-        $('#radioArea').css('height', radioh);
-        console.log(wrapper);
-
-        var rects = document.getElementsByClassName("rect");
-
-        window.onload = function() {
-          for(var i=0; i<rects.length; i++) {
-            $(rects[i]).css('width', wid);
-            $(rects[i]).css('height', hei);
-          }
-          $('.rect').show();
-        };
       }());
     </script>
   </head>
@@ -343,8 +349,12 @@
         <div class="rect rect3"></div>
         <div class="rect rect4"></div>
     </div>
+    <div id="waiting">
+      <h1><img src="assets/logo.svg" width="384" alt="n2p"></h1>
+      <p class="maintxt">ようこそお越しくださいました！！画面をタップしてください</p>
+    </div>
     <div id="alert_success">
-      <p>呼び出し中です。そのまましばらくお待ちください。</p>
+      <p><%= user.username %>を呼び出しています</p>
       <div class="loader">
         <span></span>
         <span></span>
@@ -362,9 +372,33 @@
         <span></span>
         <span></span>
       </div>
+      Cancel
     </div>
-    <div id="alert_warning"><strong>エラーが発生しました。もう一度やり直してみてください。</strong></div>
-    <div class="container text-center">
+    <div id="alert_ok_kari">
+      <p>おっと、<%= user.username %>が気づいたようです。いましばらくお待ちください。(20sで待機画面に戻る)</p>
+      <div class="loader">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      Cancel
+    </div>
+    <div id="alert_warning">
+      <strong>エラーが発生しました。もう一度やり直してみてください。</strong>
+    </div>
+    <div id="form_main" class="container text-center">
       <div class="row">
         <div class="col-md-12 col-sm-12">
           <div id="header">
@@ -374,7 +408,7 @@
             <div id="alert_warning" class="alert alert-warning col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8" role="alert"><strong>エラーが発生しました。もう一度やり直してみてください。</strong></div>-->
             <hr />
          </div>
-          <div id="radioArea">
+         <div id="radio_area">
             <%= form_tag({action: "call"}, method: "POST", class: "form-horizontal", id: "contactform" , role: "form") do %>
             <!-- <form id="contactform" class="form-horizontal" role="form" action="#" method="POST"> -->
               <% @users.each do |user| %>
@@ -400,7 +434,7 @@
                   </div>
               </div> -->
               <hr />
-              <div class="form-group" id="submitBtn">
+              <div class="form-group" id="submit_btn">
               <!-- <button type="submit" class="btn btn-success btn-lg">呼び出し</button> -->
               <%= submit_tag("呼び出し", class: "btn btn-success btn-lg text-center") %>
               </div>
