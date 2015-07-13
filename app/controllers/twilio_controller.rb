@@ -9,14 +9,14 @@ class TwilioController < ApplicationController
 
   # Define our Twilio credentials as instance variables for later use
   ###### Herrokkin #####
-  # @@twilio_sid = 'AC2791363715b8f1abc21fc62cd21bc279'
-  # @@twilio_token = '100b1d7a8374e3286b944ae391d278fc'
-  # @@twilio_number = '+81345895605'
+  @@twilio_sid = 'AC2791363715b8f1abc21fc62cd21bc279'
+  @@twilio_token = '100b1d7a8374e3286b944ae391d278fc'
+  @@twilio_number = '+81345895605'
 
   ###### n2p #####
-  @@twilio_sid = 'AC2be2f6548663497c67056293e1cf885a'
-  @@twilio_token = 'b2e54961e22bc77ab25c3f555dd3d054'
-  @@twilio_number = '+815031353908'
+  # @@twilio_sid = 'AC2be2f6548663497c67056293e1cf885a'
+  # @@twilio_token = 'b2e54961e22bc77ab25c3f555dd3d054'
+  # @@twilio_number = '+815031353908'
 
   # Render home page
   def index
