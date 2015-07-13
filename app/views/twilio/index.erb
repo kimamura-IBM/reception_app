@@ -191,6 +191,67 @@
         filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefef6',endColorstr='#877003' , GradientType=1);
       }
 
+/*待機中*/
+
+      .loader-ring {
+        position: relative;
+        margin: 360px auto 250px;
+        width: 470px;
+        height: 470px;
+      }
+
+      .loader-ring-light {
+        width: 470px;
+        height: 470px;
+        -moz-border-radius: 470px;
+        -webkit-border-radius: 470px;
+        border-radius: 470px;
+        -moz-box-shadow: 0 4px 0 #fff inset;
+        -webkit-box-shadow: 0 4px 0 #fff inset;
+        box-shadow: 0 4px 0 #fff inset;
+        animation: rotate-360 2s linear infinite;
+      }
+
+      .loader-ring-track {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 470px;
+        height: 470px;
+        -moz-border-radius: 470px;
+        -webkit-border-radius: 470px;
+        border-radius: 470px;
+        -moz-box-shadow: 0 0 10px 4px rgba(255, 255, 255, 0.3) inset;
+        -webkit-box-shadow: 0 0 10px 4px rgba(255, 255, 255, 0.3) inset;
+        box-shadow: 0 0 10px 4px rgba(255, 255, 255, 0.3) inset;
+      }
+
+      .loader-ring-text{
+        position: absolute;
+        width: 470px;
+        top: 0;
+        left: 0;
+        font-size: 90px;
+        line-height: 470px;
+        text-align: center;
+        color: #fff;
+      }
+
+      @keyframes rotate-360 {
+        from {
+          -moz-transform: rotate(0);
+          -ms-transform: rotate(0);
+          -webkit-transform: rotate(0);
+          transform: rotate(0);
+        }
+        to {
+          -moz-transform: rotate(360deg);
+          -ms-transform: rotate(360deg);
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+
 
 /*呼び出し中*/
       .loader {
@@ -282,26 +343,33 @@
     </style>
     <script>
       (function () {
-//共通タイマー（5秒）
-/*
-        var waitTime = 50000;
+//共通タイマー（秒数は自由に変更できる）
+        var waitTime = 5000;
         var waitTimer;
-        function startTimer(){
+        function startTimer(waitTime){
           waitTimer=setInterval(function(){
-            $('#form_main').fadeOut(500);
-            $('#waiting').fadeIn(500);
+            $('#form_main').fadeOut(1000);
+            $('#waiting').fadeIn(1000);
+            stopTimer();
           } , waitTime);
         }
 
         function stopTimer(){
           clearInterval(waitTimer);
         }
-*/
+
 
 
         $(function() {
+//待機画面メイン起動
+          $('#waiting').on('touchstart', function(e) {
+            $('#waiting').fadeOut(1000);
+            $('#form_main').fadeIn(1000);
+            waitTime = 20000;
+            startTimer(waitTime);
+          });
 
-//メイン画面　タップ起動用スクリプト
+//メイン画面タップ起動
           $('.form-group label').on('touchstart', function(e) {
             if(window.confirm('呼び出しますか？')){
               $('#contactform').submit();
@@ -309,7 +377,7 @@
             }
           });
 
-//画面組み立て用スクリプト
+//画面組み立て
           var wid = $(window).width() + "px";
           var hei = $(window).height();
           var headh = $('#header').height();
@@ -336,7 +404,8 @@
               $(rects[i]).css('height', hei);
             }
             $('.rect').show();
-            $('#waiting').hide();
+            $('#waiting,#alert_success,#alert_ok_kari,alert_warning').hide();
+            startTimer(waitTime);
           };
         });
       }());
@@ -351,6 +420,11 @@
     </div>
     <div id="waiting">
       <h1><img src="assets/logo.svg" width="384" alt="n2p"></h1>
+      <div class='loader-ring'>
+        <div class='loader-ring-light'></div>
+        <div class='loader-ring-track'></div>
+        <div class='loader-ring-text'>CALL</div>
+      </div>
       <p class="maintxt">ようこそお越しくださいました！！画面をタップしてください</p>
     </div>
     <div id="alert_success">
