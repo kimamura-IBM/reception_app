@@ -30,7 +30,7 @@ class TwilioController < ApplicationController
     contact.phone = params[:phone]
     # @@namae = params[:namae]
     # @@issue = params[:issue]
-    @@contact_to = User.where(phonenumber: contact.phone)
+    @@contact_to = User.where(phonenumber: contact.phone).username
    
     # Validate contact
     if contact.valid?
