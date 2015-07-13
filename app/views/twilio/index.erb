@@ -23,7 +23,8 @@
 
       h1{
         width: 384px;
-        margin:172px auto 0;
+        padding: 172px 0 0;
+        margin:0 auto;
       }
 
       .maintxt{
@@ -57,6 +58,7 @@
         color: #fff;
         padding: 20px 0;
         display: block;
+        width: 90%;
       }
 
       .form-group label input[type=radio]{
@@ -80,13 +82,17 @@
         visibility: hidden;
       }
 
+      #radioArea{
+        overflow: scroll;
+      }
+
 /*背景*/
       body{
         background-color: #fefef6;
       }
 
       #wrapper {
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         z-index: 1;
@@ -95,6 +101,7 @@
       .container{
         position: relative;
         z-index: 2;
+        margin: 0;
       }
 
       .rect {
@@ -277,11 +284,19 @@
         });
 //背景用スクリプト
         var wid = $(window).width() + "px";
-        var hei = $(window).height() + "px";
+        var hei = $(window).height();
+        var radioh = hei - 760;
 
+        hei = hei + "px";
+        radioh = radioh + "px";
+        console.log(radioh);
+
+//スクロールはなぜだか動かないので保留
         var wrapper = $('#wrapper');
         wrapper.css('width', wid);
         wrapper.css('height', hei);
+        $('#radioArea').css('height', radioh);
+        console.log(wrapper);
 
         var rects = document.getElementsByClassName("rect");
 
@@ -326,42 +341,46 @@
     <div class="container text-center">
       <div class="row">
         <div class="col-md-12 col-sm-12">
-          <h1><img src="/assets/images/logo.svg" width="384" alt="n2p"></h1>
-          <p class="maintxt">画面をタップして担当者を呼び出してください</p>
-          <!--<div id="alert_success" class="alert alert-success col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8" role="alert"><strong>呼び出し中です。そのまましばらくお待ちください</strong>。</div>
-          <div id="alert_warning" class="alert alert-warning col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8" role="alert"><strong>エラーが発生しました。もう一度やり直してみてください。</strong></div>-->
-          <hr />
-          <%= form_tag({action: "call"}, method: "POST", class: "form-horizontal", id: "contactform" , role: "form") do %>
-          <!-- <form id="contactform" class="form-horizontal" role="form" action="#" method="POST"> -->
-            <% @users.each do |user| %>
-            <div class="form-group">
-              <div class="col-md-12 col-sm-12">
-                <div class="radio">
-                  <label>
-                    <input type="radio" name="phone" value="<%= user.phonenumber %>">
-                    <img src="<%= user.profilepicture %>" alt="" class="img-rounded" width="36" height="36" /><%= user.username %>
-                  </label>
+          <div id="header">
+            <h1><img src="/assets/images/logo.svg" width="384" alt="n2p"></h1>
+            <p class="maintxt">画面をタップして担当者を呼び出してください</p>
+            <!--<div id="alert_success" class="alert alert-success col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8" role="alert"><strong>呼び出し中です。そのまましばらくお待ちください</strong>。</div>
+            <div id="alert_warning" class="alert alert-warning col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8" role="alert"><strong>エラーが発生しました。もう一度やり直してみてください。</strong></div>-->
+            <hr />
+         </div>
+          <div id="radioArea">
+            <%= form_tag({action: "call"}, method: "POST", class: "form-horizontal", id: "contactform" , role: "form") do %>
+            <!-- <form id="contactform" class="form-horizontal" role="form" action="#" method="POST"> -->
+              <% @users.each do |user| %>
+              <div class="form-group">
+                <div class="col-md-12 col-sm-12">
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="phone" value="<%= user.phonenumber %>">
+                      <img src="<%= user.profilepicture %>" alt="" class="img-rounded" width="36" height="36" /><%= user.username %>
+                    </label>
+                  </div>
                 </div>
               </div>
-            </div>
+              <% end %>
+              <!-- <div class="form-group text">
+              <div class="col-md-6 col-sm-6">
+                <input type="text" class="form-control" name="namae" placeholder="お名前">
+              </div>
+              </div>
+              <div class="form-group text">
+                  <div class="col-md-6 col-sm-6">
+                    <input type="text" class="form-control" name="issue" placeholder="ご用件">
+                  </div>
+              </div> -->
+              <hr />
+              <div class="form-group" id="submitBtn">
+              <!-- <button type="submit" class="btn btn-success btn-lg">呼び出し</button> -->
+              <%= submit_tag("呼び出し", class: "btn btn-success btn-lg text-center") %>
+              </div>
+            <!-- </form> -->
             <% end %>
-            <!-- <div class="form-group text">
-            <div class="col-md-6 col-sm-6">
-              <input type="text" class="form-control" name="namae" placeholder="お名前">
-            </div>
-            </div>
-            <div class="form-group text">
-                <div class="col-md-6 col-sm-6">
-                  <input type="text" class="form-control" name="issue" placeholder="ご用件">
-                </div>
-            </div> -->
-            <hr />
-            <div class="form-group" id="submitBtn">
-            <!-- <button type="submit" class="btn btn-success btn-lg">呼び出し</button> -->
-            <%= submit_tag("呼び出し", class: "btn btn-success btn-lg text-center") %>
-            </div>
-          <!-- </form> -->
-          <% end %>
+          </div><!-- /radioArea -->
         </div>
       </div>
 	  </div><!-- /page -->
