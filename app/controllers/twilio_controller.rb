@@ -47,18 +47,18 @@ class TwilioController < ApplicationController
         case @call.status
           when 'no-answer', 'completed'
             SlackBot.notify(
-                body: "受付Webアプリからの送信です。ステータス:#{@call.stats}。#{@@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+                body: "受付Webアプリからの送信です。ステータス:#{@call.status}。#{@@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
             ) #SlackBotからメッセージ送信
             sleep(1)
             break
           when 'failed','canceled'
             SlackBot.notify(
-                body: "受付Webアプリからの送信です。ステータス:#{@call.stats}。#{@@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+                body: "受付Webアプリからの送信です。ステータス:#{@call.status}。#{@@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
             ) #SlackBotからメッセージ送信
             break
           when 'queued','ringing','in-progress','busy'
             SlackBot.notify(
-                body: "受付Webアプリからの送信です。ステータス:#{@call.stats}。#{@@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+                body: "受付Webアプリからの送信です。ステータス:#{@call.status}。#{@@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
             ) #SlackBotからメッセージ送信
             sleep(0.5)
         end
@@ -66,7 +66,7 @@ class TwilioController < ApplicationController
 
       # SlackBot.notify(
       #     # body: "受付Webアプリからの送信です。#{@@namae}さんから送信 - ご用件：#{@@issue} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/ https://damp-reaches-2263.herokuapp.com/"
-      #     body: "ステータス:#{@@call_stats}。受付Webアプリからの送信です。#{@@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+      #     body: "受付Webアプリからの送信です。ステータス:#{@call.status}。#{@@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
       # ) #SlackBotからメッセージ送信
 
       # Lets respond to the ajax call with some positive reinforcement
