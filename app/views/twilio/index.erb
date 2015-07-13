@@ -281,6 +281,32 @@
             }else{
             }
           });
+
+  //背景用スクリプト
+          var wid = $(window).width() + "px";
+          var hei = $(window).height();
+          var headh = $('#header').height();
+          var radioh = hei - headh;
+          console.log(headh);
+
+          hei = hei + "px";
+          radioh = radioh + "px";
+
+          var wrapper = $('#wrapper');
+          wrapper.css('width', wid);
+          wrapper.css('height', hei);
+          $('#radioArea').css('height', radioh);
+          console.log(wrapper);
+
+          var rects = document.getElementsByClassName("rect");
+
+          window.onload = function() {
+            for(var i=0; i<rects.length; i++) {
+              $(rects[i]).css('width', wid);
+              $(rects[i]).css('height', hei);
+            }
+            $('.rect').show();
+          };
         });
 //背景用スクリプト
         var wid = $(window).width() + "px";
