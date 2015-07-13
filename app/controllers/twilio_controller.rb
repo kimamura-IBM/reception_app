@@ -49,7 +49,6 @@ class TwilioController < ApplicationController
         @calling = @client.account.calls.get(@call.sid)
       end
       @call_status = "完了"
-      render 'index'
 
       # loop do
       #   case @call.status
@@ -88,6 +87,7 @@ class TwilioController < ApplicationController
     respond_to do |format|
       format.json { render :json => @msg }
     end
+    render 'index'
   end
 
   # This URL contains instructions for the call that is connected with a lead
