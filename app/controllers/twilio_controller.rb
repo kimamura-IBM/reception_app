@@ -30,7 +30,7 @@ class TwilioController < ApplicationController
     contact.phone = params[:phone]
     # @@namae = params[:namae]
     # @@issue = params[:issue]
-    @@contact_to = User.find_by(phonenumber: contact.phone).username
+    @contact_to = User.find_by(phonenumber: contact.phone).username
    
     # Validate contact
     if contact.valid?
@@ -73,7 +73,7 @@ class TwilioController < ApplicationController
 
       SlackBot.notify(
           # body: "受付Webアプリからの送信です。#{@@namae}さんから送信 - ご用件：#{@@issue} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/ https://damp-reaches-2263.herokuapp.com/"
-          body: "受付Webアプリからの送信です。ステータス:#{@@call_status_for_view}。#{@@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+          body: "受付Webアプリからの送信です。ステータス:#{@@call_status_for_view}。#{@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
       ) #SlackBotからメッセージ送信
 
       # Lets respond to the ajax call with some positive reinforcement
