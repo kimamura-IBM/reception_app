@@ -49,7 +49,6 @@ class TwilioController < ApplicationController
             SlackBot.notify(
                 body: "受付Webアプリからの送信です。ステータス:#{@call.status}。#{@@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
             ) #SlackBotからメッセージ送信
-            sleep(1)
             break
           when 'failed','canceled'
             SlackBot.notify(
@@ -60,7 +59,7 @@ class TwilioController < ApplicationController
             SlackBot.notify(
                 body: "受付Webアプリからの送信です。ステータス:#{@call.status}。#{@@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
             ) #SlackBotからメッセージ送信
-            sleep(0.5)
+            sleep(3)
         end
       end
 
