@@ -13,6 +13,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <%= stylesheet_link_tag 'application' %>
     <style>
+/*背景css*/
       * {
         margin: 0;
         padding: 0;
@@ -112,23 +113,22 @@
     </style>
     <script>
       (function () {
-        var wid = window.innerWidth + "px";
-        var hei = window.innerHeight + "px";
-        console.log(wid);
-        console.log(hei);
+//背景スクリプト
+        var wid = $(window).width() + "px";
+        var hei = $(window).height() + "px";
 
-        var wrapper = document.getElementById("wrapper");
-        wrapper.style.width = wid;
-        wrapper.style.height= hei;
+        var wrapper = $('#wrapper');
+        wrapper.css('width', wid);
+        wrapper.css('height', hei);
 
         var rects = document.getElementsByClassName("rect");
 
         window.onload = function() {
           for(var i=0; i<rects.length; i++) {
-            rects[i].style.width = wid;
-            rects[i].style.height = hei;
+            $(rects[i]).css('width', wid);
+            $(rects[i]).css('height', hei);
           }
-          $(".rect").fadeIn(1500);
+          $('.rect').fadeIn(1500);
         };
       }());
     </script>
@@ -144,7 +144,7 @@
       <div class="row">
         <div class="col-md-12 col-sm-12">
           <h1>受付</h1>
-          <p>テストテスト。さいとうです。画面をタップして担当者を呼び出してください</p>
+          <p>画面をタップして担当者を呼び出してください</p>
           <div id="alert_success" class="alert alert-success col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8" role="alert"><strong>呼び出し中です。そのまましばらくお待ちください</strong>。</div>
           <div id="alert_warning" class="alert alert-warning col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8" role="alert"><strong>エラーが発生しました。もう一度やり直してみてください。</strong></div>
           <hr />
