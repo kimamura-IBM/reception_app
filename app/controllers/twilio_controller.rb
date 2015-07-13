@@ -44,6 +44,11 @@ class TwilioController < ApplicationController
       )
 
       @calling = @client.account.calls.get(@call.sid)
+      @call_status = "呼び出し中"
+      SlackBot.notify(
+          # body: "受付Webアプリからの送信です。#{@@namae}さんから送信 - ご用件：#{@@issue} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/ https://damp-reaches-2263.herokuapp.com/"
+          body: "受付Webアプリからの送信です。ステータス:#{@call_status}。#{@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+      ) #SlackBotからメッセージ送信
       while @calling.status != "completed" do
         @call_status = "呼び出し中"
         @calling = @client.account.calls.get(@call.sid)
@@ -54,17 +59,17 @@ class TwilioController < ApplicationController
       #   case @call.status
       #     when 'no-answer', 'completed'
       #       SlackBot.notify(
-      #           body: "受付Webアプリからの送信です。ステータス:#{@call.status}。#{@@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+      #           body: "受付Webアプリからの送信です。ステータス:#{@call.status}。#{@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
       #       ) #SlackBotからメッセージ送信
       #       break
       #     when 'failed','canceled'
       #       SlackBot.notify(
-      #           body: "受付Webアプリからの送信です。ステータス:#{@call.status}。#{@@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+      #           body: "受付Webアプリからの送信です。ステータス:#{@call.status}。#{@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
       #       ) #SlackBotからメッセージ送信
       #       break
       #     when 'queued','ringing','in-progress','busy'
       #       SlackBot.notify(
-      #           body: "受付Webアプリからの送信です。ステータス:#{@call.status}。#{@@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+      #           body: "受付Webアプリからの送信です。ステータス:#{@call.status}。#{@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
       #       ) #SlackBotからメッセージ送信
       #       sleep(3)
       #       break
