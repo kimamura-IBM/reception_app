@@ -7,17 +7,82 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>受付 | N2P</title>
     <link rel="icon" type="image/png" href="http://n2p.co.jp/favicon.ico">
-    <!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" type="text/css">-->
+    <!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" type="text/css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.5/paper/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.5/paper/bootstrap.min.css" type="text/css">-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <%= stylesheet_link_tag 'application' %>
     <style>
-/*背景css*/
+/*基本画面*/
       * {
         margin: 0;
         padding: 0;
         border: 0;
+        box-sizing: border-box;
+      }
+
+      h1{
+        width: 384px;
+        margin:172px auto 0;
+      }
+
+      .maintxt{
+        font-size: 52px;
+        line-height: 52px;
+        color: #fff;
+        text-align: center;
+        margin:144px auto;
+      }
+
+      hr{
+        border-top: #fff solid 1px;
+      }
+
+      #contactform .radio, #contactform .text {
+        font-size: 1em;
+        text-align: left;
+        padding-left: 20%;
+        margin: 20px 0;
+        padding: 0;
+      }
+
+      .form-group{
+        width: 100%;
+        border-bottom: #fff solid 1px;
+      }
+
+      .form-group label{
+        position: relative;
+        font-size: 90px;
+        line-height: 150px;
+        color: #fff;
+        padding: 20px 0;
+      }
+
+      .form-group label input[type=radio]{
+        z-index: 1;
+        position: absolute;
+        top: 75px;
+        left: 75px;
+        visibility: hidden;
+      }
+
+      .form-group .img-rounded{
+        width: 150px;
+        height: 150px;
+        margin: 0 55px 0 20px !important;
+        vertical-align: middle;
+        z-index: 2;
+        border-radius: 50%;
+      }
+
+      #submitBtn{
+        visibility: hidden;
+      }
+
+/*背景*/
+      body{
+        background-color: #1e9cd7;
       }
 
       #wrapper {
@@ -110,10 +175,108 @@
         background: linear-gradient(136.94deg, #1e9cd7 0%, #e9b000 100%);
         filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1E9CD7',endColorstr='#E9B000' , GradientType=1);
       }
+
+
+/*呼び出し中*/
+      .loader {
+        position: absolute;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        margin: auto;
+        width: 175px;
+        height: 100px;
+      }
+      .loader span {
+        display: block;
+        background: rgba(255,255,255,.7);
+        width: 7px;
+        height: 10%;
+        border-radius: 14px;
+        margin-right: 5px;
+        float: left;
+        margin-top: 25%;
+      }
+      .loader span:last-child {
+        margin-right: 0px;
+      }
+      .loader span:nth-child(1) {
+        animation: load 2.5s 1.4s infinite linear;
+      }
+      .loader span:nth-child(2) {
+        animation: load 2.5s 1.2s infinite linear;
+      }
+      .loader span:nth-child(3) {
+        animation: load 2.5s 1s infinite linear;
+      }
+      .loader span:nth-child(4) {
+        animation: load 2.5s 0.8s infinite linear;
+      }
+      .loader span:nth-child(5) {
+        animation: load 2.5s 0.6s infinite linear;
+      }
+      .loader span:nth-child(6) {
+        animation: load 2.5s 0.4s infinite linear;
+      }
+      .loader span:nth-child(7) {
+        animation: load 2.5s 0.2s infinite linear;
+      }
+      .loader span:nth-child(8) {
+        animation: load 2.5s 0s infinite linear;
+      }
+      .loader span:nth-child(9) {
+        animation: load 2.5s 0.2s infinite linear;
+      }
+      .loader span:nth-child(10) {
+        animation: load 2.5s 0.4s infinite linear;
+      }
+      .loader span:nth-child(11) {
+        animation: load 2.5s 0.6s infinite linear;
+      }
+      .loader span:nth-child(12) {
+        animation: load 2.5s 0.8s infinite linear;
+      }
+      .loader span:nth-child(13) {
+        animation: load 2.5s 1s infinite linear;
+      }
+      .loader span:nth-child(14) {
+        animation: load 2.5s 1.2s infinite linear;
+      }
+      .loader span:nth-child(15) {
+        animation: load 2.5s 1.4s infinite linear;
+      }
+
+      @keyframes load {
+        0% {
+          background: rgba(255,255,255,.7);
+          margin-top: 25%;
+          height: 10%;
+        }
+        50% {
+          background: rgba(255,255,255,.4);
+          height: 100%;
+          margin-top: 0%;
+        }
+        100% {
+          background: rgba(255,255,255,.7);
+          height: 10%;
+          margin-top: 25%;
+        }
+      }
     </style>
     <script>
       (function () {
-//背景スクリプト
+//タップ起動用スクリプト
+        $(function() {
+          $('.form-group label').on('touchstart', function(e) {
+            if(window.confirm('呼び出しますか？')){
+              $('#contactform').submit();
+            }else{
+            }
+          });
+        });
+//背景用スクリプト
         var wid = $(window).width() + "px";
         var hei = $(window).height() + "px";
 
@@ -128,7 +291,7 @@
             $(rects[i]).css('width', wid);
             $(rects[i]).css('height', hei);
           }
-          $('.rect').fadeIn(1500);
+          $('.rect').show();
         };
       }());
     </script>
@@ -140,13 +303,34 @@
         <div class="rect rect3"></div>
         <div class="rect rect4"></div>
     </div>
+    <div id="alert_success">
+      <p>呼び出し中です。そのまましばらくお待ちください。</p>
+      <div class="loader">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+    <div id="alert_warning"><strong>エラーが発生しました。もう一度やり直してみてください。</strong></div>
     <div class="container text-center">
       <div class="row">
         <div class="col-md-12 col-sm-12">
-          <h1>受付</h1>
-          <p>画面をタップして担当者を呼び出してください</p>
-          <div id="alert_success" class="alert alert-success col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8" role="alert"><strong>呼び出し中です。そのまましばらくお待ちください</strong>。</div>
-          <div id="alert_warning" class="alert alert-warning col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8" role="alert"><strong>エラーが発生しました。もう一度やり直してみてください。</strong></div>
+          <h1><img src="/assets/images/logo.svg" width="384" alt="n2p"></h1>
+          <p class="maintxt">画面をタップして担当者を呼び出してください</p>
+          <!--<div id="alert_success" class="alert alert-success col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8" role="alert"><strong>呼び出し中です。そのまましばらくお待ちください</strong>。</div>
+          <div id="alert_warning" class="alert alert-warning col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8" role="alert"><strong>エラーが発生しました。もう一度やり直してみてください。</strong></div>-->
           <hr />
           <%= form_tag({action: "call"}, method: "POST", class: "form-horizontal", id: "contactform" , role: "form") do %>
           <!-- <form id="contactform" class="form-horizontal" role="form" action="#" method="POST"> -->
