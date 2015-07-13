@@ -21,8 +21,6 @@ class TwilioController < ApplicationController
   # Render home page
   def index
     @users = User.all.reverse_order
-    @contact_to_view = @@contact_to
-    @call_status_view = @@call_status
   	render 'index'
   end
 
@@ -32,7 +30,7 @@ class TwilioController < ApplicationController
     contact.phone = params[:phone]
     # @@namae = params[:namae]
     # @@issue = params[:issue]
-    @@contact_to = User.find_by(phonenumber: contact.phone).username
+    @contact_to = User.find_by(phonenumber: contact.phone).username
    
     # Validate contact
     if contact.valid?
@@ -47,10 +45,11 @@ class TwilioController < ApplicationController
 
       @calling = @client.account.calls.get(@call.sid)
       while @calling.status != "completed" do
-        @@call_status = "呼び出し中"
+        @call_status = "呼び出し中"
         @calling = @client.account.calls.get(@call.sid)
       end
-      @@call_status = "完了"
+      @call_status = "完了"
+      render 'index'
 
       # loop do
       #   case @call.status
@@ -75,7 +74,7 @@ class TwilioController < ApplicationController
 
       SlackBot.notify(
           # body: "受付Webアプリからの送信です。#{@@namae}さんから送信 - ご用件：#{@@issue} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/ https://damp-reaches-2263.herokuapp.com/"
-          body: "受付Webアプリからの送信です。ステータス:#{@@call_status}。#{@@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+          body: "受付Webアプリからの送信です。ステータス:#{@call_status}。#{@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
       ) #SlackBotからメッセージ送信
 
       # Lets respond to the ajax call with some positive reinforcement
