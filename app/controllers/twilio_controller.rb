@@ -43,12 +43,12 @@ class TwilioController < ApplicationController
         :url => "#{root_url}connect" # Fetch instructions from this URL when the call connects
       )
 
-      @call_status = @client.account.calls.get(@call.sid)
-      while @call_status == "completed" do
-        @@call_status_for_view = "呼び出し中"
-        @call_status = @client.account.calls.get(@call.sid)
+      @calling = @client.account.calls.get(@call.sid)
+      while @calling.status != "completed" do
+        @call_status = "呼び出し中"
+        @calling = @client.account.calls.get(@call.sid)
       end
-      @@call_status_for_view = "完了"
+      @call_status = "完了"
 
       # loop do
       #   case @call.status
@@ -73,7 +73,7 @@ class TwilioController < ApplicationController
 
       SlackBot.notify(
           # body: "受付Webアプリからの送信です。#{@@namae}さんから送信 - ご用件：#{@@issue} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/ https://damp-reaches-2263.herokuapp.com/"
-          body: "受付Webアプリからの送信です。ステータス:#{@@call_status_for_view}。#{@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+          body: "受付Webアプリからの送信です。ステータス:#{@call_status}。#{@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
       ) #SlackBotからメッセージ送信
 
       # Lets respond to the ajax call with some positive reinforcement
@@ -98,7 +98,7 @@ class TwilioController < ApplicationController
     # of these documents
     response = Twilio::TwiML::Response.new do |r|
       # r.Say "こちらは,受付アプリです.#{@@namae}さんから,#{@@issue}の件で呼び出しがありました.", :voice => 'alice', :language => 'ja-jp'
-      r.Say "こちらは,受付アプリです.#{@@contact_to}さんが呼び出されました.", :voice => 'alice', :language => 'ja-jp'
+      r.Say "こちらは,受付アプリです.#{@contact_to}さんが呼び出されました.", :voice => 'alice', :language => 'ja-jp'
       # r.Say 'If this were a real click to call implementation, you would be connected to an agent at this point.', :voice => 'alice'
     end
     render text: response.text
