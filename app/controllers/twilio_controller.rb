@@ -43,6 +43,13 @@ class TwilioController < ApplicationController
         :url => "#{root_url}connect" # Fetch instructions from this URL when the call connects
       )
 
+      @call_status = @client.account.calls.get(@call.sid)
+      while @call_status == "completed" do
+        @@call_status_for_view = "呼び出し中"
+        @call_status = @client.account.calls.get(@call.sid)
+      end
+      @@call_status_for_view = "完了"
+
       # loop do
       #   case @call.status
       #     when 'no-answer', 'completed'
