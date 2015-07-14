@@ -34,7 +34,7 @@ class TwilioController < ApplicationController
     # @@namae = params[:namae]
     # @@issue = params[:issue]
     @contact_to = User.find_by(phonenumber: contact.phone).username
-    session[:contact_to_view] = contact.phone #indexで使うためにセッション格納
+    #session[:contact_to_view] = contact.phone #indexで使うためにセッション格納
    
     # Validate contact
     if contact.valid?
@@ -48,15 +48,16 @@ class TwilioController < ApplicationController
       )
 
       @calling = @client.account.calls.get(@call.sid) #現在のコール
-      session[:contact_status_view] = @calling.status #indexで使うためにセッション格納
-      @slack_body = "受付Webアプリからの送信です。ステータス:#{@calling.status}。#{@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+      @calling_status = @calling.status
+      #session[:contact_status_view] = @calling.status #indexで使うためにセッション格納
+      @slack_body = "受付Webアプリからの送信です。ステータス:#{@calling_status}。#{@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
 
       SlackBot.notify(
           body: @slack_body
       ) #SlackBotからメッセージ送信
 
       while @calling.status != "completed" do
-        session[:contact_status_view] = @calling.status #indexで使うためにセッション格納
+        #session[:contact_status_view] = @calling.status #indexで使うためにセッション格納
         @calling = @client.account.calls.get(@call.sid)
       end
 
