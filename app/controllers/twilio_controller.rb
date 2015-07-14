@@ -52,6 +52,7 @@ class TwilioController < ApplicationController
 
       while @calling.status != 'completed' do
         @calling = @client.account.calls.get(@call.sid)
+        @call_status = @calling.status
       end
 
       # loop do
