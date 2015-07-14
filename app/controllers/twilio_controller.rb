@@ -9,14 +9,14 @@ class TwilioController < ApplicationController
 
   # Define our Twilio credentials as instance variables for later use
   ###### Herrokkin #####
-  @@twilio_sid = 'AC2791363715b8f1abc21fc62cd21bc279'
-  @@twilio_token = '100b1d7a8374e3286b944ae391d278fc'
-  @@twilio_number = '+81345895605'
+  # @@twilio_sid = 'AC2791363715b8f1abc21fc62cd21bc279'
+  # @@twilio_token = '100b1d7a8374e3286b944ae391d278fc'
+  # @@twilio_number = '+81345895605'
 
   ###### n2p #####
-  # @@twilio_sid = 'AC2be2f6548663497c67056293e1cf885a'
-  # @@twilio_token = 'b2e54961e22bc77ab25c3f555dd3d054'
-  # @@twilio_number = '+815031353908'
+  @@twilio_sid = 'AC2be2f6548663497c67056293e1cf885a'
+  @@twilio_token = 'b2e54961e22bc77ab25c3f555dd3d054'
+  @@twilio_number = '+815031353908'
 
   # Render home page
   def index
@@ -43,7 +43,7 @@ class TwilioController < ApplicationController
 
       @calling = @client.account.calls.get(@call.sid)
       @call_status = @calling.status
-      @slack_body = "受付Webアプリからの送信です。ステータス:#{@call_status}。#{@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+      @slack_body = "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス:#{@call_status}。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
 
       SlackBot.notify(
           # body: "受付Webアプリからの送信です。#{@@namae}さんから送信 - ご用件：#{@@issue} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/ https://damp-reaches-2263.herokuapp.com/"
@@ -67,6 +67,7 @@ class TwilioController < ApplicationController
       #   end
       # end
 
+      @call_status = "#{@contact_to}さんが電話に出ました。"
       SlackBot.notify(
           # body: "受付Webアプリからの送信です。#{@@namae}さんから送信 - ご用件：#{@@issue} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/ https://damp-reaches-2263.herokuapp.com/"
           body: @slack_body
