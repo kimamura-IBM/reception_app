@@ -21,7 +21,8 @@ class TwilioController < ApplicationController
   # Render home page
   def index
     @users = User.all.reverse_order
-    @contact_to_view = User.find_by(phonenumber: session[:contact_to_view]).username
+    #@contact_to_view_session = session[:contact_to_view]
+    #@contact_to_view = @users.find_by(phonenumber: @contact_to_view_session).username
     @contact_status_view = session[:contact_status_view]
   	render 'index'
   end
@@ -33,7 +34,7 @@ class TwilioController < ApplicationController
     # @@namae = params[:namae]
     # @@issue = params[:issue]
     contact_to = User.find_by(phonenumber: contact.phone).username
-    session[:contact_to_view] = contact.phone #indexで使うためにセッション格納
+    session[:contact_to_view] = "+819061137395" #indexで使うためにセッション格納
    
     # Validate contact
     if contact.valid?
