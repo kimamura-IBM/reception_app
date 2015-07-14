@@ -28,8 +28,6 @@ class TwilioController < ApplicationController
   def call
     contact = Contact.new
     contact.phone = params[:phone]
-    # @@namae = params[:namae]
-    # @@issue = params[:issue]
     @contact_to = User.find_by(phonenumber: contact.phone).username
    
     # Validate contact
@@ -44,41 +42,33 @@ class TwilioController < ApplicationController
       )
 
       @calling = @client.account.calls.get(@call.sid)
-      @call_status = "呼び出し中"
+      @call_status = @calling.status
+      @slack_body = "受付Webアプリからの送信です。ステータス:#{@call_status}。#{@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+
       SlackBot.notify(
           # body: "受付Webアプリからの送信です。#{@@namae}さんから送信 - ご用件：#{@@issue} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/ https://damp-reaches-2263.herokuapp.com/"
-          body: "受付Webアプリからの送信です。ステータス:#{@call_status}。#{@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+          body: @slack_body
       ) #SlackBotからメッセージ送信
-      while @calling.status != "completed" do
-        @call_status = "呼び出し中"
+
+      while @calling.status != 'completed' do
         @calling = @client.account.calls.get(@call.sid)
       end
-      @call_status = "完了"
 
       # loop do
       #   case @call.status
       #     when 'no-answer', 'completed'
       #       SlackBot.notify(
-      #           body: "受付Webアプリからの送信です。ステータス:#{@call.status}。#{@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
-      #       ) #SlackBotからメッセージ送信
       #       break
       #     when 'failed','canceled'
-      #       SlackBot.notify(
-      #           body: "受付Webアプリからの送信です。ステータス:#{@call.status}。#{@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
-      #       ) #SlackBotからメッセージ送信
       #       break
       #     when 'queued','ringing','in-progress','busy'
-      #       SlackBot.notify(
-      #           body: "受付Webアプリからの送信です。ステータス:#{@call.status}。#{@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
-      #       ) #SlackBotからメッセージ送信
-      #       sleep(3)
       #       break
       #   end
       # end
 
       SlackBot.notify(
           # body: "受付Webアプリからの送信です。#{@@namae}さんから送信 - ご用件：#{@@issue} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/ https://damp-reaches-2263.herokuapp.com/"
-          body: "受付Webアプリからの送信です。ステータス:#{@call_status}。#{@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+          body: @slack_body
       ) #SlackBotからメッセージ送信
 
       # Lets respond to the ajax call with some positive reinforcement
@@ -92,7 +82,7 @@ class TwilioController < ApplicationController
     respond_to do |format|
       format.json { render :json => @msg }
     end
-    render 'index'
+    render action: 'twilio/index'
   end
 
   # This URL contains instructions for the call that is connected with a lead
@@ -103,7 +93,6 @@ class TwilioController < ApplicationController
     # format. Our Ruby library provides a helper for generating one
     # of these documents
     response = Twilio::TwiML::Response.new do |r|
-      # r.Say "こちらは,受付アプリです.#{@@namae}さんから,#{@@issue}の件で呼び出しがありました.", :voice => 'alice', :language => 'ja-jp'
       r.Say "こちらは,受付アプリです.#{@contact_to}さんが呼び出されました.", :voice => 'alice', :language => 'ja-jp'
       # r.Say 'If this were a real click to call implementation, you would be connected to an agent at this point.', :voice => 'alice'
     end
