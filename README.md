@@ -10,7 +10,3 @@ Herokuに自動で[デプロイされます](https://damp-reaches-2263.herokuapp
 Viewでそれらの情報を呼び出しています。
 
 ほとんどTwilioのチュートリアル通りです。[#ありがとうチュートリアル](https://github.com/TwilioDevEd/clicktocall-rails)
-
-## 共同作業
-saito_testブランチにデザイン周りがアップデートされていきます。動作イメージは、[さいとうさんのHerokuアプリ](http://twilio-n2p-testsaito.herokuapp.com/)にデプロイされています。
-最終的には、 @Herrokkin が、masterブランチにマージする予定。
