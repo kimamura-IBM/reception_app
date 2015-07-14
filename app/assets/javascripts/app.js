@@ -24,13 +24,13 @@ $(function() {
             $('#alert_success').show();
             setTimeout(function(){
                 $('#alert_success').hide();
-            },30000); //n秒間表示し続ける
+            },20000); //n秒間表示し続ける
         }).fail(function() {
             //alert('エラーが発生しました。');
             $('#alert_warning').show();
             setTimeout(function(){
                 $('#alert_warning').hide();
-            },30000); //n秒間表示し続ける
+            },20000); //n秒間表示し続ける
         }).always(function() {
             $submit.removeAttr('disabled');
         });
