@@ -33,7 +33,7 @@ class TwilioController < ApplicationController
     contact.phone = params[:phone]
     # @@namae = params[:namae]
     # @@issue = params[:issue]
-    contact_to = User.find_by(phonenumber: contact.phone).username
+    @contact_to = User.find_by(phonenumber: contact.phone).username
     session[:contact_to_view] = "+819061137395" #indexで使うためにセッション格納
    
     # Validate contact
@@ -47,17 +47,17 @@ class TwilioController < ApplicationController
         :url => "#{root_url}connect" # Fetch instructions from this URL when the call connects
       )
 
-      calling = @client.account.calls.get(@call.sid) #現在のコール
-      session[:contact_status_view] = calling.status #indexで使うためにセッション格納
-      slack_body = "受付Webアプリからの送信です。ステータス:#{calling.status}。#{contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+      @calling = @client.account.calls.get(@call.sid) #現在のコール
+      session[:contact_status_view] = @calling.status #indexで使うためにセッション格納
+      @slack_body = "受付Webアプリからの送信です。ステータス:#{@calling.status}。#{@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
 
       SlackBot.notify(
-          body: slack_body
+          body: @slack_body
       ) #SlackBotからメッセージ送信
 
-      while calling.status != "completed" do
-        session[:contact_status_view] = calling.status #indexで使うためにセッション格納
-        calling = @client.account.calls.get(@call.sid)
+      while @calling.status != "completed" do
+        session[:contact_status_view] = @calling.status #indexで使うためにセッション格納
+        @calling = @client.account.calls.get(@call.sid)
       end
 
       # loop do
@@ -74,7 +74,7 @@ class TwilioController < ApplicationController
 
       SlackBot.notify(
           # body: "受付Webアプリからの送信です。#{@@namae}さんから送信 - ご用件：#{@@issue} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/ https://damp-reaches-2263.herokuapp.com/"
-          body: slack_body
+          body: @slack_body
       ) #SlackBotからメッセージ送信
 
       # Lets respond to the ajax call with some positive reinforcement
