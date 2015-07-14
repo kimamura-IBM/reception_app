@@ -13,507 +13,400 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <%= stylesheet_link_tag 'application' %>
   <style>
+    #waiting{
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+    }
 
-      #waiting{
-          position: absolute;
-          top: 0;
-          left: 0;
-          z-index: 2;
-      }
+    /*基本画面*/
+    * {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      box-sizing: border-box;
+    }
 
-      /*基本画面*/
-      * {
-          margin: 0;
-          padding: 0;
-          border: 0;
-          box-sizing: border-box;
-      }
+    .container{
+      position: relative;
+      z-index: 2;
+      margin: 0;
+    }
 
-      .container{
-          position: relative;
-          z-index: 2;
-          margin: 0;
-      }
+    h1{
+      width: 384px;
+      padding: 172px 0 0;
+      margin:0 auto;
+    }
 
-      h1{
-          width: 384px;
-          padding: 172px 0 0;
-          margin:0 auto;
-      }
+    .maintxt{
+      font-size: 52px;
+      line-height: 52px;
+      color: #fff;
+      text-align: center;
+      margin:144px auto;
+    }
 
-      .maintxt{
-          font-size: 52px;
-          line-height: 52px;
-          color: #fff;
-          text-align: center;
-          margin:144px auto;
-      }
+    hr{
+      border-top: #fff solid 1px;
+    }
 
-      hr{
-          border-top: #fff solid 1px;
-      }
+    #contactform .radio, #contactform .text {
+      font-size: 1em;
+      text-align: left;
+      padding-left: 20%;
+      padding: 0;
+    }
 
-      #contactform .radio, #contactform .text {
-          font-size: 1em;
-          text-align: left;
-          padding-left: 20%;
-          padding: 0;
-      }
+    .form-group{
+      width: 100%;
+      border-bottom: #fff solid 1px;
+    }
 
-      .form-group{
-          width: 100%;
-          border-bottom: #fff solid 1px;
-      }
+    .form-group label{
+      position: relative;
+      font-size: 90px;
+      line-height: 150px;
+      color: #fff;
+      padding: 20px 0;
+      display: block;
+      width: 90%;
+    }
 
-      .form-group label{
-          position: relative;
-          font-size: 90px;
-          line-height: 150px;
-          color: #fff;
-          padding: 20px 0;
-          display: block;
-          width: 90%;
-      }
+    .form-group label input[type=radio]{
+      z-index: 1;
+      position: absolute;
+      top: 75px;
+      left: 75px;
+      visibility: hidden;
+    }
 
-      .form-group label input[type=radio]{
-          z-index: 1;
-          position: absolute;
-          top: 75px;
-          left: 75px;
-          visibility: hidden;
-      }
+    .form-group .img-rounded{
+      width: 150px;
+      height: 150px;
+      margin: 0 55px 0 20px !important;
+      vertical-align: middle;
+      z-index: 2;
+      border-radius: 50%;
+    }
 
-      .form-group .img-rounded{
-          width: 150px;
-          height: 150px;
-          margin: 0 55px 0 20px !important;
-          vertical-align: middle;
-          z-index: 2;
-          border-radius: 50%;
-      }
+    #submit_btn{
+      visibility: hidden;
+    }
 
-      #submit_btn{
-          visibility: hidden;
-      }
+    #radio_area{
+      overflow: scroll;
+    }
 
-      #radio_area{
-          overflow: scroll;
-      }
+/*背景*/
+    body{
+      background-color: #fefef6;
+    }
 
-      /*背景*/
-      body{
-          background-color: #fefef6;
-      }
+    #wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
 
-      #wrapper {
-          position: fixed;
-          top: 0;
-          left: 0;
-          z-index: 1;
-      }
+    .rect {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+    }
 
-      .rect {
-          position: absolute;
-          top: 0;
-          left: 0;
-          opacity: 0;
+    @keyframes dissolve {
+      0% {
+        opacity: 0.1;
       }
+      50% {
+        opacity: 0.9;
+      }
+      100% {
+        opacity: 0.1;
+      }
+    }
 
-      @keyframes dissolve {
-          0% {
-              opacity: 0.1;
-          }
-          50% {
-              opacity: 0.9;
-          }
-          100% {
-              opacity: 0.1;
-          }
-      }
+    .rect1 {
+      animation: dissolve 3s ease-in-out 0s infinite alternate;
+    }
 
-      .rect1 {
-          animation: dissolve 3s ease-in-out 0s infinite alternate;
-      }
+    .rect2 {
+      animation: dissolve 3s ease-in-out 1.5s infinite alternate;
+    }
 
-      .rect2 {
-          animation: dissolve 3s ease-in-out 1.5s infinite alternate;
-      }
+    .rect3 {
+      animation: dissolve 3s ease-in-out 1s infinite alternate;
+    }
 
-      .rect3 {
-          animation: dissolve 3s ease-in-out 1s infinite alternate;
-      }
+    .rect4 {
+      animation: dissolve 3s ease-in-out 0.75s infinite alternate;
+    }
 
-      .rect4 {
-          animation: dissolve 3s ease-in-out 0.75s infinite alternate;
-      }
+    .rect1 {
+      background: -moz-linear-gradient(-989.94% 1089.94% 45deg, #fefef6 0%, #877003 100%);
+      background: -webkit-linear-gradient(45deg, #fefef6 0%, #877003 100%);
+      background: -webkit-gradient(linear, -989.94% 1089.94%, -913.2% 1013.2%, color-stop(0, #fefef6), color-stop(1, #877003));
+      background: -o-linear-gradient(45deg, #fefef6 0%, #877003 100%);
+      background: -ms-linear-gradient(45deg, #fefef6 0%, #877003 100%);
+      -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefef6', endColorstr='#877003' ,GradientType=0)";
+      background: linear-gradient(45deg, #fefef6 0%, #877003 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefef6',endColorstr='#877003' , GradientType=1);
+    }
 
-      .rect1 {
-          background: -moz-linear-gradient(-989.94% 1089.94% 45deg, #fefef6 0%, #877003 100%);
-          background: -webkit-linear-gradient(45deg, #fefef6 0%, #877003 100%);
-          background: -webkit-gradient(linear, -989.94% 1089.94%, -913.2% 1013.2%, color-stop(0, #fefef6), color-stop(1, #877003));
-          background: -o-linear-gradient(45deg, #fefef6 0%, #877003 100%);
-          background: -ms-linear-gradient(45deg, #fefef6 0%, #877003 100%);
-          -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefef6', endColorstr='#877003' ,GradientType=0)";
-          background: linear-gradient(45deg, #fefef6 0%, #877003 100%);
-          filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefef6',endColorstr='#877003' , GradientType=1);
-      }
+    .rect2 {
+      background: -moz-linear-gradient(-988.63% 1014.03% -46.94deg, #fefef6 0%, #877003 100%);
+      background: -webkit-linear-gradient(-46.94deg, #fefef6 0%, #877003 100%);
+      background: -webkit-gradient(linear, -988.63% 1014.03%, -914.58% 1093.29%, color-stop(0, #fefef6), color-stop(1, #877003));
+      background: -o-linear-gradient(-46.94deg, #fefef6 0%, #877003 100%);
+      background: -ms-linear-gradient(-46.94deg, #fefef6 0%, #877003 100%);
+      -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefef6', endColorstr='#877003' ,GradientType=0)";
+      background: linear-gradient(136.94deg, #fefef6 0%, #877003 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefef6',endColorstr='#877003' , GradientType=1);
+    }
 
-      .rect2 {
-          background: -moz-linear-gradient(-988.63% 1014.03% -46.94deg, #fefef6 0%, #877003 100%);
-          background: -webkit-linear-gradient(-46.94deg, #fefef6 0%, #877003 100%);
-          background: -webkit-gradient(linear, -988.63% 1014.03%, -914.58% 1093.29%, color-stop(0, #fefef6), color-stop(1, #877003));
-          background: -o-linear-gradient(-46.94deg, #fefef6 0%, #877003 100%);
-          background: -ms-linear-gradient(-46.94deg, #fefef6 0%, #877003 100%);
-          -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefef6', endColorstr='#877003' ,GradientType=0)";
-          background: linear-gradient(136.94deg, #fefef6 0%, #877003 100%);
-          filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefef6',endColorstr='#877003' , GradientType=1);
-      }
+    .rect3 {
+      background: -moz-linear-gradient(-915.26% 1015.26% -135deg, #fefef6 0%, #877003 100%);
+      background: -webkit-linear-gradient(-135deg, #fefef6 0%, #877003 100%);
+      background: -webkit-gradient(linear, -915.26% 1015.26%, -992% 1092%, color-stop(0, #fefef6), color-stop(1, #877003));
+      background: -o-linear-gradient(-135deg, #fefef6 0%, #877003 100%);
+      background: -ms-linear-gradient(-135deg, #fefef6 0%, #877003 100%);
+      -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefef6', endColorstr='#877003' ,GradientType=0)";
+      background: linear-gradient(225deg, #fefef6 0%, #877003 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefef6',endColorstr='#877003' , GradientType=1);
+    }
 
-      .rect3 {
-          background: -moz-linear-gradient(-915.26% 1015.26% -135deg, #fefef6 0%, #877003 100%);
-          background: -webkit-linear-gradient(-135deg, #fefef6 0%, #877003 100%);
-          background: -webkit-gradient(linear, -915.26% 1015.26%, -992% 1092%, color-stop(0, #fefef6), color-stop(1, #877003));
-          background: -o-linear-gradient(-135deg, #fefef6 0%, #877003 100%);
-          background: -ms-linear-gradient(-135deg, #fefef6 0%, #877003 100%);
-          -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefef6', endColorstr='#877003' ,GradientType=0)";
-          background: linear-gradient(225deg, #fefef6 0%, #877003 100%);
-          filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefef6',endColorstr='#877003' , GradientType=1);
-      }
-
-      .rect4 {
-          background: -moz-linear-gradient(-988.63% 1014.03% -46.94deg, #fefef6 0%, #877003 100%);
-          background: -webkit-linear-gradient(-46.94deg, #fefef6 0%, #877003 100%);
-          background: -webkit-gradient(linear, -988.63% 1014.03%, -914.58% 1093.29%, color-stop(0, #fefef6), color-stop(1, #877003));
-          background: -o-linear-gradient(-46.94deg, #fefef6 0%, #877003 100%);
-          background: -ms-linear-gradient(-46.94deg, #fefef6 0%, #877003 100%);
-          -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefef6', endColorstr='#877003' ,GradientType=0)";
-          background: linear-gradient(136.94deg, #fefef6 0%, #877003 100%);
-          filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefef6',endColorstr='#877003' , GradientType=1);
-      }
+    .rect4 {
+      background: -moz-linear-gradient(-988.63% 1014.03% -46.94deg, #fefef6 0%, #877003 100%);
+      background: -webkit-linear-gradient(-46.94deg, #fefef6 0%, #877003 100%);
+      background: -webkit-gradient(linear, -988.63% 1014.03%, -914.58% 1093.29%, color-stop(0, #fefef6), color-stop(1, #877003));
+      background: -o-linear-gradient(-46.94deg, #fefef6 0%, #877003 100%);
+      background: -ms-linear-gradient(-46.94deg, #fefef6 0%, #877003 100%);
+      -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefef6', endColorstr='#877003' ,GradientType=0)";
+      background: linear-gradient(136.94deg, #fefef6 0%, #877003 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefef6',endColorstr='#877003' , GradientType=1);
+    }
 
 /*待機中*/
 
-      .loader-ring {
-        position: relative;
-        margin: 360px auto 250px;
-        width: 470px;
-        height: 470px;
-      }
+    .loader-ring {
+      position: relative;
+      margin: 360px auto 250px;
+      width: 470px;
+      height: 470px;
+    }
 
-      .loader-ring-light {
-        width: 470px;
-        height: 470px;
-        -moz-border-radius: 470px;
-        -webkit-border-radius: 470px;
-        border-radius: 470px;
-        -moz-box-shadow: 0 4px 0 #fff inset;
-        -webkit-box-shadow: 0 4px 0 #fff inset;
-        box-shadow: 0 4px 0 #fff inset;
-        animation: rotate-360 2s linear infinite;
-      }
+    .loader-ring-light {
+      width: 470px;
+      height: 470px;
+      -moz-border-radius: 470px;
+      -webkit-border-radius: 470px;
+      border-radius: 470px;
+      -moz-box-shadow: 0 4px 0 #fff inset;
+      -webkit-box-shadow: 0 4px 0 #fff inset;
+      box-shadow: 0 4px 0 #fff inset;
+      animation: rotate-360 2s linear infinite;
+    }
 
-      .loader-ring-track {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 470px;
-        height: 470px;
-        -moz-border-radius: 470px;
-        -webkit-border-radius: 470px;
-        border-radius: 470px;
-        -moz-box-shadow: 0 0 10px 4px rgba(255, 255, 255, 0.3) inset;
-        -webkit-box-shadow: 0 0 10px 4px rgba(255, 255, 255, 0.3) inset;
-        box-shadow: 0 0 10px 4px rgba(255, 255, 255, 0.3) inset;
-      }
+    .loader-ring-track {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 470px;
+      height: 470px;
+      -moz-border-radius: 470px;
+      -webkit-border-radius: 470px;
+      border-radius: 470px;
+      -moz-box-shadow: 0 0 10px 4px rgba(255, 255, 255, 0.3) inset;
+      -webkit-box-shadow: 0 0 10px 4px rgba(255, 255, 255, 0.3) inset;
+      box-shadow: 0 0 10px 4px rgba(255, 255, 255, 0.3) inset;
+    }
 
-      .loader-ring-text{
-        position: absolute;
-        width: 470px;
-        top: 0;
-        left: 0;
-        font-size: 90px;
-        line-height: 470px;
-        text-align: center;
-        color: #fff;
-      }
+    .loader-ring-text{
+      position: absolute;
+      width: 470px;
+      top: 0;
+      left: 0;
+      font-size: 90px;
+      line-height: 470px;
+      text-align: center;
+      color: #fff;
+    }
 
-      @keyframes rotate-360 {
-        from {
-          -moz-transform: rotate(0);
-          -ms-transform: rotate(0);
-          -webkit-transform: rotate(0);
-          transform: rotate(0);
-        }
-        to {
-          -moz-transform: rotate(360deg);
-          -ms-transform: rotate(360deg);
-          -webkit-transform: rotate(360deg);
-          transform: rotate(360deg);
-        }
+    @keyframes rotate-360 {
+      from {
+        -moz-transform: rotate(0);
+        -ms-transform: rotate(0);
+        -webkit-transform: rotate(0);
+        transform: rotate(0);
       }
+      to {
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
 
 
-      /*呼び出し中*/
-      .loader {
-          position: absolute;
-          top: 0px;
-          bottom: 0px;
-          left: 0px;
-          right: 0px;
-          margin: auto;
-          width: 175px;
-          height: 100px;
-      }
-      .loader span {
-          display: block;
-          background: rgba(255,255,255,.7);
-          width: 7px;
-          height: 10%;
-          border-radius: 14px;
-          margin-right: 5px;
-          float: left;
-          margin-top: 25%;
-      }
-      .loader span:last-child {
-          margin-right: 0px;
-      }
-      .loader span:nth-child(1) {
-          animation: load 2.5s 1.4s infinite linear;
-      }
-      .loader span:nth-child(2) {
-          animation: load 2.5s 1.2s infinite linear;
-      }
-      .loader span:nth-child(3) {
-          animation: load 2.5s 1s infinite linear;
-      }
-      .loader span:nth-child(4) {
-          animation: load 2.5s 0.8s infinite linear;
-      }
-      .loader span:nth-child(5) {
-          animation: load 2.5s 0.6s infinite linear;
-      }
-      .loader span:nth-child(6) {
-          animation: load 2.5s 0.4s infinite linear;
-      }
-      .loader span:nth-child(7) {
-          animation: load 2.5s 0.2s infinite linear;
-      }
-      .loader span:nth-child(8) {
-          animation: load 2.5s 0s infinite linear;
-      }
-      .loader span:nth-child(9) {
-          animation: load 2.5s 0.2s infinite linear;
-      }
-      .loader span:nth-child(10) {
-          animation: load 2.5s 0.4s infinite linear;
-      }
-      .loader span:nth-child(11) {
-          animation: load 2.5s 0.6s infinite linear;
-      }
-      .loader span:nth-child(12) {
-          animation: load 2.5s 0.8s infinite linear;
-      }
-      .loader span:nth-child(13) {
-          animation: load 2.5s 1s infinite linear;
-      }
-      .loader span:nth-child(14) {
-          animation: load 2.5s 1.2s infinite linear;
-      }
-      .loader span:nth-child(15) {
-          animation: load 2.5s 1.4s infinite linear;
-      }
+/*呼び出し中*/
+    .loader {
+      position: absolute;
+      top: 0px;
+      bottom: 0px;
+      left: 0px;
+      right: 0px;
+      margin: auto;
+      width: 175px;
+      height: 100px;
+    }
+    .loader span {
+      display: block;
+      background: rgba(255,255,255,.7);
+      width: 7px;
+      height: 10%;
+      border-radius: 14px;
+      margin-right: 5px;
+      float: left;
+      margin-top: 25%;
+    }
+    .loader span:last-child {
+      margin-right: 0px;
+    }
+    .loader span:nth-child(1) {
+      animation: load 2.5s 1.4s infinite linear;
+    }
+    .loader span:nth-child(2) {
+      animation: load 2.5s 1.2s infinite linear;
+    }
+    .loader span:nth-child(3) {
+      animation: load 2.5s 1s infinite linear;
+    }
+    .loader span:nth-child(4) {
+      animation: load 2.5s 0.8s infinite linear;
+    }
+    .loader span:nth-child(5) {
+      animation: load 2.5s 0.6s infinite linear;
+    }
+    .loader span:nth-child(6) {
+      animation: load 2.5s 0.4s infinite linear;
+    }
+    .loader span:nth-child(7) {
+      animation: load 2.5s 0.2s infinite linear;
+    }
+    .loader span:nth-child(8) {
+      animation: load 2.5s 0s infinite linear;
+    }
+    .loader span:nth-child(9) {
+      animation: load 2.5s 0.2s infinite linear;
+    }
+    .loader span:nth-child(10) {
+      animation: load 2.5s 0.4s infinite linear;
+    }
+    .loader span:nth-child(11) {
+      animation: load 2.5s 0.6s infinite linear;
+    }
+    .loader span:nth-child(12) {
+      animation: load 2.5s 0.8s infinite linear;
+    }
+    .loader span:nth-child(13) {
+      animation: load 2.5s 1s infinite linear;
+    }
+    .loader span:nth-child(14) {
+      animation: load 2.5s 1.2s infinite linear;
+    }
+    .loader span:nth-child(15) {
+      animation: load 2.5s 1.4s infinite linear;
+    }
 
-      @keyframes load {
-          0% {
-              background: rgba(255,255,255,.7);
-              margin-top: 25%;
-              height: 10%;
-          }
-          50% {
-              background: rgba(255,255,255,.4);
-              height: 100%;
-              margin-top: 0%;
-          }
-          100% {
-              background: rgba(255,255,255,.7);
-              height: 10%;
-              margin-top: 25%;
-          }
+    @keyframes load {
+      0% {
+        background: rgba(255,255,255,.7);
+        margin-top: 25%;
+        height: 10%;
       }
-  </style>
-  <script>
-      (function () {
-<<<<<<< HEAD
+      50% {
+        background: rgba(255,255,255,.4);
+        height: 100%;
+        margin-top: 0%;
+      }
+      100% {
+        background: rgba(255,255,255,.7);
+        height: 10%;
+        margin-top: 25%;
+      }
+    }
+</style>
+<script>
+  (function () {
 //共通タイマー（秒数は自由に変更できる）
-        var waitTime = 5000;
-        var waitTimer;
-        function startTimer(waitTime){
-          waitTimer=setInterval(function(){
-            $('#form_main').fadeOut(1000);
-            $('#waiting').fadeIn(1000);
-            stopTimer();
-          } , waitTime);
-        }
+    var waitTime = 5000;
+    var waitTimer;
+    function startTimer(waitTime){
+      waitTimer=setInterval(function(){
+        $('#form_main').fadeOut(1000);
+        $('#waiting').fadeIn(1000);
+        stopTimer();
+      } , waitTime);
+    }
 
-        function stopTimer(){
-          clearInterval(waitTimer);
-        }
+    function stopTimer(){
+      clearInterval(waitTimer);
+    }
 
-
-
-        $(function() {
+    $(function() {
 //待機画面メイン起動
-          $('#waiting').on('touchstart', function(e) {
-            $('#waiting').fadeOut(1000);
-            $('#form_main').fadeIn(1000);
-            waitTime = 20000;
-            startTimer(waitTime);
-          });
+      $('#waiting').on('touchstart', function(e) {
+        $('#waiting').fadeOut(1000);
+        $('#form_main').fadeIn(1000);
+        waitTime = 20000;
+        startTimer(waitTime);
+      });
 
 //メイン画面タップ起動
-          $('.form-group label').on('touchstart', function(e) {
-            if(window.confirm('呼び出しますか？')){
-              $('#contactform').submit();
-            }else{
-            }
-          });
+      $('.form-group label').on('touchstart', function(e) {
+        if(window.confirm('呼び出しますか？')){
+          $('#contactform').submit();
+        }else{
+        }
+      });
 
 //画面組み立て
-          var wid = $(window).width() + "px";
-          var hei = $(window).height();
-          var headh = $('#header').height();
-          var radioh = hei - headh;
-=======
-//共通タイマー（5秒）
-          /*
-           var waitTime = 50000;
-           var waitTimer;
-           function startTimer(){
-           waitTimer=setInterval(function(){
-           $('#form_main').fadeOut(500);
-           $('#waiting').fadeIn(500);
-           } , waitTime);
-           }
+      var wid = $(window).width() + "px";
+      var hei = $(window).height();
+      var headh = $('#header').height();
+      var radioh = hei - headh;
 
-           function stopTimer(){
-           clearInterval(waitTimer);
-           }
-           */
+      hei = hei + "px";
+      radioh = radioh + "px";
 
+      var waiting = $('#waiting');
+      waiting.css('width', wid);
+      waiting.css('height', hei);
 
-          $(function() {
+      var wrapper = $('#wrapper');
+      wrapper.css('width', wid);
+      wrapper.css('height', hei);
+      $('#radio_area').css('height', radioh);
 
-//メイン画面　タップ起動用スクリプト
-              $('.form-group label').on('touchstart', function(e) {
-                  if(window.confirm('呼び出しますか？')){
-                      $('#contactform').submit();
-                  }else{
-                  }
-              });
+      var rects = document.getElementsByClassName("rect");
 
-//画面組み立て用スクリプト
-              var wid = $(window).width() + "px";
-              var hei = $(window).height();
-              var headh = $('#header').height();
-              var radioh = hei - headh;
->>>>>>> origin/saito_test
-
-              hei = hei + "px";
-              radioh = radioh + "px";
-
-              var waiting = $('#waiting');
-              waiting.css('width', wid);
-              waiting.css('height', hei);
-
-              var wrapper = $('#wrapper');
-              wrapper.css('width', wid);
-              wrapper.css('height', hei);
-              $('#radio_area').css('height', radioh);
-
-              var rects = document.getElementsByClassName("rect");
-
-//読み込み時の処理
-<<<<<<< HEAD
-          window.onload = function() {
-            for(var i=0; i<rects.length; i++) {
-              $(rects[i]).css('width', wid);
-              $(rects[i]).css('height', hei);
-            }
-            $('.rect').show();
-            $('#waiting,#alert_success,#alert_ok_kari,alert_warning').hide();
-            startTimer(waitTime);
-          };
-        });
-      }());
-    </script>
-  </head>
-  <body>
-    <div id="wrapper">
-        <div class="rect rect1"></div>
-        <div class="rect rect2"></div>
-        <div class="rect rect3"></div>
-        <div class="rect rect4"></div>
-    </div>
-    <div id="waiting">
-      <h1><img src="assets/logo.svg" width="384" alt="n2p"></h1>
-      <div class='loader-ring'>
-        <div class='loader-ring-light'></div>
-        <div class='loader-ring-track'></div>
-        <div class='loader-ring-text'>CALL</div>
-      </div>
-      <p class="maintxt">ようこそお越しくださいました！！画面をタップしてください</p>
-    </div>
-    <div id="alert_success">
-      <p>を呼び出しています</p>
-      <div class="loader">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-      Cancel
-    </div>
-    <div id="alert_ok_kari">
-      <p>おっと、が気づいたようです。いましばらくお待ちください。(20sで待機画面に戻る)</p>
-      <div class="loader">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-=======
-              window.onload = function() {
-                  for(var i=0; i<rects.length; i++) {
-                      $(rects[i]).css('width', wid);
-                      $(rects[i]).css('height', hei);
-                  }
-                  $('.rect').show();
-                  $('#waiting').hide();
-              };
-          });
-      }());
-  </script>
+  //読み込み時の処理
+      window.onload = function() {
+        for(var i=0; i<rects.length; i++) {
+          $(rects[i]).css('width', wid);
+          $(rects[i]).css('height', hei);
+        }
+        $('.rect').show();
+        $('#waiting,#alert_success,#alert_ok_kari,alert_warning').hide();
+        startTimer(waitTime);
+      };
+    });
+  }());
+</script>
 </head>
 <body>
 <div id="wrapper">
@@ -524,6 +417,11 @@
 </div>
 <div id="waiting">
   <h1><img src="assets/logo.svg" width="384" alt="n2p"></h1>
+  <div class='loader-ring'>
+    <div class='loader-ring-light'></div>
+    <div class='loader-ring-track'></div>
+    <div class='loader-ring-text'>CALL</div>
+  </div>
   <p class="maintxt">ようこそお越しくださいました！！画面をタップしてください</p>
 </div>
 <div id="alert_success">
@@ -580,7 +478,6 @@
         <!--<div id="alert_success" class="alert alert-success col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8" role="alert"><strong>呼び出し中です。そのまましばらくお待ちください</strong>。</div>
         <div id="alert_warning" class="alert alert-warning col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8" role="alert"><strong>エラーが発生しました。もう一度やり直してみてください。</strong></div>-->
         <hr />
->>>>>>> origin/saito_test
       </div>
       <div id="radio_area">
         <%= form_tag({action: "call"}, method: "POST", class: "form-horizontal", id: "contactform" , role: "form") do %>
