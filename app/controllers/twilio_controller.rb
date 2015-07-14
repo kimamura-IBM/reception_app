@@ -9,18 +9,21 @@ class TwilioController < ApplicationController
 
   # Define our Twilio credentials as instance variables for later use
   ###### Herrokkin #####
-  @@twilio_sid = 'AC2791363715b8f1abc21fc62cd21bc279'
-  @@twilio_token = '100b1d7a8374e3286b944ae391d278fc'
-  @@twilio_number = '+81345895605'
+  # @@twilio_sid = 'AC2791363715b8f1abc21fc62cd21bc279'
+  # @@twilio_token = '100b1d7a8374e3286b944ae391d278fc'
+  # @@twilio_number = '+81345895605'
 
   ###### n2p #####
-  # @@twilio_sid = 'AC2be2f6548663497c67056293e1cf885a'
-  # @@twilio_token = 'b2e54961e22bc77ab25c3f555dd3d054'
-  # @@twilio_number = '+815031353908'
+  @@twilio_sid = 'AC2be2f6548663497c67056293e1cf885a'
+  @@twilio_token = 'b2e54961e22bc77ab25c3f555dd3d054'
+  @@twilio_number = '+815031353908'
 
   # Render home page
   def index
-    @users = User.all.reverse_order
+    @users = User.all
+    #@contact_to_view_session = session[:contact_to_view]
+    #@contact_to_view = @users.find_by(phonenumber: @contact_to_view_session).username
+    @contact_status_view = session[:contact_status_view]
   	render 'index'
   end
 
@@ -31,6 +34,7 @@ class TwilioController < ApplicationController
     # @@namae = params[:namae]
     # @@issue = params[:issue]
     @contact_to = User.find_by(phonenumber: contact.phone).username
+    #session[:contact_to_view] = contact.phone #indexで使うためにセッション格納
    
     # Validate contact
     if contact.valid?
@@ -43,34 +47,27 @@ class TwilioController < ApplicationController
         :url => "#{root_url}connect" # Fetch instructions from this URL when the call connects
       )
 
-      @calling = @client.account.calls.get(@call.sid)
-      @call_status = "呼び出し中"
+      @calling = @client.account.calls.get(@call.sid) #現在のコール
+      @calling_status = @calling.status
+      #session[:contact_status_view] = @calling.status #indexで使うためにセッション格納
+      @slack_body = "受付Webアプリからの送信です。ステータス:#{@calling_status}。#{@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+
       SlackBot.notify(
-          # body: "受付Webアプリからの送信です。#{@@namae}さんから送信 - ご用件：#{@@issue} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/ https://damp-reaches-2263.herokuapp.com/"
-          body: "受付Webアプリからの送信です。ステータス:#{@call_status}。#{@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+          body: @slack_body
       ) #SlackBotからメッセージ送信
+
       while @calling.status != "completed" do
-        @call_status = "呼び出し中"
+        #session[:contact_status_view] = @calling.status #indexで使うためにセッション格納
         @calling = @client.account.calls.get(@call.sid)
       end
-      @call_status = "完了"
 
       # loop do
       #   case @call.status
       #     when 'no-answer', 'completed'
-      #       SlackBot.notify(
-      #           body: "受付Webアプリからの送信です。ステータス:#{@call.status}。#{@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
-      #       ) #SlackBotからメッセージ送信
       #       break
       #     when 'failed','canceled'
-      #       SlackBot.notify(
-      #           body: "受付Webアプリからの送信です。ステータス:#{@call.status}。#{@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
-      #       ) #SlackBotからメッセージ送信
       #       break
       #     when 'queued','ringing','in-progress','busy'
-      #       SlackBot.notify(
-      #           body: "受付Webアプリからの送信です。ステータス:#{@call.status}。#{@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
-      #       ) #SlackBotからメッセージ送信
       #       sleep(3)
       #       break
       #   end
@@ -78,7 +75,7 @@ class TwilioController < ApplicationController
 
       SlackBot.notify(
           # body: "受付Webアプリからの送信です。#{@@namae}さんから送信 - ご用件：#{@@issue} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/ https://damp-reaches-2263.herokuapp.com/"
-          body: "受付Webアプリからの送信です。ステータス:#{@call_status}。#{@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+          body: @slack_body
       ) #SlackBotからメッセージ送信
 
       # Lets respond to the ajax call with some positive reinforcement
@@ -92,7 +89,6 @@ class TwilioController < ApplicationController
     respond_to do |format|
       format.json { render :json => @msg }
     end
-    render 'index'
   end
 
   # This URL contains instructions for the call that is connected with a lead
