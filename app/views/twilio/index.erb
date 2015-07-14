@@ -426,7 +426,7 @@
 </div>
 <% if @contact_status_view != "completed" %>
     <div id="alert_success">
-        <p><%= @contact_to_view %> を呼び出しています</p>
+        <p><%= @contact_status_view %> を呼び出しています</p>
     <div class="loader">
         <span></span>
         <span></span>
@@ -448,7 +448,7 @@
     </div>
 <% else %>
 <div id="alert_ok_kari">
-    <p>おっと、 <%= @contact_to_view %> が気づいたようです。いましばらくお待ちください。(20sで待機画面に戻る)</p>
+    <p>おっと、 <%= @contact_status_view %> が気づいたようです。いましばらくお待ちください。(20sで待機画面に戻る)</p>
     <div class="loader">
         <span></span>
         <span></span>
