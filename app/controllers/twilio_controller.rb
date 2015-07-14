@@ -20,7 +20,7 @@ class TwilioController < ApplicationController
 
   # Render home page
   def index
-    @users = User.all.reverse_order
+    @users = User.all
     #@contact_to_view_session = session[:contact_to_view]
     #@contact_to_view = @users.find_by(phonenumber: @contact_to_view_session).username
     @contact_status_view = session[:contact_status_view]
