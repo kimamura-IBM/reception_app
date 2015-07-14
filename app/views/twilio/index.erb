@@ -424,48 +424,51 @@
   </div>
   <p class="maintxt">ようこそお越しくださいました！！画面をタップしてください</p>
 </div>
-<div id="alert_success">
-  <p>を呼び出しています</p>
-  <div class="loader">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-  Cancel
-</div>
+<% if @contact_status_view != "completed" %>
+    <div id="alert_success">
+        <p><%= @contact_to_view %> を呼び出しています</p>
+    <div class="loader">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    Cancel
+    </div>
+<% else %>
 <div id="alert_ok_kari">
-  <p>おっと、が気づいたようです。いましばらくお待ちください。(20sで待機画面に戻る)</p>
-  <div class="loader">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-  Cancel
+    <p>おっと、 <%= @contact_to_view %> が気づいたようです。いましばらくお待ちください。(20sで待機画面に戻る)</p>
+    <div class="loader">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    Cancel
 </div>
+<% end %>
 <div id="alert_warning">
   <strong>エラーが発生しました。もう一度やり直してみてください。</strong>
 </div>
