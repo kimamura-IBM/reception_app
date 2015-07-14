@@ -68,7 +68,7 @@ class TwilioController < ApplicationController
       #   end
       # end
 
-      @call_status = "#{@contact_to}さんが電話に出ました。"
+      @call_status = @calling.status
       SlackBot.notify(
           # body: "受付Webアプリからの送信です。#{@@namae}さんから送信 - ご用件：#{@@issue} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/ https://damp-reaches-2263.herokuapp.com/"
           body: @slack_body
