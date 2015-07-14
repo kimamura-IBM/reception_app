@@ -53,6 +53,7 @@ class TwilioController < ApplicationController
       while @calling.status != 'completed' do
         @calling = @client.account.calls.get(@call.sid)
         @call_status = @calling.status
+        render action: 'twilio/index'
       end
 
       # loop do
@@ -72,6 +73,7 @@ class TwilioController < ApplicationController
           # body: "受付Webアプリからの送信です。#{@@namae}さんから送信 - ご用件：#{@@issue} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/ https://damp-reaches-2263.herokuapp.com/"
           body: @slack_body
       ) #SlackBotからメッセージ送信
+      render action: 'twilio/index'
 
       # Lets respond to the ajax call with some positive reinforcement
       @msg = { :message => 'Phone call incoming!', :status => 'ok' }
@@ -84,7 +86,6 @@ class TwilioController < ApplicationController
     respond_to do |format|
       format.json { render :json => @msg }
     end
-    render action: 'twilio/index'
   end
 
   # This URL contains instructions for the call that is connected with a lead
