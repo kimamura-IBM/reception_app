@@ -13,11 +13,42 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <%= stylesheet_link_tag 'application' %>
   <style>
-    #waiting{
+    #waiting,
+    #alert_success,
+    #alert_ok_kari,
+    #alert_warning{
       position: absolute;
       top: 0;
       left: 0;
       z-index: 2;
+    }
+
+    #waiting{
+      z-index: 2;
+    }
+
+    #alert_success{
+      z-index: 3;
+    }
+
+    #alert_ok_kari{
+      z-index: 3;
+    }
+
+    #alert_warning{
+      z-index: 3;
+    }
+
+/*エラー画面*/
+    #alert_warning{
+      background-color: rgba(0,0,0,.6);
+    }
+
+    #alert_warning .maintxt{
+      position: absolute;
+      width: 100%;
+      top:50%;
+      margin-top: -26px;
     }
 
     /*基本画面*/
@@ -383,7 +414,7 @@
       hei = hei + "px";
       radioh = radioh + "px";
 
-      var waiting = $('#waiting');
+      var waiting = $('#waiting,#alert_success,#alert_ok_kari,#alert_warning');
       waiting.css('width', wid);
       waiting.css('height', hei);
 
@@ -401,7 +432,7 @@
           $(rects[i]).css('height', hei);
         }
         $('.rect').show();
-        $('#waiting,#alert_success,#alert_ok_kari,alert_warning').hide();
+        $('#waiting,#alert_success,#alert_ok_kari,#alert_warning').hide();
         startTimer(waitTime);
       };
     });
