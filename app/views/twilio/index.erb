@@ -16,7 +16,6 @@
 /*基本画面配置*/
     #waiting,
     #alert_success,
-    #alert_ok_kari,
     #alert_warning{
       position: absolute;
       top: 0;
@@ -29,10 +28,6 @@
     }
 
     #alert_success{
-      z-index: 3;
-    }
-
-    #alert_ok_kari{
       z-index: 3;
     }
 
@@ -125,14 +120,38 @@
 
 /*エラー画面*/
     #alert_warning{
-      background-color: rgba(0,0,0,.6);
+      text-align: center;
+    }
+
+    #alert_warning h1{
+      width: 275px;
+      padding: 120px 0 370px;
+      margin:0 auto;
+    }
+
+    #alert_warning h1 img{
+      width: 360px;
     }
 
     #alert_warning .maintxt{
-      position: absolute;
-      width: 100%;
-      top:50%;
-      margin-top: -26px;
+      display: inline-block;
+      font-size: 52px;
+      line-height: 72px;
+      color: #fff;
+      padding: 52px 0 52px;
+      margin: 0 auto 370px;
+      border-top: 4px solid #fff;
+      border-bottom: 4px solid #fff;
+    }
+
+    #alert_warning .cancelbtn{
+      border:4px #fff solid;
+      color: #fff;
+      font-size: 72px;
+      line-height: 114px;
+      text-align: center;
+      width: 750px;
+      margin:auto;
     }
 
 /*呼び出し中画面*/
@@ -172,6 +191,10 @@
       margin:0 auto 150px;
     }
 
+    #alert_success .maintxt-response{
+      display: none;
+    }
+
     #alert_success .cancelbtn{
       border:4px #fff solid;
       color: #fff;
@@ -180,6 +203,13 @@
       text-align: center;
       width: 585px;
       margin:auto;
+    }
+
+    #alert_success .img-response{
+      width: 190px;
+      position: relative;
+      margin: 0 0 -99px 950px;
+      display: none;
     }
 
     .dot01{
@@ -492,7 +522,7 @@
       hei = hei + "px";
       radioh = radioh + "px";
 
-      var waiting = $('#waiting,#alert_success,#alert_ok_kari,#alert_warning');
+      var waiting = $('#waiting,#alert_success,#alert_warning');
       waiting.css('width', wid);
       waiting.css('height', hei);
 
@@ -510,7 +540,7 @@
           $(rects[i]).css('height', hei);
         }
         $('.rect').show();
-        $('#waiting,#alert_success,#alert_ok_kari,#alert_warning').hide();
+        $('#waiting,#alert_success,#alert_warning').hide();
         startTimer(waitTime);
       };
     });
@@ -525,7 +555,7 @@
   <div class="rect rect4"></div>
 </div>
 <div id="waiting">
-  <h1><img src="/assets/images/logo.svg" width="384" alt="n2p"></h1>
+  <h1><img src="/assets/images/logo.svg" alt="n2p"></h1>
   <div class='loader-ring'>
     <div class='loader-ring-light'></div>
     <div class='loader-ring-track'></div>
@@ -535,9 +565,11 @@
 </div>
 <div id="alert_success">
   <h1><img src="/assets/images/logo.svg" alt="n2p"></h1>
+  <img src="/assets/images/response.svg" alt="" class="img-response" />
   <img src="http://www.herrokkin.jp/images/Icon.jpg" alt="" class="img-rounded" />
   <p class="nametxt">Keiichi Tsuneyama</p>
   <p class="maintxt">を呼び出しています<span class="dot01">･</span><span class="dot02">･</span><span class="dot03">･</span></p>
+  <p class="maintxt maintxt-response">おっと、気づいたようです。<br>いましばらくお待ちください。</p>
   <div class="loader">
     <span></span>
     <span></span>
@@ -557,29 +589,15 @@
   </div>
   <div class="cancelbtn">キャンセル</div>
 </div>
-<div id="alert_ok_kari">
-  <p class="maintxt">おっと、が気づいたようです。いましばらくお待ちください。(20sで待機画面に戻る)</p>
-  <div class="loader">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-  Cancel
-</div>
 <div id="alert_warning">
-  <p class="maintxt">エラーが発生しました。もう一度やり直してみてください。</p>
+  <h1><img src="/assets/images/logo.svg" alt="n2p"></h1>
+  <p class="maintxt">
+    うまくつながらないようです<br>
+    あらためて呼び出してください<br>
+    それでもつながらない場合はドアからお入りいただき、<br>
+    エントランスの呼び鈴を鳴らしてください
+  </p>
+  <div class="cancelbtn">呼び出し画面へ戻る</div>
 </div>
 <div id="form_main" class="container text-center">
   <div class="row">
