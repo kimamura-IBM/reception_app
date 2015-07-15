@@ -13,6 +13,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <%= stylesheet_link_tag 'application' %>
   <style>
+/*基本画面配置*/
     #waiting,
     #alert_success,
     #alert_ok_kari,
@@ -39,19 +40,7 @@
       z-index: 3;
     }
 
-/*エラー画面*/
-    #alert_warning{
-      background-color: rgba(0,0,0,.6);
-    }
-
-    #alert_warning .maintxt{
-      position: absolute;
-      width: 100%;
-      top:50%;
-      margin-top: -26px;
-    }
-
-    /*基本画面*/
+/*基本画面パーツ*/
     * {
       margin: 0;
       padding: 0;
@@ -69,6 +58,10 @@
       width: 384px;
       padding: 172px 0 0;
       margin:0 auto;
+    }
+
+    h1 img{
+      width: 384px;
     }
 
     .maintxt{
@@ -130,7 +123,96 @@
       overflow: scroll;
     }
 
-/*背景*/
+/*エラー画面*/
+    #alert_warning{
+      background-color: rgba(0,0,0,.6);
+    }
+
+    #alert_warning .maintxt{
+      position: absolute;
+      width: 100%;
+      top:50%;
+      margin-top: -26px;
+    }
+
+/*呼び出し中画面*/
+    #alert_success h1{
+      width: 275px;
+      padding: 120px 0 132px;
+      margin:0 auto;
+    }
+
+    #alert_success h1 img{
+      width: 275px;
+    }
+
+    #alert_success .img-rounded{
+      width: 325px;
+      height: 325px;
+      margin: 0 auto 80px auto !important;
+      vertical-align: middle;
+      border-radius: 50%;
+      display: block;
+    }
+
+    #alert_success .nametxt{
+      font-size: 90px;
+      line-height: 90px;
+      color: #fff;
+      padding: 0;
+      display: block;
+      margin:0 auto 150px;
+      text-align: center;
+    }
+
+    #alert_success .maintxt{
+      font-size: 52px;
+      line-height: 52px;
+      color: #fff;
+      margin:0 auto 150px;
+    }
+
+    #alert_success .cancelbtn{
+      border:4px #fff solid;
+      color: #fff;
+      font-size: 72px;
+      line-height: 114px;
+      text-align: center;
+      width: 585px;
+      margin:auto;
+    }
+
+    .dot01{
+      opacity: 0;
+      animation: dotsonoff 3s 0.5s infinite;
+    }
+
+    .dot02{
+      opacity: 0;
+      animation: dotsonoff 3s 1s infinite;
+    }
+
+    .dot03{
+      opacity: 0;
+      animation: dotsonoff 3s 1.5s infinite;
+    }
+
+    @keyframes dotsonoff {
+      0% {
+        opacity: 0;
+      }
+      33% {
+        opacity: 1;
+      }
+      66% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+
+/*背景アニメパーツ*/
     body{
       background-color: #fefef6;
     }
@@ -221,8 +303,8 @@
       filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefef6',endColorstr='#877003' , GradientType=1);
     }
 
-/*待機中*/
 
+/*待機中アニメパーツ*/
     .loader-ring {
       position: relative;
       margin: 360px auto 250px;
@@ -283,24 +365,20 @@
     }
 
 
-/*呼び出し中*/
+/*呼び出し中アニメパーツ*/
     .loader {
-      position: absolute;
-      top: 0px;
-      bottom: 0px;
-      left: 0px;
-      right: 0px;
-      margin: auto;
-      width: 175px;
-      height: 100px;
+      position: relative;
+      margin:0 auto 220px;
+      width: 350px;
+      height: 200px;
     }
     .loader span {
       display: block;
       background: rgba(255,255,255,.7);
-      width: 7px;
+      width: 14px;
       height: 10%;
-      border-radius: 14px;
-      margin-right: 5px;
+      border-radius: 28px;
+      margin-right: 10px;
       float: left;
       margin-top: 25%;
     }
@@ -456,7 +534,10 @@
   <p class="maintxt">ようこそお越しくださいました！！画面をタップしてください</p>
 </div>
 <div id="alert_success">
-  <p class="maintxt">を呼び出しています</p>
+  <h1><img src="assets/logo.svg" alt="n2p"></h1>
+  <img src="http://www.herrokkin.jp/images/Icon.jpg" alt="" class="img-rounded" />
+  <p class="nametxt">Keiichi Tsuneyama</p>
+  <p class="maintxt">を呼び出しています<span class="dot01">･</span><span class="dot02">･</span><span class="dot03">･</span></p>
   <div class="loader">
     <span></span>
     <span></span>
@@ -474,7 +555,7 @@
     <span></span>
     <span></span>
   </div>
-  Cancel
+  <div class="cancelbtn">キャンセル</div>
 </div>
 <div id="alert_ok_kari">
   <p class="maintxt">おっと、が気づいたようです。いましばらくお待ちください。(20sで待機画面に戻る)</p>
