@@ -146,7 +146,7 @@
           <h1>受付</h1>
           <p>画面をタップして担当者を呼び出してください</p>
           <div id="alert_success" class="alert alert-success col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8" role="alert">
-            <% if @calling_status == 'completed' %>
+            <% if @calling_status != 'completed' %>
                 <strong>呼び出しています。</strong>。
             <% else %>
                 <strong>おっと、気付いたようです。いましばらくお待ちください</strong>。

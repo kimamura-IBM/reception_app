@@ -21,7 +21,7 @@ class TwilioController < ApplicationController
   # Render home page
   def index
     @users = User.all.reverse_order
-    @calling_status = "waiting"
+    @calling_status = params[:calling_status]
   	render 'index'
   end
 
@@ -43,7 +43,10 @@ class TwilioController < ApplicationController
       )
 
       @calling = @client.account.calls.get(@call.sid)
-      @calling_status = @calling.status
+      while @calling.status != 'completed' do
+        redirect_to index_path(calling_status: @calling.status)
+        sleep(3)
+      end
 
       # #コールステータスが完了するまで
       # if @calling.status != 'completed' #|| @calling.status != 'no-answer'
@@ -62,16 +65,14 @@ class TwilioController < ApplicationController
       #       break
       #   end
       # end
-
+      redirect_to index_path(calling_status: @calling.status)
       SlackBot.notify(
-          body: "受付Webアプリからの送信です。#{@calling.to}さんが呼び出されました。ステータス:#{@calling_status}。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+          body: "受付Webアプリからの送信です。#{@calling.to}さんが呼び出されました。ステータス:#{@calling.status}。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
       ) #SlackBotからメッセージ送信
 
 
       # Lets respond to the ajax call with some positive reinforcement
       @msg = { :message => 'Phone call incoming!', :status => 'ok' }
-      render :action => index
-
     else
 
       # Oops there was an error, lets return the validation errors
@@ -90,7 +91,7 @@ class TwilioController < ApplicationController
     # format. Our Ruby library provides a helper for generating one
     # of these documents
     response = Twilio::TwiML::Response.new do |r|
-      r.Say "こちらは,受付アプリです.#{@calling.to}さんが呼び出されました.", :voice => 'alice', :language => 'ja-jp'
+      r.Say "こちらは,受付アプリです.#{@contact_to}さんが呼び出されました.", :voice => 'alice', :language => 'ja-jp'
       # r.Say 'If this were a real click to call implementation, you would be connected to an agent at this point.', :voice => 'alice'
     end
     render text: response.text
