@@ -30,6 +30,7 @@ class TwilioController < ApplicationController
     contact = Contact.new
     contact.phone = params[:phone]
     @contact_to = User.find_by(phonenumber: contact.phone).username
+    session[:contact_to_session] = @contact_to
    
     # Validate contact
     if contact.valid?
@@ -45,11 +46,9 @@ class TwilioController < ApplicationController
       @calling = @client.account.calls.get(@call.sid)
       @call_status = @calling.status
       session[:call_status_session] = @call_status
-      @slack_body = "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス:#{@call_status}。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
 
       SlackBot.notify(
-          # body: "受付Webアプリからの送信です。#{@@namae}さんから送信 - ご用件：#{@@issue} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/ https://damp-reaches-2263.herokuapp.com/"
-          body: @slack_body
+          body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス:#{@call_status}。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
       ) #SlackBotからメッセージ送信
 
       #コールステータスが完了するまで
@@ -57,7 +56,6 @@ class TwilioController < ApplicationController
         @calling = @client.account.calls.get(@call.sid)
         @call_status = @calling.status
         session[:call_status_session] = @call_status
-        #render action: 'twilio/index' and return
       end
 
       # loop do
@@ -77,10 +75,8 @@ class TwilioController < ApplicationController
       session[:call_status_session] = @call_status
 
       SlackBot.notify(
-          # body: "受付Webアプリからの送信です。#{@@namae}さんから送信 - ご用件：#{@@issue} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/ https://damp-reaches-2263.herokuapp.com/"
-          body: @slack_body
+          body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス:#{@call_status}。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
       ) #SlackBotからメッセージ送信
-      #render action: 'twilio/index'
 
       # Lets respond to the ajax call with some positive reinforcement
       @msg = { :message => 'Phone call incoming!', :status => 'ok' }
@@ -102,8 +98,9 @@ class TwilioController < ApplicationController
     # Our response to this request will be an XML document in the "TwiML"
     # format. Our Ruby library provides a helper for generating one
     # of these documents
+    @contact_to_session = session[:contact_to_session]
     response = Twilio::TwiML::Response.new do |r|
-      r.Say "こちらは,受付アプリです.#{@contact_to}さんが呼び出されました.", :voice => 'alice', :language => 'ja-jp'
+      r.Say "こちらは,受付アプリです.#{@contact_to_session}さんが呼び出されました.", :voice => 'alice', :language => 'ja-jp'
       # r.Say 'If this were a real click to call implementation, you would be connected to an agent at this point.', :voice => 'alice'
     end
     render text: response.text
