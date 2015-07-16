@@ -145,6 +145,7 @@
         <div class="col-md-12 col-sm-12">
           <h1>受付</h1>
           <p>画面をタップして担当者を呼び出してください</p>
+          <% loop do %>
           <div id="alert_success" class="alert alert-success col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8" role="alert">
             <% if @calling_status != 'completed' %>
                 <strong>呼び出しています。</strong>。
@@ -152,6 +153,8 @@
                 <strong>おっと、気付いたようです。いましばらくお待ちください</strong>。
             <% end %>
           </div>
+          <% sleep(1) %>
+          <% end %>
           <div id="alert_warning" class="alert alert-warning col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8" role="alert"><strong>エラーが発生しました。もう一度やり直してみてください。</strong></div>
           <hr />
           <%= form_tag({action: "call"}, method: "POST", class: "form-horizontal", id: "contactform" , role: "form") do %>
@@ -183,7 +186,10 @@
             <!-- <button type="submit" class="btn btn-success btn-lg">呼び出し</button> -->
             <%= submit_tag("呼び出し", class: "btn btn-success btn-lg text-center") %>
             </div>
-            <div>デバッグ用, calling_status：<%= @calling_status %>, contact_to: <%= @contact_to %></div>
+            <% loop do %>
+                  <div>デバッグ用, calling_status：<%= @calling_status %>, contact_to: <%= @contact_to %></div>
+                  <% sleep(1) %>
+            <% end %>
           <!-- </form> -->
           <% end %>
         </div>
