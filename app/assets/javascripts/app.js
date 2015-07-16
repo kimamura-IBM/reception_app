@@ -1,12 +1,14 @@
 (function () {
-//待機画面共通タイマー（秒数は自由に変更できる）
+//待機画面タイマー（秒数は自由に変更できる）
 	var waitTime,
+			hideLayer,
+			showLayer,
 			waitTimer;
 
-	function startTimer(waitTime){
+	function startTimer(waitTime,hideLayer,showLayer,){
 		waitTimer=setInterval(function(){
-			$('#form_main').fadeOut(1000);
-			$('#waiting').fadeIn(1000);
+			$(hideLayer).fadeOut(1000);
+			$(showLayer).fadeIn(1000);
 			stopTimer();
 		} , waitTime);
 	}
@@ -16,22 +18,7 @@
 	}
 
 	$(function() {
-//待機画面メイン起動
-		$('#waiting').on('touchstart', function(e) {
-			$('#waiting').fadeOut(1000);
-			$('#form_main').fadeIn(1000);
-			waitTime = 20000;
-			startTimer(waitTime);
-		});
-
-//メイン画面タップ起動
-		$('.form-group label').on('touchstart', function(e) {
-			if(window.confirm('呼び出しますか？')){
-				$('#contactform').submit();
-			}else{
-			}
-		});
-
+//読み込み時の処理
 //画面組み立て
 		var wid = $(window).width() + "px",
 				hei = $(window).height(),
@@ -48,7 +35,7 @@
 
 		$('#radio_area').css('height', radioh);
 
-//読み込み時の処理
+//読み込み終了直後の処理
 		window.onload = function() {
 			for(var i=0; i<rects.length; i++) {
 				$(rects[i]).css('width', wid);
@@ -56,17 +43,49 @@
 			}
 			$('.rect').show();
 			$('#waiting,#alert_success,#alert_warning').hide();
-			waitTime = 20000;
-			startTimer(waitTime);
+			startTimer(20000,#form_main,#waiting);
 		};
 
-//呼び出しフォーム
+//待機画面メイン起動
+		$('#waiting').on('touchstart', function(e) {
+			stopTimer();
+			startTimer(0,#waiting,#form_main);
+			startTimer(20000,#form_main,#waiting);
+		});
+
+//呼び出し起動
+		$('.form-group label').on('touchstart', function(e) {
+			var pop = window.confirm('呼び出しますか？');
+			stopTimer();
+			setTimeout(function() {
+				$(pop).hide();
+			}, 20000);
+			if(pop == true){
+				$('#contactform').submit();
+			}else{
+				startTimer(20000,#form_main,#waiting);
+			}
+		});
+
+//キャンセルボタン
+		$('#alert_success .cancelbtn').on('touchstart', function(e) {
+			stopTimer();
+			startTimer(0,#alert_success,#form_main);
+			startTimer(20000,#form_main,#waiting);
+		});
+
+		$('#alert_warning .cancelbtn').on('touchstart', function(e) {
+			stopTimer();
+			startTimer(0,#alert_warning,#form_main);
+			startTimer(20000,#form_main,#waiting);
+		});
+
+//呼び出しフォームの設定
 		$('#phoneNumber').intlTelInput({
 			responsiveDropdown: true,
 			autoFormat: true,
 			utilsScript: 'assets/intl-phone/libphonenumber/build/utils.js'
 		});
-
 
 //呼び出し処理
 		var $form = $('#contactform'),
@@ -84,16 +103,14 @@
 				data: $form.serialize()
 			}).done(function(data) {
 				//alert('呼び出し中です。しばらくお待ちください。');
-				$('#alert_success').show();
-				setTimeout(function(){
-						$('#alert_success').hide();
-				},10000);
+				stopTimer();
+				startTimer(0,#form_main,#alert_success);
+				startTimer(20000,#alert_success,#form_main);
 			}).fail(function() {
 				//alert('エラーが発生しました。');
-				$('#alert_warning').show();
-				setTimeout(function(){
-						$('#alert_warning').hide();
-				},10000);
+				stopTimer();
+				startTimer(0,#form_main,#alert_warning);
+				startTimer(20000,#alert_warning,#form_main);
 			}).always(function() {
 				$submit.removeAttr('disabled');
 			});
