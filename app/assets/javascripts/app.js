@@ -55,7 +55,6 @@
 
 //呼び出し起動
 
-
 		$('.form-group label').on('touchstart', function(e) {
 			var callName,
 					callImg,
@@ -71,6 +70,12 @@
 			}, 4000);
 			if(pop == true){
 				$('#contactform').submit();
+				timerStop();
+				startTimer(0,'#form_main','#alert_success');
+				$('#alert_success .maintxt-response,#alert_success .img-response').hide();
+				$('#alert_success .maintxt').fadeIn(1000);
+				startTimer(8000,'#alert_success','#form_main');
+				startTimer(12000,'#form_main','#waiting');
 			}else{
 				startTimer(4000,'#form_main','#waiting');
 			}
@@ -111,13 +116,11 @@
 				method:'POST',
 				data: $form.serialize()
 			}).done(function(data) {
-				//alert('呼び出し中です。しばらくお待ちください。');
-				timerStop();
-				startTimer(0,'#form_main','#alert_success');
-				startTimer(4000,'#alert_success','#form_main');
-				startTimer(8000,'#form_main','#waiting');
+				//呼び出し成功;
+				$('#alert_success .maintxt').hide();
+				$('#alert_success .maintxt-response,#alert_success .img-response').show();
 			}).fail(function() {
-				//alert('エラーが発生しました。');
+				//エラー;
 				timerStop();
 				startTimer(0,'#form_main','#alert_warning');
 				startTimer(4000,'#alert_warning','#form_main');
