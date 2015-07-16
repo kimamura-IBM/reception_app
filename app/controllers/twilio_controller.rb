@@ -48,12 +48,6 @@ class TwilioController < ApplicationController
         # session[:calling_status] = @calling.status
       end
 
-      # #コールステータスが完了するまで
-      # if @calling.status != 'completed' #|| @calling.status != 'no-answer'
-      #   @calling = @client.account.calls.get(@call.sid)
-      #   @call_status = @calling.status
-      # end
-
       # loop do
       #   case @call.status
       #     when 'no-answer', 'completed'
@@ -91,7 +85,7 @@ class TwilioController < ApplicationController
     # format. Our Ruby library provides a helper for generating one
     # of these documents
     response = Twilio::TwiML::Response.new do |r|
-      r.Say "こちらは,受付アプリです.#{@@contact_to}さんが呼び出されました.", :voice => 'alice', :language => 'ja-jp'
+      r.Say "こちらは,受付アプリです.", :voice => 'alice', :language => 'ja-jp'
       # r.Say 'If this were a real click to call implementation, you would be connected to an agent at this point.', :voice => 'alice'
     end
     render text: response.text
