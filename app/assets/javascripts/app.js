@@ -5,7 +5,7 @@
 			showLayer,
 			waitTimer;
 
-	function startTimer(waitTime,hideLayer,showLayer,){
+	function startTimer(waitTime,hideLayer,showLayer){
 		waitTimer=setInterval(function(){
 			$(hideLayer).fadeOut(1000);
 			$(showLayer).fadeIn(1000);
@@ -43,14 +43,14 @@
 			}
 			$('.rect').show();
 			$('#waiting,#alert_success,#alert_warning').hide();
-			startTimer(2000,#form_main,#waiting);
+			startTimer(2000,'#form_main','#waiting');
 		};
 
 //待機画面メイン起動
 		$('#waiting').on('touchstart', function(e) {
 			stopTimer();
-			startTimer(0,#waiting,#form_main);
-			startTimer(2000,#form_main,#waiting);
+			startTimer(0,'#waiting','#form_main');
+			startTimer(2000,'#form_main','#waiting');
 		});
 
 //呼び出し起動
@@ -63,21 +63,21 @@
 			if(pop == true){
 				$('#contactform').submit();
 			}else{
-				startTimer(2000,#form_main,#waiting);
+				startTimer(2000,'#form_main','#waiting');
 			}
 		});
 
 //キャンセルボタン
 		$('#alert_success .cancelbtn').on('touchstart', function(e) {
 			stopTimer();
-			startTimer(0,#alert_success,#form_main);
-			startTimer(2000,#form_main,#waiting);
+			startTimer(0,'#alert_success','#form_main');
+			startTimer(2000,'#form_main','#waiting');
 		});
 
 		$('#alert_warning .cancelbtn').on('touchstart', function(e) {
 			stopTimer();
-			startTimer(0,#alert_warning,#form_main);
-			startTimer(2000,#form_main,#waiting);
+			startTimer(0,'#alert_warning','#form_main');
+			startTimer(2000,'#form_main','#waiting');
 		});
 
 //呼び出しフォームの設定
@@ -104,13 +104,13 @@
 			}).done(function(data) {
 				//alert('呼び出し中です。しばらくお待ちください。');
 				stopTimer();
-				startTimer(0,#form_main,#alert_success);
-				startTimer(2000,#alert_success,#form_main);
+				startTimer(0,'#form_main','#alert_success');
+				startTimer(2000,'#alert_success','#form_main');
 			}).fail(function() {
 				//alert('エラーが発生しました。');
 				stopTimer();
-				startTimer(0,#form_main,#alert_warning);
-				startTimer(2000,#alert_warning,#form_main);
+				startTimer(0,'#form_main','#alert_warning');
+				startTimer(2000,'#alert_warning','#form_main');
 			}).always(function() {
 				$submit.removeAttr('disabled');
 			});
