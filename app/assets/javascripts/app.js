@@ -6,15 +6,14 @@
 			waitTimer;
 
 	function startTimer(waitTime,hideLayer,showLayer){
-		waitTimer=setInterval(function(){
+		waitTimer = setTimeout(function() {
 			$(hideLayer).fadeOut(1000);
 			$(showLayer).fadeIn(1000);
-			stopTimer();
-		} , waitTime);
+		}, waitTime);
 	}
 
-	function stopTimer(){
-		clearInterval(waitTimer);
+	function timerStop(){
+		clearTimeout(waitTimer);
 	}
 
 	$(function() {
@@ -43,12 +42,13 @@
 			}
 			$('.rect').show();
 			$('#waiting,#alert_success,#alert_warning').hide();
+			timerStop();
 			startTimer(4000,'#form_main','#waiting');
 		};
 
 //待機画面メイン起動
 		$('#waiting').on('touchstart', function(e) {
-			stopTimer();
+			timerStop();
 			startTimer(0,'#waiting','#form_main');
 			startTimer(4000,'#form_main','#waiting');
 		});
@@ -56,26 +56,27 @@
 //呼び出し起動
 		$('.form-group label').on('touchstart', function(e) {
 			var pop = window.confirm('呼び出しますか？');
-			stopTimer();
+			timerStop();
 			setTimeout(function() {
 				$(pop).hide();
 			}, 4000);
 			if(pop == true){
 				$('#contactform').submit();
 			}else{
+				timerStop();
 				startTimer(4000,'#form_main','#waiting');
 			}
 		});
 
 //キャンセルボタン
 		$('#alert_success .cancelbtn').on('touchstart', function(e) {
-			stopTimer();
+			timerStop();
 			startTimer(0,'#alert_success','#form_main');
 			startTimer(4000,'#form_main','#waiting');
 		});
 
 		$('#alert_warning .cancelbtn').on('touchstart', function(e) {
-			stopTimer();
+			timerStop();
 			startTimer(0,'#alert_warning','#form_main');
 			startTimer(4000,'#form_main','#waiting');
 		});
@@ -103,12 +104,12 @@
 				data: $form.serialize()
 			}).done(function(data) {
 				//alert('呼び出し中です。しばらくお待ちください。');
-				stopTimer();
+				timerStop();
 				startTimer(0,'#form_main','#alert_success');
 				startTimer(4000,'#alert_success','#form_main');
 			}).fail(function() {
 				//alert('エラーが発生しました。');
-				stopTimer();
+				timerStop();
 				startTimer(0,'#form_main','#alert_warning');
 				startTimer(4000,'#alert_warning','#form_main');
 			}).always(function() {
