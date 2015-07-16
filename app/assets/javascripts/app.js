@@ -74,8 +74,8 @@
 				startTimer(0,'#form_main','#alert_success');
 				$('#alert_success .maintxt-response,#alert_success .img-response').hide();
 				$('#alert_success .maintxt').fadeIn(1000);
-				startTimer(8000,'#alert_success','#form_main');
-				startTimer(12000,'#form_main','#waiting');
+				startTimer(30000,'#alert_success','#form_main');
+				startTimer(35000,'#form_main','#waiting');
 			}else{
 				startTimer(4000,'#form_main','#waiting');
 			}
@@ -122,6 +122,7 @@
 			}).fail(function() {
 				//エラー;
 				timerStop();
+				startTimer(0,'#alert_success','#alert_warning');
 				startTimer(0,'#form_main','#alert_warning');
 				startTimer(4000,'#alert_warning','#form_main');
 				startTimer(8000,'#form_main','#waiting');
