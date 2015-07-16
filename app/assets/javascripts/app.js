@@ -60,7 +60,7 @@
 			var callName,
 					callImg,
 					pop;
-			callName = $(this).text();
+			callName = $(this).text().replace(/[\n\r]/g,'');
 			callImg = $(this).find('img').attr('src');
 			pop = window.confirm(callName+'を呼び出しますか？');
 			$('#alert_success .nametxt').text(callName);
@@ -115,11 +115,13 @@
 				timerStop();
 				startTimer(0,'#form_main','#alert_success');
 				startTimer(4000,'#alert_success','#form_main');
+				startTimer(8000,'#form_main','#waiting');
 			}).fail(function() {
 				//alert('エラーが発生しました。');
 				timerStop();
 				startTimer(0,'#form_main','#alert_warning');
 				startTimer(4000,'#alert_warning','#form_main');
+				startTimer(8000,'#form_main','#waiting');
 			}).always(function() {
 				$submit.removeAttr('disabled');
 			});
