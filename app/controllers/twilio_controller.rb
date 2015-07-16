@@ -44,7 +44,6 @@ class TwilioController < ApplicationController
 
       @calling = @client.account.calls.get(@call.sid)
       @calling_status = @calling.status
-      render :action => index
 
       # #コールステータスが完了するまで
       # if @calling.status != 'completed' #|| @calling.status != 'no-answer'
@@ -71,6 +70,7 @@ class TwilioController < ApplicationController
 
       # Lets respond to the ajax call with some positive reinforcement
       @msg = { :message => 'Phone call incoming!', :status => 'ok' }
+      render :action => index
 
     else
 
