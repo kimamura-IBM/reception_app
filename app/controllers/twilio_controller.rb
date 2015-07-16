@@ -44,6 +44,7 @@ class TwilioController < ApplicationController
 
       @calling = @client.account.calls.get(@call.sid)
       @call_status = @calling.status
+      session[:call_status_session] = @call_status
       @slack_body = "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス:#{@call_status}。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
 
       SlackBot.notify(
