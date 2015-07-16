@@ -58,7 +58,7 @@
 			var pop = window.confirm('呼び出しますか？');
 			timerStop();
 			setTimeout(function() {
-				$(pop).hide();
+				pop.close();
 			}, 4000);
 			if(pop == true){
 				$('#contactform').submit();
