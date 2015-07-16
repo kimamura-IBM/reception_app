@@ -21,7 +21,6 @@ class TwilioController < ApplicationController
   # Render home page
   def index
     @users = User.all.reverse_order
-    # @calling_status = session[:calling_status]
   	render 'index'
   end
 
@@ -30,6 +29,10 @@ class TwilioController < ApplicationController
     contact = Contact.new
     contact.phone = params[:phone]
     @@contact_to = User.find_by(phonenumber: contact.phone).username
+
+    SlackBot.notify(
+        body: "受付Webアプリからの送信です。#{@@contact_to}さんが呼び出されました。ステータス：呼び出し中。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+    ) #SlackBotからメッセージ送信
    
     # Validate contact
     if contact.valid?
@@ -45,23 +48,14 @@ class TwilioController < ApplicationController
       @calling = @client.account.calls.get(@call.sid)
       while @calling.status != 'completed' do
         @calling = @client.account.calls.get(@call.sid)
-        # session[:calling_status] = @calling.status
       end
 
-      # loop do
-      #   case @call.status
       #     when 'no-answer', 'completed'
-      #       SlackBot.notify(
-      #       break
       #     when 'failed','canceled'
-      #       break
       #     when 'queued','ringing','in-progress','busy'
-      #       break
-      #   end
-      # end
-      # session[:calling_status] = @calling.status
+
       SlackBot.notify(
-          body: "受付Webアプリからの送信です。#{@@contact_to}さんが呼び出されました。ステータス:#{@calling.status}。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+          body: "受付Webアプリからの送信です。#{@@contact_to}さんが呼び出されました。ステータス：#{@calling.status}。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
       ) #SlackBotからメッセージ送信
 
 
