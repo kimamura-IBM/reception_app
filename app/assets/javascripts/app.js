@@ -54,8 +54,17 @@
 		});
 
 //呼び出し起動
+
+
 		$('.form-group label').on('touchstart', function(e) {
-			var pop = window.confirm('呼び出しますか？');
+			var callName,
+					callImg,
+					pop;
+			callName = $(this).text();
+			callImg = $(this).find('img').attr('src');
+			pop = window.confirm(callName+'を呼び出しますか？');
+			$('#alert_success .nametxt').text(callName);
+			$('#alert_success .img-rounded').attr('src',callImg);
 			timerStop();
 			setTimeout(function() {
 				pop.close();
@@ -63,12 +72,11 @@
 			if(pop == true){
 				$('#contactform').submit();
 			}else{
-				timerStop();
 				startTimer(4000,'#form_main','#waiting');
 			}
 		});
 
-//キャンセルボタン
+//呼び出し後キャンセルボタン
 		$('#alert_success .cancelbtn').on('touchstart', function(e) {
 			timerStop();
 			startTimer(0,'#alert_success','#form_main');
