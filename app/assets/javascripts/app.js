@@ -1,5 +1,5 @@
 (function () {
-//待機画面タイマー（秒数は自由に変更できる）
+//待機画面タイマー（startTimerには、待機時間、消したい要素、表示したい要素を追加）
 	var waitTime,
 			hideLayer,
 			showLayer,
