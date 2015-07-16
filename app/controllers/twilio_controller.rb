@@ -44,6 +44,7 @@ class TwilioController < ApplicationController
 
       @calling = @client.account.calls.get(@call.sid)
       while @calling.status != 'completed' do
+        @calling = @client.account.calls.get(@call.sid)
         redirect_to index_path(calling_status: @calling.status)
         sleep(3)
       end
