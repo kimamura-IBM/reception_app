@@ -55,7 +55,7 @@ class TwilioController < ApplicationController
       #     when 'queued','ringing','in-progress','busy'
 
       SlackBot.notify(
-          body: "受付Webアプリからの送信です。#{@@contact_to}さんが呼び出されました。ステータス：#{@calling.status}。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+          body: "受付Webアプリからの送信です。#{@@contact_to}さんが呼び出されました。ステータス：電話を取りました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
       ) #SlackBotからメッセージ送信
 
 
