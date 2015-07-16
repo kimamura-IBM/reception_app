@@ -146,7 +146,7 @@
           <h1>受付</h1>
           <p>画面をタップして担当者を呼び出してください</p>
           <div id="alert_success" class="alert alert-success col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8" role="alert">
-            <% if @call_status_session == 'completed' %>
+            <% if @calling_status == 'completed' %>
                 <strong>呼び出しています。</strong>。
             <% else %>
                 <strong>おっと、気付いたようです。いましばらくお待ちください</strong>。
@@ -183,7 +183,7 @@
             <!-- <button type="submit" class="btn btn-success btn-lg">呼び出し</button> -->
             <%= submit_tag("呼び出し", class: "btn btn-success btn-lg text-center") %>
             </div>
-            <div>デバッグ用, status：<%= @call_status_session %></div>
+            <div>デバッグ用, status：<%= @calling_status %></div>
           <!-- </form> -->
           <% end %>
         </div>
