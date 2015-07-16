@@ -22,6 +22,7 @@ class TwilioController < ApplicationController
   def index
     @users = User.all.reverse_order
     @calling_status = params[:calling_status]
+    @contact_to = params[:contact_to]
   	render 'index'
   end
 
@@ -29,7 +30,7 @@ class TwilioController < ApplicationController
   def call
     contact = Contact.new
     contact.phone = params[:phone]
-    @contact_to = User.find_by(phonenumber: contact.phone).username
+    @@contact_to = User.find_by(phonenumber: contact.phone).username
    
     # Validate contact
     if contact.valid?
@@ -45,8 +46,7 @@ class TwilioController < ApplicationController
       @calling = @client.account.calls.get(@call.sid)
       while @calling.status != 'completed' do
         @calling = @client.account.calls.get(@call.sid)
-        redirect_to root_url, :calling_status => @calling.status
-        sleep(3)
+        redirect_to root_url, :calling_status => @calling.status, :contact_to => @@contact_to
       end
 
       # #コールステータスが完了するまで
@@ -68,7 +68,7 @@ class TwilioController < ApplicationController
       # end
       redirect_to root_url, :calling_status => @calling.status
       SlackBot.notify(
-          body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス:#{@calling.status}。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+          body: "受付Webアプリからの送信です。#{@@contact_to}さんが呼び出されました。ステータス:#{@calling.status}。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
       ) #SlackBotからメッセージ送信
 
 
@@ -92,7 +92,7 @@ class TwilioController < ApplicationController
     # format. Our Ruby library provides a helper for generating one
     # of these documents
     response = Twilio::TwiML::Response.new do |r|
-      r.Say "こちらは,受付アプリです.#{@contact_to}さんが呼び出されました.", :voice => 'alice', :language => 'ja-jp'
+      r.Say "こちらは,受付アプリです.#{@@contact_to}さんが呼び出されました.", :voice => 'alice', :language => 'ja-jp'
       # r.Say 'If this were a real click to call implementation, you would be connected to an agent at this point.', :voice => 'alice'
     end
     render text: response.text
