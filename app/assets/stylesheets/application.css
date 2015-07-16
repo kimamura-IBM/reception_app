@@ -218,7 +218,8 @@ hr{
   text-align: center;
 }
 
-#alert_success .maintxt{
+#alert_success .maintxt,
+#alert_success .maintxt-response{
   font-size: 52px;
   line-height: 52px;
   color: #fff;
