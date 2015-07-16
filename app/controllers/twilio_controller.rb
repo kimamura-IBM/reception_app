@@ -21,6 +21,7 @@ class TwilioController < ApplicationController
   # Render home page
   def index
     @users = User.all.reverse_order
+    @call_status_session = session[:call_status_session]
   	render 'index'
   end
 
@@ -50,10 +51,12 @@ class TwilioController < ApplicationController
           body: @slack_body
       ) #SlackBotからメッセージ送信
 
-      while @calling.status != 'completed' do
+      #コールステータスが完了するまで
+      while @calling.status != 'completed' #|| @calling.status != 'no-answer'
         @calling = @client.account.calls.get(@call.sid)
         @call_status = @calling.status
-        render action: 'twilio/index' and return
+        session[:call_status_session] = @call_status
+        #render action: 'twilio/index' and return
       end
 
       # loop do
@@ -68,12 +71,15 @@ class TwilioController < ApplicationController
       #   end
       # end
 
-      @call_status = @calling.status
+      #コールステータスが完了したら
+      @call_status = 'completed'
+      session[:call_status_session] = @call_status
+
       SlackBot.notify(
           # body: "受付Webアプリからの送信です。#{@@namae}さんから送信 - ご用件：#{@@issue} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/ https://damp-reaches-2263.herokuapp.com/"
           body: @slack_body
       ) #SlackBotからメッセージ送信
-      render action: 'twilio/index'
+      #render action: 'twilio/index'
 
       # Lets respond to the ajax call with some positive reinforcement
       @msg = { :message => 'Phone call incoming!', :status => 'ok' }
