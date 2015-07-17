@@ -224,6 +224,7 @@ hr{
   line-height: 52px;
   color: #fff;
   margin:0 auto 150px;
+  text-align: center;
 }
 
 #alert_success .maintxt-response{
