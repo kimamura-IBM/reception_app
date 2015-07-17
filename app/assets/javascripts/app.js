@@ -68,40 +68,44 @@ var timerRefresh,
 //呼び出し起動
 		$('.form-group label').on('touchstart', function(e) {
 			var callName,
-					callImg,
-					pop;
+					callImg;
 			timerWaiting01.reject();
-			timerRefresh = $.wait(4000).done(function(){
+			timerRefresh = $.wait(40000).done(function(){
 				location.reload(false);
 			}).fail(function(){
 				console.log('timerRefreshreject');
 			});
 			callName = $(this).text().replace(/[\n\r]/g,'');
 			callImg = $(this).find('img').attr('src');
-			pop = window.confirm(callName+'を呼び出しますか？');
+			$('#modal_window p').text(callName+'を呼び出しますか？');
 			$('#alert_success .nametxt').text(callName);
 			$('#alert_success .img-rounded').attr('src',callImg);
-			if(pop == true){
-				timerRefresh.reject();
-				$('#contactform').submit();
-				timerSuccess01 = $.wait(2000).done(function(){
-					changeLayer('#form_main','#alert_success');
-					$('#alert_success .maintxt-response,#alert_success .img-response').hide();
-					$('#alert_success .maintxt').fadeIn(1000);
-				}).fail(function(){
-					console.log('timerSuccess01reject');
-				});
-				timerMain01 = $.wait(35000).done(function(){
-					changeLayer('#alert_success','#form_main');
-				}).fail(function(){
-					console.log('timerMain01reject');
-				});
-				timerWaiting01Func();
-			}else{
-				timerRefresh.reject();
-				timerWaiting01Func();
-			}
+			$('#modal_window').show();
 		});
+
+		$('#modal_window #call').on('touchstart', function(e) {
+			timerRefresh.reject();
+			$('#contactform').submit();
+			timerSuccess01 = $.wait(2000).done(function(){
+				changeLayer('#form_main','#alert_success');
+				$('#alert_success .maintxt-response,#alert_success .img-response').hide();
+				$('#alert_success .maintxt').fadeIn(1000);
+			}).fail(function(){
+				console.log('timerSuccess01reject');
+			});
+			timerMain01 = $.wait(35000).done(function(){
+				changeLayer('#alert_success','#form_main');
+			}).fail(function(){
+				console.log('timerMain01reject');
+			});
+			timerWaiting01Func();
+		});
+
+		$('#modal_window #cancel').on('touchstart', function(e) {
+			timerRefresh.reject();
+			timerWaiting01Func();
+		});
+
 
 //呼び出し後キャンセルボタン
 		$('#alert_success .cancelbtn').on('touchstart', function(e) {

@@ -50,7 +50,8 @@
 /*基本画面配置*/
 #waiting,
 #alert_success,
-#alert_warning{
+#alert_warning,
+#modal_window{
   position: absolute;
   top: 0;
   left: 0;
@@ -67,6 +68,10 @@
 
 #alert_warning{
   z-index: 3;
+}
+
+#modal_window{
+  z-index: 10;
 }
 
 /*基本画面パーツ*/
