@@ -143,7 +143,7 @@ var timerRefresh,
 				//呼び出し成功;
 				$('#alert_success .maintxt').hide();
 				$('#alert_success .maintxt-response,#alert_success .img-response').show();
-			}).fail(function() {
+			}).fail(function(XMLHttpRequest, textStatus, errorThrown) {
 				//エラー;
 				console.log('エラー内容');
 				console.log(XMLHttpRequest.status);
