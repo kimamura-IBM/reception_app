@@ -91,7 +91,7 @@ var timerRefresh,
 				}).fail(function(){
 					console.log('timerSuccess01reject');
 				});
-				timerMain01 = $.wait(30000).done(function(){
+				timerMain01 = $.wait(35000).done(function(){
 					changeLayer('#alert_success','#form_main');
 				}).fail(function(){
 					console.log('timerMain01reject');
@@ -145,6 +145,10 @@ var timerRefresh,
 				$('#alert_success .maintxt-response,#alert_success .img-response').show();
 			}).fail(function() {
 				//エラー;
+				console.log('エラー内容');
+				console.log(XMLHttpRequest.status);
+				console.log(textStatus);
+				console.log(errorThrown.message);
 				timerSuccess01.reject();
 				timerMain01.reject();
 				timerWaiting01.reject();
