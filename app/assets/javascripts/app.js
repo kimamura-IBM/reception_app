@@ -145,10 +145,12 @@ var timerRefresh,
 				$('#alert_success .maintxt-response,#alert_success .img-response').show();
 			}).fail(function(XMLHttpRequest, textStatus, errorThrown) {
 				//エラー;
-				console.log('エラー内容');
-				console.log(XMLHttpRequest.status);
-				console.log(textStatus);
-				console.log(errorThrown.message);
+				var errStatus = XMLHttpRequest.status;
+				if(errStatus == 503){
+					$('#alert_warning .maintxt').text('誰もいないようです<br>弊社の営業時間は月曜日から金曜日の<br>10時半から20時までです');
+				}else{
+					$('#alert_warning .maintxt').text('うまくつながらないようです<br>あらためて呼び出してください<br>それでもつながらない場合はドアからお入りいただき、<br>エントランスの呼び鈴を鳴らしてください');
+				}
 				timerSuccess01.reject();
 				timerMain01.reject();
 				timerWaiting01.reject();
