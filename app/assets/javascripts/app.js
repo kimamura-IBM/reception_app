@@ -1,9 +1,10 @@
 (function () {
 //待機画面タイマー
 var timerRefresh,
-		timer01,
-		timer02,
-		timer03;
+		timerWaiting01,
+		timerMain01,
+		timerMain02,
+		timerSuccess01;
 
 	$.extend({
 		wait: function(waitTime){
@@ -19,11 +20,11 @@ var timerRefresh,
 	}
 
 //待機画面の予約(セット時点より60s後)
-	function returnWait(){
-		timer01 = $.wait(60000).done(function(){
+	function timerWaiting01Func(){
+		timerWaiting01 = $.wait(60000).done(function(){
 			changeLayer('#form_main','#waiting');
 		}).fail(function(){
-			console.log('timer01reject');
+			console.log('timerWaiting01reject');
 		});
 	}
 
@@ -54,14 +55,14 @@ var timerRefresh,
 			}
 			$('.rect').show();
 			$('#waiting,#alert_success,#alert_warning').hide();
-			returnWait();
+			timerWaiting01Func();
 		};
 
 //待機画面メイン起動
 		$('#waiting').on('touchstart', function(e) {
-			timer01.reject();
+			timerWaiting01.reject();
 			changeLayer('#waiting','#form_main');
-			returnWait();
+			timerWaiting01Func();
 		});
 
 //呼び出し起動
@@ -69,7 +70,7 @@ var timerRefresh,
 			var callName,
 					callImg,
 					pop;
-			timer01.reject();
+			timerWaiting01.reject();
 			timerRefresh = $.wait(4000).done(function(){
 				location.reload(false);
 			}).fail(function(){
@@ -83,34 +84,38 @@ var timerRefresh,
 			if(pop == true){
 				timerRefresh.reject();
 				$('#contactform').submit();
-				changeLayer('#form_main','#alert_success');
-				$('#alert_success .maintxt-response,#alert_success .img-response').hide();
-				$('#alert_success .maintxt').fadeIn(1000);
-				timer02 = $.wait(30000).done(function(){
+				timerSuccess01 = $.wait(2000).done(function(){
+					changeLayer('#form_main','#alert_success');
+					$('#alert_success .maintxt-response,#alert_success .img-response').hide();
+					$('#alert_success .maintxt').fadeIn(1000);
+				}).fail(function(){
+					console.log('timerSuccess01reject');
+				});
+				timerMain01 = $.wait(30000).done(function(){
 					changeLayer('#alert_success','#form_main');
 				}).fail(function(){
-					console.log('timer02reject');
+					console.log('timerMain01reject');
 				});
-				returnWait();
+				timerWaiting01Func();
 			}else{
 				timerRefresh.reject();
-				returnWait();
+				timerWaiting01Func();
 			}
 		});
 
 //呼び出し後キャンセルボタン
 		$('#alert_success .cancelbtn').on('touchstart', function(e) {
-			timer02.reject();
-			timer01.reject();
+			timerMain01.reject();
+			timerWaiting01.reject();
 			changeLayer('#alert_success','#form_main');
-			returnWait();
+			timerWaiting01Func();
 		});
 
 		$('#alert_warning .cancelbtn').on('touchstart', function(e) {
-			timer03.reject();
-			timer01.reject();
+			timerMain02.reject();
+			timerWaiting01.reject();
 			changeLayer('#alert_warning','#form_main');
-			returnWait();
+			timerWaiting01Func();
 		});
 
 //呼び出しフォームの設定
@@ -140,15 +145,16 @@ var timerRefresh,
 				$('#alert_success .maintxt-response,#alert_success .img-response').show();
 			}).fail(function() {
 				//エラー;
-				timer02.reject();
-				timer01.reject();
+				timerSuccess01.reject();
+				timerMain01.reject();
+				timerWaiting01.reject();
 				changeLayer('#alert_success,#form_main','#alert_warning');
-				timer03 = $.wait(30000).done(function(){
+				timerMain02 = $.wait(30000).done(function(){
 					changeLayer('#alert_warning','#form_main');
 				}).fail(function(){
-					console.log('timer03reject');
+					console.log('timerMain02reject');
 				});
-				returnWait();
+				timerWaiting01Func();
 			}).always(function() {
 				$submit.removeAttr('disabled');
 			});
