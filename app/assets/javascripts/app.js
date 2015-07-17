@@ -1,20 +1,32 @@
 (function () {
-//待機画面タイマー（startTimerには、待機時間、消したい要素、表示したい要素を追加）
-	var waitTime,
-			hideLayer,
-			showLayer,
-			waitTimer;
+//待機画面タイマー
+var timerRefresh,
+		timer01,
+		timer02,
+		timer03;
 
-	function startTimer(waitTime,hideLayer,showLayer){
-		waitTimer = setTimeout(function() {
-			$(hideLayer).fadeOut(1000);
-			$(showLayer).fadeIn(1000);
-		}, waitTime);
+	$.extend({
+		wait: function(waitTime){
+			var dfd = $.Deferred();
+			setTimeout(dfd.resolve, waitTime);
+			return dfd;
+		}
+	});
+
+	function changeLayer(hideLayer,showLayer){
+		$(hideLayer).fadeOut(1000);
+		$(showLayer).fadeIn(1000);
 	}
 
-	function timerStop(){
-		clearTimeout(waitTimer);
+//待機画面の予約(セット時点より60s後)
+	function returnWait(){
+		timer01 = $.wait(60000).done(function(){
+			changeLayer('#form_main','#waiting');
+		}).fail(function(){
+			console.log('timer01reject');
+		});
 	}
+
 
 	$(function() {
 //読み込み時の処理
@@ -42,56 +54,63 @@
 			}
 			$('.rect').show();
 			$('#waiting,#alert_success,#alert_warning').hide();
-			timerStop();
-			startTimer(4000,'#form_main','#waiting');
+			returnWait();
 		};
 
 //待機画面メイン起動
 		$('#waiting').on('touchstart', function(e) {
-			timerStop();
-			startTimer(0,'#waiting','#form_main');
-			startTimer(4000,'#form_main','#waiting');
+			timer01.reject();
+			changeLayer('#waiting','#form_main');
+			returnWait();
 		});
 
 //呼び出し起動
-
 		$('.form-group label').on('touchstart', function(e) {
 			var callName,
 					callImg,
 					pop;
+			timer01.reject();
+			timerRefresh = $.wait(4000).done(function(){
+				location.reload(false);
+			}).fail(function(){
+				console.log('timerRefreshreject');
+			});
 			callName = $(this).text().replace(/[\n\r]/g,'');
 			callImg = $(this).find('img').attr('src');
 			pop = window.confirm(callName+'を呼び出しますか？');
 			$('#alert_success .nametxt').text(callName);
 			$('#alert_success .img-rounded').attr('src',callImg);
-			timerStop();
-			setTimeout(function() {
-				pop.close();
-			}, 4000);
 			if(pop == true){
+				timerRefresh.reject();
 				$('#contactform').submit();
-				timerStop();
-				startTimer(0,'#form_main','#alert_success');
+				changeLayer('#form_main','#alert_success');
 				$('#alert_success .maintxt-response,#alert_success .img-response').hide();
 				$('#alert_success .maintxt').fadeIn(1000);
-				startTimer(30000,'#alert_success','#form_main');
-				startTimer(35000,'#form_main','#waiting');
+				timer02 = $.wait(30000).done(function(){
+					changeLayer('#alert_success','#form_main');
+				}).fail(function(){
+					console.log('timer02reject');
+				});
+				returnWait();
 			}else{
-				startTimer(4000,'#form_main','#waiting');
+				timerRefresh.reject();
+				returnWait();
 			}
 		});
 
 //呼び出し後キャンセルボタン
 		$('#alert_success .cancelbtn').on('touchstart', function(e) {
-			timerStop();
-			startTimer(0,'#alert_success','#form_main');
-			startTimer(4000,'#form_main','#waiting');
+			timer02.reject();
+			timer01.reject();
+			changeLayer('#alert_success','#form_main');
+			returnWait();
 		});
 
 		$('#alert_warning .cancelbtn').on('touchstart', function(e) {
-			timerStop();
-			startTimer(0,'#alert_warning','#form_main');
-			startTimer(4000,'#form_main','#waiting');
+			timer03.reject();
+			timer01.reject();
+			changeLayer('#alert_warning','#form_main');
+			returnWait();
 		});
 
 //呼び出しフォームの設定
@@ -121,11 +140,15 @@
 				$('#alert_success .maintxt-response,#alert_success .img-response').show();
 			}).fail(function() {
 				//エラー;
-				timerStop();
-				startTimer(0,'#alert_success','#alert_warning');
-				startTimer(0,'#form_main','#alert_warning');
-				startTimer(4000,'#alert_warning','#form_main');
-				startTimer(8000,'#form_main','#waiting');
+				timer02.reject();
+				timer01.reject();
+				changeLayer('#alert_success,#form_main','#alert_warning');
+				timer03 = $.wait(30000).done(function(){
+					changeLayer('#alert_warning','#form_main');
+				}).fail(function(){
+					console.log('timer03reject');
+				});
+				returnWait();
 			}).always(function() {
 				$submit.removeAttr('disabled');
 			});
