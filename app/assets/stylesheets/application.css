@@ -256,6 +256,7 @@ hr{
   text-align: center;
   width: 750px;
   margin:auto;
+  display: block;
   outline: none;
   background-color: inherit;
 }
@@ -311,6 +312,7 @@ hr{
   text-align: center;
   width: 585px;
   margin:auto;
+  display: block;
   background-color: inherit;
 }
 
