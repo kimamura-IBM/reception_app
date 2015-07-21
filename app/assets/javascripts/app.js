@@ -60,6 +60,7 @@ var timerRefresh,
 
 //待機画面メイン起動
 		$('#waiting').on('touchstart', function(e) {
+			e.preventDefault();
 			timerWaiting01.reject();
 			changeLayer('#waiting','#form_main');
 			timerWaiting01Func();
@@ -67,6 +68,7 @@ var timerRefresh,
 
 //呼び出し起動
 		$('.form-group label').on('touchstart', function(e) {
+			e.preventDefault();
 			var callName,
 					callImg;
 			timerWaiting01.reject();
@@ -80,10 +82,12 @@ var timerRefresh,
 			$('#modal_window p').text(callName+'を呼び出しますか？');
 			$('#alert_success .nametxt').text(callName);
 			$('#alert_success .img-rounded').attr('src',callImg);
+
 			$('#modal_window').show();
 		});
 
 		$('#modal_window #call').on('touchstart', function(e) {
+			e.preventDefault();
 			timerRefresh.reject();
 			$('#modal_window').hide();
 			$('#contactform').submit();
@@ -103,6 +107,7 @@ var timerRefresh,
 		});
 
 		$('#modal_window #cancel').on('touchstart', function(e) {
+			e.preventDefault();
 			timerRefresh.reject();
 			$('#modal_window').hide();
 			timerWaiting01Func();
@@ -111,6 +116,7 @@ var timerRefresh,
 
 //呼び出し後キャンセルボタン
 		$('#alert_success .cancelbtn').on('touchstart', function(e) {
+			e.preventDefault();
 			request.abort();
 			timerMain01.reject();
 			timerWaiting01.reject();
@@ -119,6 +125,7 @@ var timerRefresh,
 		});
 
 		$('#alert_warning .cancelbtn').on('touchstart', function(e) {
+			e.preventDefault();
 			request.abort();
 			timerMain02.reject();
 			timerWaiting01.reject();
