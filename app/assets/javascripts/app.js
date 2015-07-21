@@ -32,15 +32,15 @@ var timerRefresh,
 	$(function() {
 //読み込み時の処理
 //画面組み立て
-		var wid = $(window).width() + "px",
+		var wid = $(window).width() + 'px',
 				hei = $(window).height(),
 				headh = $('#header').height(),
 				radioh = hei - headh,
 				layer = $('#wrapper,#waiting,#modal_window,#alert_success,#alert_warning'),
-				rects = document.getElementsByClassName("rect");
+				rects = document.getElementsByClassName('rect');
 
-		hei = hei + "px";
-		radioh = radioh + "px";
+		hei = hei + 'px';
+		radioh = radioh + 'px';
 
 		layer.css('width', wid);
 		layer.css('height', hei);
@@ -79,7 +79,7 @@ var timerRefresh,
 			});
 			callName = $(this).text().replace(/[\n\r]/g,'');
 			callImg = $(this).find('img').attr('src');
-			$('#modal_window p').text(callName+'を呼び出しますか？');
+			$('#modal_window p').text(callName+'を\n呼び出しますか？');
 			$('#alert_success .nametxt').text(callName);
 			$('#alert_success .img-rounded').attr('src',callImg);
 
