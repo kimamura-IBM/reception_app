@@ -85,6 +85,7 @@ var timerRefresh,
 
 		$('#modal_window #call').on('touchstart', function(e) {
 			timerRefresh.reject();
+			$('#modal_window').hide();
 			$('#contactform').submit();
 			timerSuccess01 = $.wait(2000).done(function(){
 				changeLayer('#form_main','#alert_success');
@@ -103,6 +104,7 @@ var timerRefresh,
 
 		$('#modal_window #cancel').on('touchstart', function(e) {
 			timerRefresh.reject();
+			$('#modal_window').hide();
 			timerWaiting01Func();
 		});
 
