@@ -157,6 +157,62 @@ hr{
   overflow: scroll;
 }
 
+/*呼び出しモーダルウインドウ*/
+#modal_window{
+  background-color: rgba(0,0,0,.5);
+}
+
+#modal_window #main_window{
+  position: absolute;
+  width: 840px;
+  height: 485px;
+  padding: 90px 120px 65px;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+#modal_window p{
+  color: #c8bf8a;
+  font-size: 60px;
+  line-height: 84px;
+  margin: 0 0 55px;
+}
+
+#modal_window .clearfix{
+  overflow: hidden;
+}
+
+#modal_window #call{
+  text-align: center;
+  font-size: 60px;
+  line-height: 94px;
+  height: 94px;
+  width: 370px;
+  border:#c8bf8a 6px solid;
+  background-color:#c8bf8a;
+  color:#fff;
+  float: left;
+}
+
+#modal_window #cancel{
+  text-align: center;
+  font-size: 60px;
+  line-height: 94px;
+  height: 94px;
+  width: 370px;
+  border:#c8bf8a 6px solid;
+  background-color:#fff;
+  color:#c8bf8a;
+  float: right;
+}
+
+
+
+
 /*エラー画面*/
 #alert_warning{
   text-align: center;
