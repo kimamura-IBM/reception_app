@@ -36,7 +36,7 @@ var timerRefresh,
 				hei = $(window).height(),
 				headh = $('#header').height(),
 				radioh = hei - headh,
-				layer = $('#wrapper,#waiting,#alert_success,#alert_warning'),
+				layer = $('#wrapper,#waiting,#modal_window,#alert_success,#alert_warning'),
 				rects = document.getElementsByClassName("rect");
 
 		hei = hei + "px";
@@ -54,7 +54,7 @@ var timerRefresh,
 				$(rects[i]).css('height', hei);
 			}
 			$('.rect').show();
-			$('#waiting,#alert_success,#alert_warning').hide();
+			$('#waiting,#modal_window,#alert_success,#alert_warning').hide();
 			timerWaiting01Func();
 		};
 
