@@ -310,6 +310,7 @@ hr{
   text-align: center;
   width: 585px;
   margin:auto;
+  background-color: inherit;
 }
 
 #alert_success .img-response{
