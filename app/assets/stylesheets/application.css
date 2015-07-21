@@ -159,13 +159,15 @@ hr{
 
 /*呼び出しモーダルウインドウ*/
 #modal_window{
+  position: fixed;
   background-color: rgba(0,0,0,.5);
 }
 
 #modal_window #main_window{
   position: absolute;
-  width: 840px;
-  height: 485px;
+  background-color: #fff;
+  width: 1080px;
+  height: 640px;
   padding: 90px 120px 65px;
   margin: auto;
   top: 0;
