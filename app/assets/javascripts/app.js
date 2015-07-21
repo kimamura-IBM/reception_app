@@ -164,13 +164,16 @@ var timerRefresh,
 				timerSuccess01.reject();
 				timerMain01.reject();
 				timerWaiting01.reject();
-				changeLayer('#alert_success,#form_main','#alert_warning');
-				timerMain02 = $.wait(30000).done(function(){
-					changeLayer('#alert_warning','#form_main');
-				}).fail(function(){
-					console.log('timerMain02reject');
-				});
-				timerWaiting01Func();
+				if(errStatus == 0){
+				}else{
+					changeLayer('#alert_success,#form_main','#alert_warning');
+					timerMain02 = $.wait(30000).done(function(){
+						changeLayer('#alert_warning','#form_main');
+					}).fail(function(){
+						console.log('timerMain02reject');
+					});
+					timerWaiting01Func();
+				}
 			}).always(function() {
 				$submit.removeAttr('disabled');
 			});
