@@ -73,13 +73,14 @@ var timerRefresh,
 					callImg;
 			timerWaiting01.reject();
 			timerRefresh = $.wait(40000).done(function(){
-				location.reload(false);
+				$('#modal_window').hide();
+				timerWaiting01Func();
 			}).fail(function(){
 				console.log('timerRefreshreject');
 			});
 			callName = $(this).text().replace(/[\n\r]/g,'');
 			callImg = $(this).find('img').attr('src');
-			$('#modal_window p').text(callName+'を\n呼び出しますか？');
+			$('#modal_window p').text(callName+'を&#13;&#10;呼び出しますか？');
 			$('#alert_success .nametxt').text(callName);
 			$('#alert_success .img-rounded').attr('src',callImg);
 
