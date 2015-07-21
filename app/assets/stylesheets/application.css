@@ -186,6 +186,10 @@ hr{
 
 #modal_window .clearfix{
   overflow: hidden;
+  width: 840px;
+  position: absolute;
+  bottom: 65px;
+  left: 120px;
 }
 
 #modal_window #call{
