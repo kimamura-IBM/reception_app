@@ -111,6 +111,7 @@ var timerRefresh,
 
 //呼び出し後キャンセルボタン
 		$('#alert_success .cancelbtn').on('touchstart', function(e) {
+			request.abort();
 			timerMain01.reject();
 			timerWaiting01.reject();
 			changeLayer('#alert_success','#form_main');
@@ -118,6 +119,7 @@ var timerRefresh,
 		});
 
 		$('#alert_warning .cancelbtn').on('touchstart', function(e) {
+			request.abort();
 			timerMain02.reject();
 			timerWaiting01.reject();
 			changeLayer('#alert_warning','#form_main');
@@ -133,7 +135,8 @@ var timerRefresh,
 
 //呼び出し処理
 		var $form = $('#contactform'),
-				$submit = $('#contactform input[type=submit]');
+				$submit = $('#contactform input[type=submit]'),
+				request;
 
 // Intercept form submission
 		$form.on('submit', function(e) {
@@ -141,7 +144,7 @@ var timerRefresh,
 			e.preventDefault();
 			$submit.attr('disabled', 'disabled');
 // Submit the form via ajax
-			$.ajax({
+			request = $.ajax({
 				url:'/call',
 				method:'POST',
 				data: $form.serialize()
