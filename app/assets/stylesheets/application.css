@@ -257,6 +257,7 @@ hr{
   width: 750px;
   margin:auto;
   outline: none;
+  background-color: inherit;
 }
 
 /*呼び出し中画面*/
