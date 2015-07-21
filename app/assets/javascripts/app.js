@@ -155,6 +155,7 @@ var timerRefresh,
 			}).fail(function(XMLHttpRequest, textStatus, errorThrown) {
 				//エラー;
 				var errStatus = XMLHttpRequest.status;
+				console.log(errStatus);
 				if(errStatus == 503){
 					$('#alert_warning .maintxt').html('誰もいないようです<br>弊社の営業時間は月曜日から金曜日の<br>10時半から20時までです');
 				}else{
