@@ -182,6 +182,7 @@ hr{
   font-size: 60px;
   line-height: 84px;
   margin: 0 0 55px;
+  word-break: break-all;
 }
 
 #modal_window .clearfix{
@@ -198,10 +199,11 @@ hr{
   line-height: 94px;
   height: 94px;
   width: 370px;
-  border:#c8bf8a 6px solid;
+  border:#c8bf8a 4px solid;
   background-color:#c8bf8a;
   color:#fff;
   float: left;
+  outline: none;
 }
 
 #modal_window #cancel{
@@ -210,10 +212,11 @@ hr{
   line-height: 94px;
   height: 94px;
   width: 370px;
-  border:#c8bf8a 6px solid;
+  border:#c8bf8a 4px solid;
   background-color:#fff;
   color:#c8bf8a;
   float: right;
+  outline: none;
 }
 
 
@@ -253,6 +256,7 @@ hr{
   text-align: center;
   width: 750px;
   margin:auto;
+  outline: none;
 }
 
 /*呼び出し中画面*/
