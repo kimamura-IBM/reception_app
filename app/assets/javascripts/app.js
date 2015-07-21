@@ -80,7 +80,7 @@ var timerRefresh,
 			});
 			callName = $(this).text().replace(/[\n\r]/g,'');
 			callImg = $(this).find('img').attr('src');
-			$('#modal_window p').text(callName+'を'+\r\n+'呼び出しますか？');
+			$('#modal_window p').html(callName+'を<br>呼び出しますか？');
 			$('#alert_success .nametxt').text(callName);
 			$('#alert_success .img-rounded').attr('src',callImg);
 
