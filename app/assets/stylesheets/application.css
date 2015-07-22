@@ -100,7 +100,7 @@ h1 img{
 
 .maintxt{
   font-size: 52px;
-  line-height: 52px;
+  line-height: 72px;
   color: #fff;
   text-align: center;
   margin:144px auto;
@@ -294,7 +294,7 @@ hr{
 #alert_success .maintxt,
 #alert_success .maintxt-response{
   font-size: 52px;
-  line-height: 52px;
+  line-height: 72px;
   color: #fff;
   margin:0 auto 150px;
   text-align: center;
