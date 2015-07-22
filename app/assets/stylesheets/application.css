@@ -494,7 +494,7 @@ body{
 /*待機中アニメパーツ*/
 .loader-ring {
   position: relative;
-  margin: 360px auto 250px;
+  margin: 240px auto 180px;
   width: 470px;
   height: 470px;
 }
