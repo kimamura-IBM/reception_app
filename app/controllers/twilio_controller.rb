@@ -28,17 +28,14 @@ class TwilioController < ApplicationController
   def call
     contact = Contact.new
     contact.phone = params[:phone]
-    # @@namae = params[:namae]
-    # @@issue = params[:issue]
     @@contact_to = User.find_by(phonenumber: contact.phone).username
+
+    SlackBot.notify(
+        body: "受付Webアプリからの送信です。#{@@contact_to}さんが呼び出されました。ステータス：呼び出し中。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+    ) #SlackBotからメッセージ送信
    
     # Validate contact
     if contact.valid?
-      SlackBot.notify(
-        # body: "受付Webアプリからの送信です。#{@@namae}さんから送信 - ご用件：#{@@issue} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/ https://damp-reaches-2263.herokuapp.com/"
-          body: "受付Webアプリからの送信です。#{@@contact_to}さんが呼び出されました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
-      ) #SlackBotからメッセージ送信
-
       @client = Twilio::REST::Client.new @@twilio_sid, @@twilio_token
       # Connect an outbound call to the number submitted
       @call = @client.account.calls.create(
@@ -48,9 +45,22 @@ class TwilioController < ApplicationController
         :url => "#{root_url}connect" # Fetch instructions from this URL when the call connects
       )
 
+      @calling = @client.account.calls.get(@call.sid)
+      while @calling.status != 'in-progress' do
+        @calling = @client.account.calls.get(@call.sid)
+      end
+
+      #     when 'no-answer', 'completed'
+      #     when 'failed','canceled'
+      #     when 'queued','ringing','in-progress','busy'
+
+      SlackBot.notify(
+          body: "受付Webアプリからの送信です。#{@@contact_to}さんが呼び出されました。ステータス：電話を取りました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+      ) #SlackBotからメッセージ送信
+
+
       # Lets respond to the ajax call with some positive reinforcement
       @msg = { :message => 'Phone call incoming!', :status => 'ok' }
-
     else
 
       # Oops there was an error, lets return the validation errors
@@ -69,7 +79,6 @@ class TwilioController < ApplicationController
     # format. Our Ruby library provides a helper for generating one
     # of these documents
     response = Twilio::TwiML::Response.new do |r|
-      # r.Say "こちらは,受付アプリです.#{@@namae}さんから,#{@@issue}の件で呼び出しがありました.", :voice => 'alice', :language => 'ja-jp'
       r.Say "こちらは,受付アプリです.#{@@contact_to}さんが呼び出されました.", :voice => 'alice', :language => 'ja-jp'
       # r.Say 'If this were a real click to call implementation, you would be connected to an agent at this point.', :voice => 'alice'
     end
