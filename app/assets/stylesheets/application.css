@@ -157,6 +157,18 @@ hr{
   overflow: scroll;
 }
 
+/*待機画面*/
+
+#waiting h1{
+  width: 1024px;
+  padding: 172px 0 0;
+  margin:0 auto;
+}
+
+#waiting h1 img{
+  width: 1024px;
+}
+
 /*呼び出しモーダルウインドウ*/
 #modal_window{
   position: fixed;
