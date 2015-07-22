@@ -89,13 +89,13 @@
 }
 
 h1{
-  width: 384px;
+  width: 425px;
   padding: 172px 0 0;
   margin:0 auto;
 }
 
 h1 img{
-  width: 384px;
+  width: 425px;
 }
 
 .maintxt{
@@ -129,7 +129,7 @@ hr{
   color: #fff;
   padding: 20px 0;
   display: block;
-  width: 90%;
+  width: 80%;
 }
 
 .form-group label input[type=radio]{
@@ -143,7 +143,7 @@ hr{
 .form-group .img-rounded{
   width: 150px;
   height: 150px;
-  margin: 0 55px 0 20px !important;
+  margin: 0 55px 0 75px !important;
   vertical-align: middle;
   z-index: 2;
   border-radius: 50%;
