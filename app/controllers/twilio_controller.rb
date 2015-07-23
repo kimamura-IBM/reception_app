@@ -29,10 +29,10 @@ class TwilioController < ApplicationController
   def call
     contact = Contact.new
     contact.phone = params[:phone]
-    @@contact_to = User.find_by(phonenumber: contact.phone).username
+    @contact_to = User.find_by(phonenumber: contact.phone).username
 
     SlackBot.notify(
-        body: "受付Webアプリからの送信です。#{@@contact_to}さんが呼び出されました。ステータス：呼び出し中。15秒後に通話ステータスを再確認します。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+        body: "受付Webアプリからの送信です。#{@@contact_to}さんが呼び出されました。ステータス：呼び出し中。30秒後に通話ステータスを再確認します。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
     ) #SlackBotからメッセージ送信
    
     # Validate contact
@@ -51,12 +51,12 @@ class TwilioController < ApplicationController
       @calling = @client.account.calls.get(@call.sid)
       if @calling.status != 'in-progress' || @calling.status != 'completed'
         SlackBot.notify(
-            body: "受付Webアプリからの送信です。#{@@contact_to}さんが呼び出されました。ステータス：#{@calling.status} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+            body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：#{@calling.status} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
         ) #SlackBotからメッセージ送信
         render 'index' and return
       else
         SlackBot.notify(
-            body: "受付Webアプリからの送信です。#{@@contact_to}さんが呼び出されました。ステータス：#{@calling.status} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+            body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：#{@calling.status} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
         ) #SlackBotからメッセージ送信
       end
       render 'index'
@@ -86,7 +86,7 @@ class TwilioController < ApplicationController
     # format. Our Ruby library provides a helper for generating one
     # of these documents
     response = Twilio::TwiML::Response.new do |r|
-      r.Say "こちらは,受付アプリです.#{@@contact_to}さんが呼び出されました.", :voice => 'alice', :language => 'ja-jp'
+      r.Say "こちらは,受付アプリです...呼び出されました...", :voice => 'alice', :language => 'ja-jp'
       # r.Say 'If this were a real click to call implementation, you would be connected to an agent at this point.', :voice => 'alice'
     end
     render text: response.text
