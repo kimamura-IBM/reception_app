@@ -97,7 +97,7 @@ var timerRefresh,
 				console.log('callFlag'+callFlag);
 				timerRefresh.reject();
 				$('#modal_window').hide();
-				console.log($("input[name='phone']:checked").val(););
+				console.log($("input[name='phone']:checked").val());
 				$('#contactform').submit();
 				timerSuccess01 = $.wait(2000).done(function(){
 					changeLayer('#form_main','#alert_success');
