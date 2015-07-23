@@ -106,12 +106,6 @@ var timerRefresh,
 				}).fail(function(){
 					console.log('timerSuccess01reject');
 				});
-				timerMain01 = $.wait(60000).done(function(){
-					changeLayer('#alert_success','#form_main');
-				}).fail(function(){
-					console.log('timerMain01reject');
-				});
-				timerWaiting01Func();
 			}
 		});
 
@@ -127,8 +121,8 @@ var timerRefresh,
 		$('#alert_success .cancelbtn').on('touchstart', function(e) {
 			e.preventDefault();
 			request.abort();
-			timerMain01.reject();
-			timerWaiting01.reject();
+//			timerMain01.reject();
+//			timerWaiting01.reject();
 			changeLayer('#alert_success','#form_main');
 			timerWaiting01Func();
 		});
@@ -137,7 +131,7 @@ var timerRefresh,
 			e.preventDefault();
 			request.abort();
 			timerMain02.reject();
-			timerWaiting01.reject();
+//			timerWaiting01.reject();
 			changeLayer('#alert_warning','#form_main');
 			timerWaiting01Func();
 		});
@@ -170,11 +164,17 @@ var timerRefresh,
 				if(data.message == 'yes'){
 					$('#alert_success .maintxt').hide();
 					$('#alert_success .maintxt-response,#alert_success .img-response').show();
+					timerMain01 = $.wait(30000).done(function(){
+						changeLayer('#alert_success','#form_main');
+					}).fail(function(){
+						console.log('timerMain01reject');
+					});
+					timerWaiting01Func();
 				}else{
 					$('#alert_warning .maintxt').html('誰もいないようです<br>弊社の営業時間は月曜日から金曜日の<br>10時半から20時までです');
 					timerSuccess01.reject();
-					timerMain01.reject();
-					timerWaiting01.reject();
+//					timerMain01.reject();
+//					timerWaiting01.reject();
 					changeLayer('#alert_success,#form_main','#alert_warning');
 					timerMain02 = $.wait(30000).done(function(){
 						changeLayer('#alert_warning','#form_main');
@@ -184,7 +184,7 @@ var timerRefresh,
 					timerWaiting01Func();
 				}
 			}).fail(function(XMLHttpRequest) {
-				//エラー;
+//エラー処理
 				var errStatus = XMLHttpRequest.status;
 				console.log(errStatus);
 				if(errStatus == 503){
@@ -193,8 +193,8 @@ var timerRefresh,
 					$('#alert_warning .maintxt').html('うまくつながらないようです<br>あらためて呼び出してください<br>それでもつながらない場合はドアからお入りいただき、<br>エントランスの呼び鈴を鳴らしてください');
 				}
 				timerSuccess01.reject();
-				timerMain01.reject();
-				timerWaiting01.reject();
+//				timerMain01.reject();
+//				timerWaiting01.reject();
 				if(errStatus == 0){
 				}else{
 					changeLayer('#alert_success,#form_main','#alert_warning');
