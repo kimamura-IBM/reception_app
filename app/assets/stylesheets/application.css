@@ -329,10 +329,10 @@ hr{
 }
 
 #alert_success .img-response{
+  position: absolute;
+  left: 950px;
+  top: 360px;
   width: 190px;
-  position: relative;
-  margin: 0 0 -99px 950px;
-  display: none;
 }
 
 .dot01{
