@@ -50,7 +50,7 @@ class TwilioController < ApplicationController
       while @calling.status != 'in-progress' do
         if @calling.status == 'no-answer'
           SlackBot.notify(
-              body: "受付Webアプリからの送信です。#{@@contact_to}さんが呼び出されました。ステータス：電話を取ることができませんでした。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+              body: "受付Webアプリからの送信です。#{@@contact_to}さんが呼び出されました。ステータス：#{@calling.status} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
           ) #SlackBotからメッセージ送信
           render 'index'  and return
         end
@@ -62,7 +62,7 @@ class TwilioController < ApplicationController
       #     when 'queued','ringing','in-progress','busy'
 
       SlackBot.notify(
-          body: "受付Webアプリからの送信です。#{@@contact_to}さんが呼び出されました。ステータス：電話を取りました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+          body: "受付Webアプリからの送信です。#{@@contact_to}さんが呼び出されました。ステータス：#{@calling.status} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
       ) #SlackBotからメッセージ送信
       render 'index'
 
