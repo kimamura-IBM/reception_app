@@ -106,7 +106,7 @@ var timerRefresh,
 				}).fail(function(){
 					console.log('timerSuccess01reject');
 				});
-				timerMain01 = $.wait(35000).done(function(){
+				timerMain01 = $.wait(60000).done(function(){
 					changeLayer('#alert_success','#form_main');
 				}).fail(function(){
 					console.log('timerMain01reject');
