@@ -166,6 +166,7 @@ var timerRefresh,
 				data: $form.serialize()
 			}).done(function(data) {
 				//呼び出し成功;
+				console.log(data.message);
 				$('#alert_success .maintxt').hide();
 				$('#alert_success .maintxt-response,#alert_success .img-response').show();
 			}).fail(function(XMLHttpRequest) {
