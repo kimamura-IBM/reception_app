@@ -52,12 +52,14 @@ class TwilioController < ApplicationController
       @calling = @client.account.calls.get(@call.sid)
       if @calling.status != 'in-progress' || @calling.status != 'completed'
         SlackBot.notify(
-            body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：#{@calling.status} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+            body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：電話を取ることができませんでした。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
         ) #SlackBotからメッセージ送信
+        @msg = { :message => "#{@contact_to}は只今留守のようです。", :status => 'ok' }
       else
         SlackBot.notify(
-            body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：#{@calling.status} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+            body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：電話を取りました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
         ) #SlackBotからメッセージ送信
+        @msg = { :message => "おっと、#{@contact_to}が気付いたようです。", :status => 'ok' }
       end
       #     when 'no-answer', 'completed'
       #     when 'failed','canceled'
