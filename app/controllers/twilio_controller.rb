@@ -21,7 +21,8 @@ class TwilioController < ApplicationController
   # Render home page
   def index
     @users = User.all.reverse_order
-  	render 'index'
+  	#render 'index'
+    render :layout => false
   end
 
   # Hande a POST from our web form and connect a call via REST API
