@@ -32,7 +32,7 @@ class TwilioController < ApplicationController
     @@contact_to = User.find_by(phonenumber: contact.phone).username
 
     SlackBot.notify(
-        body: "受付Webアプリからの送信です。#{@@contact_to}さんが呼び出されました。ステータス：呼び出し中。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+        body: "受付Webアプリからの送信です。#{@@contact_to}さんが呼び出されました。ステータス：呼び出し中。15秒後に通話ステータスを再確認します。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
     ) #SlackBotからメッセージ送信
    
     # Validate contact
@@ -43,28 +43,31 @@ class TwilioController < ApplicationController
         :from => @@twilio_number,
         :to => contact.phone,
         #:url => "http://twimlets.com/echo?Twiml=%3CResponse%3E%0A%20%20%3CPause%20length%3D%222%22%2F%3E%0A%20%20%3CSay%20voice%3D%22woman%22%20language%3D%22ja-jp%22%3E%E3%81%93%E3%81%A1%E3%82%89%E3%81%AF%E3%80%81%E3%82%A6%E3%82%A7%E3%83%96%E3%83%AA%E3%82%AA%E3%81%8B%E3%82%89%E7%99%BA%E4%BF%A1%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%81%BE%E3%81%99%E3%80%82%E5%8F%97%E4%BB%98%E3%81%8B%E3%82%89%E3%81%82%E3%81%AA%E3%81%9F%E3%81%AB%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97%E3%81%8C%E3%81%82%E3%82%8A%E3%81%BE%E3%81%97%E3%81%9F%E3%80%82%3C%2FSay%3E%0A%3C%2FResponse%3E&" # Fetch instructions from this URL when the call connects
-        :url => "#{root_url}connect" # Fetch instructions from this URL when the call connects
+        :url => "#{root_url}connect", # Fetch instructions from this URL when the call connects
+        :timeout => 15
       )
 
+      sleep(15)
       @calling = @client.account.calls.get(@call.sid)
-      while @calling.status != 'in-progress' do
+      if @calling.status != 'in-progress'
         if @calling.status == 'no-answer'
           SlackBot.notify(
               body: "受付Webアプリからの送信です。#{@@contact_to}さんが呼び出されました。ステータス：#{@calling.status} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
           ) #SlackBotからメッセージ送信
-          render 'index'  and return
+          render 'index' and return
         end
-        @calling = @client.account.calls.get(@call.sid)
+      else
+        SlackBot.notify(
+            body: "受付Webアプリからの送信です。#{@@contact_to}さんが呼び出されました。ステータス：#{@calling.status} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+        ) #SlackBotからメッセージ送信
+        render 'index' and return
       end
 
       #     when 'no-answer', 'completed'
       #     when 'failed','canceled'
       #     when 'queued','ringing','in-progress','busy'
 
-      SlackBot.notify(
-          body: "受付Webアプリからの送信です。#{@@contact_to}さんが呼び出されました。ステータス：#{@calling.status} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
-      ) #SlackBotからメッセージ送信
-      render 'index'
+
 
       # Lets respond to the ajax call with some positive reinforcement
       @msg = { :message => 'Phone call incoming!', :status => 'ok' }
