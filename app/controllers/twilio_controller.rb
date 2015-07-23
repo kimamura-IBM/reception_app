@@ -43,7 +43,7 @@ class TwilioController < ApplicationController
       @call = @client.account.calls.create(
         :from => @@twilio_number,
         :to => contact.phone,
-        :url => "http://twimlets.com/echo?Twiml=%E3%81%93%E3%81%A1%E3%82%89%E3%81%AF%2C%E5%8F%97%E4%BB%98%E3%82%A2%E3%83%97%E3%83%AA%E3%81%A7%E3%81%99.%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%97%E3%81%8C%E3%81%82%E3%82%8A%E3%81%BE%E3%81%97%E3%81%9F.&",
+        :url => "http://twimlets.com/echo?Twiml=%3CResponse%3E%0A%3CSay%20voice%3D%22alice%22%20language%3D%22ja-JP%22%3E%E3%81%93%E3%81%A1%E3%82%89%E3%81%AF%2C%E5%8F%97%E4%BB%98%E3%82%A2%E3%83%97%E3%83%AA%E3%81%A7%E3%81%99.#{@contact_to_url}%E3%81%95%E3%82%93%E3%81%8C%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%95%E3%82%8C%E3%81%BE%E3%81%97%E3%81%9F.%3C%2FSay%3E%0A%3C%2FResponse%3E&",
         # :url => "#{root_url}connect", # Fetch instructions from this URL when the call connects
         :timeout => 15
       )
