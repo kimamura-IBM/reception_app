@@ -85,6 +85,7 @@ var timerRefresh,
 			$('#modal_window p').html(callName+'を<br>呼び出しますか？');
 			$('#alert_success .nametxt').text(callName);
 			$('#alert_success .img-rounded').attr('src',callImg);
+			$(this).find('input').prop('checked', true);
 			$('#modal_window').show();
 		});
 
