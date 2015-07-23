@@ -167,8 +167,22 @@ var timerRefresh,
 			}).done(function(data) {
 				//呼び出し成功;
 				console.log(data.message);
-				$('#alert_success .maintxt').hide();
-				$('#alert_success .maintxt-response,#alert_success .img-response').show();
+				if(data.message == true){
+					$('#alert_success .maintxt').hide();
+					$('#alert_success .maintxt-response,#alert_success .img-response').show();
+				}else{
+					$('#alert_warning .maintxt').html('誰もいないようです<br>弊社の営業時間は月曜日から金曜日の<br>10時半から20時までです');
+					timerSuccess01.reject();
+					timerMain01.reject();
+					timerWaiting01.reject();
+					changeLayer('#alert_success,#form_main','#alert_warning');
+					timerMain02 = $.wait(30000).done(function(){
+						changeLayer('#alert_warning','#form_main');
+					}).fail(function(){
+						console.log('timerMain02reject');
+					});
+					timerWaiting01Func();
+				}
 			}).fail(function(XMLHttpRequest) {
 				//エラー;
 				var errStatus = XMLHttpRequest.status;
