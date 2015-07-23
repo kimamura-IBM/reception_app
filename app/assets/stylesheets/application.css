@@ -50,7 +50,8 @@
 /*基本画面配置*/
 #waiting,
 #alert_success,
-#alert_warning{
+#alert_warning,
+#modal_window{
   position: absolute;
   top: 0;
   left: 0;
@@ -69,6 +70,10 @@
   z-index: 3;
 }
 
+#modal_window{
+  z-index: 10;
+}
+
 /*基本画面パーツ*/
 * {
   margin: 0;
@@ -84,18 +89,18 @@
 }
 
 h1{
-  width: 384px;
+  width: 425px;
   padding: 172px 0 0;
   margin:0 auto;
 }
 
 h1 img{
-  width: 384px;
+  width: 425px;
 }
 
 .maintxt{
   font-size: 52px;
-  line-height: 52px;
+  line-height: 72px;
   color: #fff;
   text-align: center;
   margin:144px auto;
@@ -124,7 +129,7 @@ hr{
   color: #fff;
   padding: 20px 0;
   display: block;
-  width: 90%;
+  width: 80%;
 }
 
 .form-group label input[type=radio]{
@@ -138,7 +143,7 @@ hr{
 .form-group .img-rounded{
   width: 150px;
   height: 150px;
-  margin: 0 55px 0 20px !important;
+  margin: 0 55px 0 75px !important;
   vertical-align: middle;
   z-index: 2;
   border-radius: 50%;
@@ -151,6 +156,83 @@ hr{
 #radio_area{
   overflow: scroll;
 }
+
+/*待機画面*/
+
+#waiting h1{
+  width: 1024px;
+  padding: 172px 0 0;
+  margin:0 auto;
+}
+
+#waiting h1 img{
+  width: 1024px;
+}
+
+/*呼び出しモーダルウインドウ*/
+#modal_window{
+  position: fixed;
+  background-color: rgba(0,0,0,.5);
+}
+
+#modal_window #main_window{
+  position: absolute;
+  background-color: #fff;
+  width: 1080px;
+  height: 640px;
+  padding: 90px 120px 65px;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+#modal_window p{
+  color: #c8bf8a;
+  font-size: 60px;
+  line-height: 84px;
+  margin: 0 0 55px;
+  word-break: break-all;
+}
+
+#modal_window .clearfix{
+  overflow: hidden;
+  width: 840px;
+  position: absolute;
+  bottom: 65px;
+  left: 120px;
+}
+
+#modal_window #call{
+  text-align: center;
+  font-size: 60px;
+  line-height: 94px;
+  height: 94px;
+  width: 370px;
+  border:#c8bf8a 4px solid;
+  background-color:#c8bf8a;
+  color:#fff;
+  float: left;
+  outline: none;
+}
+
+#modal_window #cancel{
+  text-align: center;
+  font-size: 60px;
+  line-height: 94px;
+  height: 94px;
+  width: 370px;
+  border:#c8bf8a 4px solid;
+  background-color:#fff;
+  color:#c8bf8a;
+  float: right;
+  outline: none;
+}
+
+
+
 
 /*エラー画面*/
 #alert_warning{
@@ -186,6 +268,9 @@ hr{
   text-align: center;
   width: 750px;
   margin:auto;
+  display: block;
+  outline: none;
+  background-color: inherit;
 }
 
 /*呼び出し中画面*/
@@ -218,11 +303,13 @@ hr{
   text-align: center;
 }
 
-#alert_success .maintxt{
+#alert_success .maintxt,
+#alert_success .maintxt-response{
   font-size: 52px;
-  line-height: 52px;
+  line-height: 72px;
   color: #fff;
   margin:0 auto 150px;
+  text-align: center;
 }
 
 #alert_success .maintxt-response{
@@ -237,6 +324,8 @@ hr{
   text-align: center;
   width: 585px;
   margin:auto;
+  display: block;
+  background-color: inherit;
 }
 
 #alert_success .img-response{
@@ -248,17 +337,35 @@ hr{
 
 .dot01{
   opacity: 0;
+  -webkit-animation: dotsonoff 3s 0.5s infinite;
   animation: dotsonoff 3s 0.5s infinite;
 }
 
 .dot02{
   opacity: 0;
+  -webkit-animation: dotsonoff 3s 1s infinite;
   animation: dotsonoff 3s 1s infinite;
 }
 
 .dot03{
   opacity: 0;
+  -webkit-animation: dotsonoff 3s 1.5s infinite;
   animation: dotsonoff 3s 1.5s infinite;
+}
+
+@-webkit-keyframes dotsonoff {
+  0% {
+    opacity: 0;
+  }
+  33% {
+    opacity: 1;
+  }
+  66% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 @keyframes dotsonoff {
@@ -295,6 +402,18 @@ body{
   opacity: 0;
 }
 
+@-webkit-keyframes dissolve {
+  0% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0.1;
+  }
+}
+
 @keyframes dissolve {
   0% {
     opacity: 0.1;
@@ -308,18 +427,22 @@ body{
 }
 
 .rect1 {
+  -webkit-animation: dissolve 3s ease-in-out 0s infinite alternate;
   animation: dissolve 3s ease-in-out 0s infinite alternate;
 }
 
 .rect2 {
+  -webkit-animation: dissolve 3s ease-in-out 1.5s infinite alternate;
   animation: dissolve 3s ease-in-out 1.5s infinite alternate;
 }
 
 .rect3 {
+  -webkit-animation: dissolve 3s ease-in-out 1s infinite alternate;
   animation: dissolve 3s ease-in-out 1s infinite alternate;
 }
 
 .rect4 {
+  -webkit-animation: dissolve 3s ease-in-out 0.75s infinite alternate;
   animation: dissolve 3s ease-in-out 0.75s infinite alternate;
 }
 
@@ -371,7 +494,7 @@ body{
 /*待機中アニメパーツ*/
 .loader-ring {
   position: relative;
-  margin: 360px auto 250px;
+  margin: 240px auto 180px;
   width: 470px;
   height: 470px;
 }
@@ -385,6 +508,7 @@ body{
   -moz-box-shadow: 0 4px 0 #fff inset;
   -webkit-box-shadow: 0 4px 0 #fff inset;
   box-shadow: 0 4px 0 #fff inset;
+  -webkit-animation: rotate-360 2s linear infinite;
   animation: rotate-360 2s linear infinite;
 }
 
@@ -411,6 +535,21 @@ body{
   line-height: 470px;
   text-align: center;
   color: #fff;
+}
+
+@-webkit-keyframes rotate-360 {
+  from {
+    -moz-transform: rotate(0);
+    -ms-transform: rotate(0);
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+  to {
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes rotate-360 {
@@ -450,49 +589,82 @@ body{
   margin-right: 0px;
 }
 .loader span:nth-child(1) {
+  -webkit-animation: load 2.5s 1.4s infinite linear;
   animation: load 2.5s 1.4s infinite linear;
 }
 .loader span:nth-child(2) {
+  -webkit-animation: load 2.5s 1.2s infinite linear;
   animation: load 2.5s 1.2s infinite linear;
 }
 .loader span:nth-child(3) {
+  -webkit-animation: load 2.5s 1s infinite linear;
   animation: load 2.5s 1s infinite linear;
 }
 .loader span:nth-child(4) {
+  -webkit-animation: load 2.5s 0.8s infinite linear;
   animation: load 2.5s 0.8s infinite linear;
 }
 .loader span:nth-child(5) {
+  -webkit-animation: load 2.5s 0.6s infinite linear;
   animation: load 2.5s 0.6s infinite linear;
 }
 .loader span:nth-child(6) {
+  -webkit-animation: load 2.5s 0.4s infinite linear;
   animation: load 2.5s 0.4s infinite linear;
 }
 .loader span:nth-child(7) {
+  -webkit-animation: load 2.5s 0.2s infinite linear;
   animation: load 2.5s 0.2s infinite linear;
 }
 .loader span:nth-child(8) {
+  -webkit-animation: load 2.5s 0s infinite linear;
   animation: load 2.5s 0s infinite linear;
 }
 .loader span:nth-child(9) {
+  -webkit-animation: load 2.5s 0.2s infinite linear;
   animation: load 2.5s 0.2s infinite linear;
 }
 .loader span:nth-child(10) {
+  -webkit-animation: load 2.5s 0.4s infinite linear;
   animation: load 2.5s 0.4s infinite linear;
 }
 .loader span:nth-child(11) {
+  -webkit-animation: load 2.5s 0.6s infinite linear;
   animation: load 2.5s 0.6s infinite linear;
 }
 .loader span:nth-child(12) {
+  -webkit-animation: load 2.5s 0.8s infinite linear;
   animation: load 2.5s 0.8s infinite linear;
 }
 .loader span:nth-child(13) {
+  -webkit-animation: load 2.5s 1s infinite linear;
   animation: load 2.5s 1s infinite linear;
 }
 .loader span:nth-child(14) {
+  -webkit-animation: load 2.5s 1.2s infinite linear;
   animation: load 2.5s 1.2s infinite linear;
 }
 .loader span:nth-child(15) {
+  -webkit-animation: load 2.5s 1.4s infinite linear;
   animation: load 2.5s 1.4s infinite linear;
+}
+
+@-webkit-keyframes load {
+  0% {
+    background: rgba(255,255,255,.7);
+    margin-top: 25%;
+    height: 10%;
+  }
+  50% {
+    background: rgba(255,255,255,.4);
+    height: 100%;
+    margin-top: 0%;
+  }
+  100% {
+    background: rgba(255,255,255,.7);
+    height: 10%;
+    margin-top: 25%;
+  }
 }
 
 @keyframes load {
