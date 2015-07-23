@@ -24,6 +24,7 @@ $(function() {
             $('#alert_success').show();
             setTimeout(function(){
                 $('#alert_success').hide();
+                alert(data.message);
             },20000); //n秒間表示し続ける
         }).fail(function() {
             //alert('エラーが発生しました。');
