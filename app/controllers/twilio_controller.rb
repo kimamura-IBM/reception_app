@@ -48,6 +48,12 @@ class TwilioController < ApplicationController
 
       @calling = @client.account.calls.get(@call.sid)
       while @calling.status != 'in-progress' do
+        if @calling.status == 'no-answer'
+          SlackBot.notify(
+              body: "受付Webアプリからの送信です。#{@@contact_to}さんが呼び出されました。ステータス：電話を取ることができませんでした。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+          ) #SlackBotからメッセージ送信
+          render 'index'  and return
+        end
         @calling = @client.account.calls.get(@call.sid)
       end
 
@@ -58,7 +64,7 @@ class TwilioController < ApplicationController
       SlackBot.notify(
           body: "受付Webアプリからの送信です。#{@@contact_to}さんが呼び出されました。ステータス：電話を取りました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
       ) #SlackBotからメッセージ送信
-
+      render 'index'
 
       # Lets respond to the ajax call with some positive reinforcement
       @msg = { :message => 'Phone call incoming!', :status => 'ok' }
