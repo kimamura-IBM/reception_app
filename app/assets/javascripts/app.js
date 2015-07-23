@@ -1,4 +1,7 @@
 (function () {
+//共通仕様フラグ
+var callFlag = true;
+
 //待機画面タイマー
 var timerRefresh,
 		timerWaiting01,
@@ -83,28 +86,32 @@ var timerRefresh,
 			$('#modal_window p').html(callName+'を<br>呼び出しますか？');
 			$('#alert_success .nametxt').text(callName);
 			$('#alert_success .img-rounded').attr('src',callImg);
-
 			$('#modal_window').show();
 		});
 
 		$('#modal_window #call').on('touchstart', function(e) {
 			e.preventDefault();
-			timerRefresh.reject();
-			$('#modal_window').hide();
-			$('#contactform').submit();
-			timerSuccess01 = $.wait(2000).done(function(){
-				changeLayer('#form_main','#alert_success');
-				$('#alert_success .maintxt-response,#alert_success .img-response').hide();
-				$('#alert_success .maintxt').fadeIn(1000);
-			}).fail(function(){
-				console.log('timerSuccess01reject');
-			});
-			timerMain01 = $.wait(35000).done(function(){
-				changeLayer('#alert_success','#form_main');
-			}).fail(function(){
-				console.log('timerMain01reject');
-			});
-			timerWaiting01Func();
+			console.log('callFlag'+callFlag);
+			if(callFlag == true){
+				callFlag = false;
+				console.log('callFlag'+callFlag);
+				timerRefresh.reject();
+				$('#modal_window').hide();
+				$('#contactform').submit();
+				timerSuccess01 = $.wait(2000).done(function(){
+					changeLayer('#form_main','#alert_success');
+					$('#alert_success .maintxt-response,#alert_success .img-response').hide();
+					$('#alert_success .maintxt').fadeIn(1000);
+				}).fail(function(){
+					console.log('timerSuccess01reject');
+				});
+				timerMain01 = $.wait(35000).done(function(){
+					changeLayer('#alert_success','#form_main');
+				}).fail(function(){
+					console.log('timerMain01reject');
+				});
+				timerWaiting01Func();
+			}
 		});
 
 		$('#modal_window #cancel').on('touchstart', function(e) {
@@ -184,6 +191,8 @@ var timerRefresh,
 				}
 			}).always(function() {
 				$submit.removeAttr('disabled');
+				callFlag = true;
+				console.log('callFlag'+callFlag);
 			});
 		});
 	});
