@@ -32,7 +32,7 @@ class TwilioController < ApplicationController
     @contact_to = User.find_by(phonenumber: contact.phone).username
 
     SlackBot.notify(
-        body: "受付Webアプリからの送信です。#{@@contact_to}さんが呼び出されました。ステータス：呼び出し中。30秒後に通話ステータスを再確認します。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+        body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：呼び出し中。30秒後に通話ステータスを再確認します。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
     ) #SlackBotからメッセージ送信
    
     # Validate contact
