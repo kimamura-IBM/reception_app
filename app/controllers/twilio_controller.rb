@@ -47,7 +47,7 @@ class TwilioController < ApplicationController
         :timeout => 15
       )
 
-      sleep(15)
+      sleep(25)
       @calling = @client.account.calls.get(@call.sid)
       if @calling.status != 'in-progress' || @calling.status != 'completed'
         SlackBot.notify(
@@ -58,9 +58,8 @@ class TwilioController < ApplicationController
         SlackBot.notify(
             body: "受付Webアプリからの送信です。#{@@contact_to}さんが呼び出されました。ステータス：#{@calling.status} https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
         ) #SlackBotからメッセージ送信
-        render 'index' and return
       end
-
+      render 'index'
       #     when 'no-answer', 'completed'
       #     when 'failed','canceled'
       #     when 'queued','ringing','in-progress','busy'
