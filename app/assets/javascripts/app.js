@@ -4,10 +4,10 @@ var callFlag = true;
 
 //待機画面タイマー
 var timerRefresh,
-		timerWaiting01,
-		timerMain01,
-		timerMain02,
-		timerSuccess01;
+	timerWaiting01,
+	timerMain01,
+	timerMain02,
+	timerSuccess01;
 
 	$.extend({
 		wait: function(waitTime){
@@ -36,11 +36,11 @@ var timerRefresh,
 //読み込み時の処理
 //画面組み立て
 		var wid = $(window).width() + 'px',
-				hei = $(window).height(),
-				headh = $('#header').height(),
-				radioh = hei - headh,
-				layer = $('#wrapper,#waiting,#modal_window,#alert_success,#alert_warning'),
-				rects = document.getElementsByClassName('rect');
+			hei = $(window).height(),
+			headh = $('#header').height(),
+			radioh = hei - headh,
+			layer = $('#wrapper,#waiting,#modal_window,#alert_success,#alert_warning'),
+			rects = document.getElementsByClassName('rect');
 
 		hei = hei + 'px';
 		radioh = radioh + 'px';
@@ -73,7 +73,7 @@ var timerRefresh,
 		$('.form-group label').on('touchstart', function(e) {
 			e.preventDefault();
 			var callName,
-					callImg;
+				callImg;
 			timerWaiting01.reject();
 			timerRefresh = $.wait(40000).done(function(){
 				$('#modal_window').hide();
@@ -150,8 +150,8 @@ var timerRefresh,
 
 //呼び出し処理
 		var $form = $('#contactform'),
-				$submit = $('#contactform input[type=submit]'),
-				request;
+			$submit = $('#contactform input[type=submit]'),
+			request;
 
 // Intercept form submission
 		$form.on('submit', function(e) {
