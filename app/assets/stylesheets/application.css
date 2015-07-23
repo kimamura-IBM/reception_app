@@ -307,6 +307,8 @@ hr{
 #alert_success .maintxt-response{
   font-size: 52px;
   line-height: 72px;
+  height: 72px;
+  overflow: visible;
   color: #fff;
   margin:0 auto 150px;
   text-align: center;
