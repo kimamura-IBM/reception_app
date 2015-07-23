@@ -167,7 +167,7 @@ var timerRefresh,
 				//呼び出し成功;
 				$('#alert_success .maintxt').hide();
 				$('#alert_success .maintxt-response,#alert_success .img-response').show();
-			}).fail(function(XMLHttpRequest, textStatus, errorThrown) {
+			}).fail(function(XMLHttpRequest) {
 				//エラー;
 				var errStatus = XMLHttpRequest.status;
 				console.log(errStatus);
