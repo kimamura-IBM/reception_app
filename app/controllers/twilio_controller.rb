@@ -33,7 +33,7 @@ class TwilioController < ApplicationController
     @contact_to_url = URI.escape(@contact_to)
 
     SlackBot.notify(
-        body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：呼び出し中。30秒後に通話ステータスを再確認します。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+        body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：呼び出し中。20秒後に通話ステータスを再確認します。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
     ) #SlackBotからメッセージ送信
    
     # Validate contact
@@ -45,21 +45,21 @@ class TwilioController < ApplicationController
         :to => contact.phone,
         :url => "http://twimlets.com/echo?Twiml=%3CResponse%3E%0A%3CSay%20voice%3D%22alice%22%20language%3D%22ja-JP%22%3E%E3%81%93%E3%81%A1%E3%82%89%E3%81%AF%2C%E5%8F%97%E4%BB%98%E3%82%A2%E3%83%97%E3%83%AA%E3%81%A7%E3%81%99.#{@contact_to_url}%E3%81%95%E3%82%93%E3%81%8C%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%95%E3%82%8C%E3%81%BE%E3%81%97%E3%81%9F.%3C%2FSay%3E%0A%3C%2FResponse%3E&",
         # :url => "#{root_url}connect", # Fetch instructions from this URL when the call connects
-        :timeout => 15
+        :timeout => 10
       )
 
-      sleep(25)
+      sleep(20)
       @calling = @client.account.calls.get(@call.sid)
-      if @calling.status != 'in-progress' || @calling.status != 'completed'
-        SlackBot.notify(
-            body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：電話を取ることができませんでした。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
-        ) #SlackBotからメッセージ送信
-        @msg = { :message => "#{@contact_to}は只今留守のようです。", :status => 'ok' }
-      else
+      if @calling.status == 'in-progress' || @calling.status == 'completed'
         SlackBot.notify(
             body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：電話を取りました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
         ) #SlackBotからメッセージ送信
         @msg = { :message => "おっと、#{@contact_to}が気付いたようです。", :status => 'ok' }
+      else
+        SlackBot.notify(
+            body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：電話を取ることができませんでした。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+        ) #SlackBotからメッセージ送信
+        @msg = { :message => "#{@contact_to}は只今留守のようです。", :status => 'ok' }
       end
       #     when 'no-answer', 'completed'
       #     when 'failed','canceled'

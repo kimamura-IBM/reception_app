@@ -22,9 +22,9 @@ $(function() {
         }).done(function(data) {
             //alert('呼び出し中です。しばらくお待ちください。');
             $('#alert_success').show();
+            alert(data.message);
             setTimeout(function(){
                 $('#alert_success').hide();
-                alert(data.message);
             },20000); //n秒間表示し続ける
         }).fail(function() {
             //alert('エラーが発生しました。');
