@@ -121,8 +121,6 @@ var timerRefresh,
 		$('#alert_success .cancelbtn').on('touchstart', function(e) {
 			e.preventDefault();
 			request.abort();
-//			timerMain01.reject();
-//			timerWaiting01.reject();
 			changeLayer('#alert_success','#form_main');
 			timerWaiting01Func();
 		});
@@ -131,7 +129,6 @@ var timerRefresh,
 			e.preventDefault();
 			request.abort();
 			timerMain02.reject();
-//			timerWaiting01.reject();
 			changeLayer('#alert_warning','#form_main');
 			timerWaiting01Func();
 		});
@@ -159,7 +156,7 @@ var timerRefresh,
 				method:'POST',
 				data: $form.serialize()
 			}).done(function(data) {
-				//呼び出し成功;
+//呼び出し成功;
 				console.log(data.message);
 				if(data.message == 'yes'){
 					$('#alert_success .maintxt').hide();
@@ -173,8 +170,6 @@ var timerRefresh,
 				}else{
 					$('#alert_warning .maintxt').html('誰もいないようです<br>弊社の営業時間は月曜日から金曜日の<br>10時半から20時までです');
 					timerSuccess01.reject();
-//					timerMain01.reject();
-//					timerWaiting01.reject();
 					changeLayer('#alert_success,#form_main','#alert_warning');
 					timerMain02 = $.wait(30000).done(function(){
 						changeLayer('#alert_warning','#form_main');
@@ -193,8 +188,6 @@ var timerRefresh,
 					$('#alert_warning .maintxt').html('うまくつながらないようです<br>あらためて呼び出してください<br>それでもつながらない場合はドアからお入りいただき、<br>エントランスの呼び鈴を鳴らしてください');
 				}
 				timerSuccess01.reject();
-//				timerMain01.reject();
-//				timerWaiting01.reject();
 				if(errStatus == 0){
 				}else{
 					changeLayer('#alert_success,#form_main','#alert_warning');
