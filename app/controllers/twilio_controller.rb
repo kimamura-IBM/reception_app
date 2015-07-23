@@ -54,12 +54,12 @@ class TwilioController < ApplicationController
         SlackBot.notify(
             body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：電話を取りました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
         ) #SlackBotからメッセージ送信
-        @msg = { :message => "true", :status => 'ok' }
+        @msg = { :message => "yes", :status => 'ok' }
       else
         SlackBot.notify(
             body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：電話を取ることができませんでした。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
         ) #SlackBotからメッセージ送信
-        @msg = { :message => "false", :status => 'ok' }
+        @msg = { :message => "no", :status => 'ok' }
       end
       #     when 'no-answer', 'completed'
       #     when 'failed','canceled'
