@@ -35,7 +35,7 @@ class TwilioController < ApplicationController
     SlackBot.notify(
         body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：呼び出し中。20秒後に通話ステータスを再確認します。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
     ) #SlackBotからメッセージ送信
-   
+
     # Validate contact
     if contact.valid?
       @client = Twilio::REST::Client.new @@twilio_sid, @@twilio_token
@@ -54,12 +54,12 @@ class TwilioController < ApplicationController
         SlackBot.notify(
             body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：電話を取りました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
         ) #SlackBotからメッセージ送信
-        @msg = { :message => "おっと、#{@contact_to}が気付いたようです。", :status => 'ok' }
+        @msg = { :message => "true", :status => 'ok' }
       else
         SlackBot.notify(
             body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：電話を取ることができませんでした。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
         ) #SlackBotからメッセージ送信
-        @msg = { :message => "#{@contact_to}は只今留守のようです。", :status => 'ok' }
+        @msg = { :message => "false", :status => 'ok' }
       end
       #     when 'no-answer', 'completed'
       #     when 'failed','canceled'
@@ -81,7 +81,7 @@ class TwilioController < ApplicationController
 
   # This URL contains instructions for the call that is connected with a lead
   # that is using the web form.  These instructions are used either for a
-  # direct call to our Twilio number (the mobile use case) or 
+  # direct call to our Twilio number (the mobile use case) or
   def connect
     # Our response to this request will be an XML document in the "TwiML"
     # format. Our Ruby library provides a helper for generating one
@@ -95,22 +95,22 @@ class TwilioController < ApplicationController
 
 
   # Authenticate that all requests to our public-facing TwiML pages are
-  # coming from Twilio. Adapted from the example at 
+  # coming from Twilio. Adapted from the example at
   # http://twilio-ruby.readthedocs.org/en/latest/usage/validation.html
   # Read more on Twilio Security at https://www.twilio.com/docs/security
   private
   def authenticate_twilio_request
     twilio_signature = request.headers['HTTP_X_TWILIO_SIGNATURE']
 
-    # Helper from twilio-ruby to validate requests. 
+    # Helper from twilio-ruby to validate requests.
     @validator = Twilio::Util::RequestValidator.new(@@twilio_token)
- 
+
     # the POST variables attached to the request (eg "From", "To")
     # Twilio requests only accept lowercase letters. So scrub here:
     post_vars = params.reject {|k, v| k.downcase == k}
- 
+
     is_twilio_req = @validator.validate(request.url, post_vars, twilio_signature)
- 
+
     unless is_twilio_req
       render :xml => (Twilio::TwiML::Response.new {|r| r.Hangup}).text, :status => :unauthorized
       false
