@@ -71,7 +71,6 @@ var timerRefresh,
 
 //呼び出し起動
 		$('.form-group label').on('touchstart', function(e) {
-			e.preventDefault();
 			var callName,
 				callImg;
 			timerWaiting01.reject();
