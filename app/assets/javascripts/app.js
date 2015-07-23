@@ -167,7 +167,7 @@ var timerRefresh,
 			}).done(function(data) {
 				//呼び出し成功;
 				console.log(data.message);
-				if(data.message == true){
+				if(data.message == 'yes'){
 					$('#alert_success .maintxt').hide();
 					$('#alert_success .maintxt-response,#alert_success .img-response').show();
 				}else{
