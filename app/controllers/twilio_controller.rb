@@ -32,7 +32,7 @@ class TwilioController < ApplicationController
 
   # Render home page
   def index
-    @users = User.order("updated_at DESC") # DBからユーザー全員分取得
+    @users = User.order("updated_at DESC") # DBからユーザー全員分取得。更新日時で並び替え。
   	#render 'index'
     render :layout => false # レイアウトを使わない設定に
   end
