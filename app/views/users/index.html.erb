@@ -1,10 +1,7 @@
-<h1>Listing users</h1>
+<h2>登録済みユーザーリスト</h2>
+<h5>実際の画面にもこの順番で表示されます</h5>
 
 <style>
-h1{
-    margin-bottom: 50px;
-}
-
 td, th {
     padding: 10px 10px;
 }
@@ -16,8 +13,8 @@ td, th {
       <th>表示名</th>
       <th>電話番号</th>
       <th>プロフィール画像</th>
-      <th>更新日時(並び替えに利用。新しいものが上にきます)</th>
-      <th colspan="3"></th>
+      <th>更新日時<br />(並び替えに利用。新しいものが上にきます)</th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
@@ -28,9 +25,9 @@ td, th {
         <td><%= user.phonenumber %></td>
         <td><a href="<%= user.profilepicture %>" target="_blank"><img src="<%= user.profilepicture %>" height="30" /><br /><%= user.profilepicture %></a></td>
         <td><%= user.updated_at %></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <!--<td><%# link_to 'Show', user %></td>-->
+        <td><%= link_to '編集', edit_user_path(user) %></td>
+        <td><%= link_to '削除', user, method: :delete, data: { confirm: '本当に削除しますか？' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -38,4 +35,4 @@ td, th {
 
 <br>
 
-<h4><%= link_to 'New User', new_user_path %></h4>
+<h4><%= link_to '新規追加', new_user_path %></h4>
