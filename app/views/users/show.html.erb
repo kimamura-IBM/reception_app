@@ -1,18 +1,19 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Username:</strong>
+  <strong>表示名:</strong>
   <%= @user.username %>
 </p>
 
 <p>
-  <strong>Phonenumber:</strong>
+  <strong>電話番号:</strong>
   <%= @user.phonenumber %>
 </p>
 
 <p>
-  <strong>Profilepicture:</strong>
-  <%= @user.profilepicture %>
+  <strong>プロフィール画像:</strong>
+  <a href="<%= @user.profilepicture %>" target="_blank"><%= @user.profilepicture %></a><br />
+  <a href="<%= @user.profilepicture %>" target="_blank"><img src="<%= @user.profilepicture %>" height="200" /></a>
 </p>
 
 <p>

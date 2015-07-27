@@ -27,7 +27,8 @@
     </div>
     <div class="field">
         <%= f.label :profilepicture, 'プロフィール画像 ※URLで入力' %><br>
-        <%= f.text_field :profilepicture, placeholder: "http://***.jpg" %>
+        <%= f.text_field :profilepicture, placeholder: "http://***.jpg" %><br />
+        <a href="<%= @user.profilepicture %>" target="_blank"><img src="<%= @user.profilepicture %>" height="100" /></a>
     </div>
   <div class="actions">
     <%= f.submit %>
