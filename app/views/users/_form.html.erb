@@ -1,3 +1,9 @@
+<style>
+  div {
+      margin: 20px;
+  }
+</style>
+
 <%= form_for(@user) do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
@@ -9,20 +15,21 @@
       <% end %>
       </ul>
     </div>
-  <% end %>
+    <% end %>
 
-  <div class="field">
-    <%= f.label :username, '表示名' %><br>
-    <%= f.text_field :username %>
-  </div>
-  <div class="field">
-    <%= f.label :phonenumber, '電話番号 ※"+81"の後に"0"を抜いた電話番号を入力 (例)+819012345678' %><br>
-    <%= f.text_field :phonenumber %>
-  </div>
-  <div class="field">
-    <%= f.label :profilepicture, 'プロフィール画像 ※URLで入力' %><br>
-    <%= f.text_field :profilepicture %>
-  </div>
+    <div class="field">
+        <%= f.label :username, '表示名' %><br>
+        <%= f.text_field :username %>
+    </div>
+    <div class="field">
+        <%= f.label :phonenumber, '電話番号 ※"+81"の後に"0"を抜いた電話番号を入力 (例)+819012345678' %><br>
+        <%= f.text_field :phonenumber, placeholder: "+819012345678" %>
+    </div>
+    <div class="field">
+        <%= f.label :profilepicture, 'プロフィール画像 ※URLで入力' %><br>
+        <%= f.text_field :profilepicture, placeholder: "http://***.jpg" %><br />
+        <a href="<%= @user.profilepicture %>" target="_blank"><img src="<%= @user.profilepicture %>" height="100" /></a>
+    </div>
   <div class="actions">
     <%= f.submit %>
   </div>
