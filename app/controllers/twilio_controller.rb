@@ -46,7 +46,7 @@ class TwilioController < ApplicationController
 
     # SlackBotからメッセージ送信.まず呼び出された旨を#visitorに.
     SlackBot.notify(
-        body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：呼び出し中。20秒後に通話ステータスを再確認します。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+        body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：呼び出し中。20秒後に通話ステータスを再確認します。"
     )
 
     # Validate contact
@@ -69,13 +69,13 @@ class TwilioController < ApplicationController
       if @calling.status == 'in-progress' || @calling.status == 'completed' # 電話に出ている(='in-progress')か、通話が完了している(='completed')場合
         # SlackBotからメッセージ送信.電話を取った旨を#visitorに.
         SlackBot.notify(
-            body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：電話を取りました。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+            body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：電話を取りました。"
         )
         @msg = { :message => "yes", :status => 'ok' } # data.messageに"yes"を追加.その後jsで分岐処理.
       else # 電話に出れなかった場合
         # SlackBotからメッセージ送信.電話を取れなかった旨を#visitorに.
         SlackBot.notify(
-            body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：電話を取ることができませんでした。 https://github.com/Herrokkin/twilio-tutorial-clicktocall-rails/"
+            body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：電話を取ることができませんでした。"
         )
         @msg = { :message => "no", :status => 'ok' } # data.messageに"no"を追加.その後jsで分岐処理.
       end
