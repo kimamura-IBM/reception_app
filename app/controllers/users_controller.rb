@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    @users = User.order("updated_at DESC") # DBからユーザー全員分取得。更新日時で並び替え。
   end
 
   # GET /users/1
