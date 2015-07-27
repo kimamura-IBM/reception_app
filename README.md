@@ -10,7 +10,7 @@ Viewでそれらの情報を呼び出しています。
 
 TwilioのAPIについては、[チュートリアル](https://github.com/TwilioDevEd/clicktocall-rails)を参考にしています。
 
-### Github・Heroku関連
+## Github・Heroku関連
 [https://github.com/ayako0802/reception_app](https://github.com/ayako0802/reception_app)
 
 master → 本番環境
