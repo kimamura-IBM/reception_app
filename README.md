@@ -1,16 +1,23 @@
 # Twilioを用いた受付呼び出しプログラム
-Herokuに自動で[デプロイされます](https://damp-reaches-2263.herokuapp.com/)。
 
 ## ユーザーが行う操作
 1. 呼び出す担当者を選択
 2. その担当者の電話に自動メッセージがコールされます
 
 ## 制作メモ
-担当者の情報はUserモデルに[格納されています](https://damp-reaches-2263.herokuapp.com/users)。※追加・変更・削除可能です。
+担当者の情報はUserモデルに格納されています。※追加・変更・削除可能です。
 Viewでそれらの情報を呼び出しています。
 
-ほとんどTwilioのチュートリアル通りです。[#ありがとうチュートリアル](https://github.com/TwilioDevEd/clicktocall-rails)
+TwilioのAPIについては、[チュートリアル](https://github.com/TwilioDevEd/clicktocall-rails)を参考にしています。
 
-## 共同作業
-saito_testブランチにデザイン周りがアップデートされていきます。動作イメージは、[さいとうさんのHerokuアプリ](http://twilio-n2p-testsaito.herokuapp.com/)にデプロイされています。
-最終的には、 @Herrokkin が、masterブランチにマージする予定。
+## Github・Heroku関連
+[https://github.com/ayako0802/reception_app](https://github.com/ayako0802/reception_app)
+
+master → 本番環境
+
+dev → [内部開発環境](https://twilio-n2p-dev.herokuapp.com/)
+
+test_saito → [デザイン開発環境](https://twilio-n2p-testsaito.herokuapp.com/)
+
+staging → [ステージング環境](https://twilio-n2p-staging.herokuapp.com/)
+
