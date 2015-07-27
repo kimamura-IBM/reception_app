@@ -20,11 +20,12 @@ gem 'twilio-ruby'
 # SlackBot
 gem 'slack_bot'
 
+gem 'therubyracer'
 
 group :development, :test do
   gem 'sqlite3'
 end
 
 group :production do
-  gem 'pg'
+  gem 'mysql'
 end
