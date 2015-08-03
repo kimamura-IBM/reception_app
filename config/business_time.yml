@@ -1,7 +1,6 @@
 business_time:
-  beginning_of_workday: 10:30 am
-  #end_of_workday: 10:00 pm
-  end_of_workday: 8:00 pm
+#  beginning_of_workday: 10:30 am
+#  end_of_workday: 10:00 pm
   holidays:
     - January 01, 2014
     - January 13, 2014
