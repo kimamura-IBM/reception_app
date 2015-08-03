@@ -1,0 +1,40 @@
+<div class="col-md-12 col-sm-12">
+  <h1>受付</h1>
+  <p>画面をタップして担当者を呼び出してください</p>
+  <div id="alert_success" class="alert alert-success col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8" role="alert">
+    <strong>おっと、気付いたようです。いましばらくお待ちください</strong>。
+  </div>
+  <div id="alert_warning" class="alert alert-warning col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8" role="alert"><strong>エラーが発生しました。もう一度やり直してみてください。</strong></div>
+  <hr />
+  <%= form_tag({action: "call"}, method: "POST", class: "form-horizontal", id: "contactform" , role: "form") do %>
+      <!-- <form id="contactform" class="form-horizontal" role="form" action="#" method="POST"> -->
+      <% @users.each do |user| %>
+          <div class="form-group">
+            <div class="col-md-12 col-sm-12">
+              <div class="radio">
+                <label>
+                  <input type="radio" name="phone" value="<%= user.phonenumber %>">
+                  <img src="<%= user.profilepicture %>" alt="" class="img-rounded" width="36" height="36" /><%= user.username %>
+                </label>
+              </div>
+            </div>
+          </div>
+      <% end %>
+      <!-- <div class="form-group text">
+      <div class="col-md-6 col-sm-6">
+        <input type="text" class="form-control" name="namae" placeholder="お名前">
+      </div>
+      </div>
+      <div class="form-group text">
+          <div class="col-md-6 col-sm-6">
+            <input type="text" class="form-control" name="issue" placeholder="ご用件">
+          </div>
+      </div> -->
+      <hr />
+      <div class="form-group">
+        <!-- <button type="submit" class="btn btn-success btn-lg">呼び出し</button> -->
+        <%= submit_tag("呼び出し", class: "btn btn-success btn-lg text-center") %>
+      </div>
+      <!-- </form> -->
+  <% end %>
+</div>

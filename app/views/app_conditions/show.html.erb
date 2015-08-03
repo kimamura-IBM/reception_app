@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @app_condition.status %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @app_condition.user %>
+</p>
+
+<p>
+  <strong>Reason:</strong>
+  <%= @app_condition.reason %>
+</p>
+
+<%= link_to 'Edit', edit_app_condition_path(@app_condition) %> |
+<%= link_to 'Back', app_conditions_path %>
