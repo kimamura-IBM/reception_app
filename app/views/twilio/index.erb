@@ -16,7 +16,7 @@
   <body>
     <div class="container text-center">
       <div class="row">
-        <p>休日？：<%= Date.today.workday? %><br />営業時間？：<%= Time.now.during_business_hours? %><br />現在時刻：<%= Time.now %></p>
+        <p>ステータス：<%= @app_condition %><br />(1:通常, 2:強制稼働, 3:強制休止)<br />休日ですか？：<%= Date.today.workday? %><br />営業時間内ですか？：<%= Time.now.during_business_hours? %><br />現在時刻：<%= Time.now %></p>
         <% if @app_condition == 1%>
             <% if Date.today.workday? == true %>
                 <% if Time.now.during_business_hours? == true %>
