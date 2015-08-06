@@ -1,0 +1,29 @@
+<style>
+    #sleep_status {
+        border: dashed 1px #000;
+        margin: 2em;
+        padding: 2em;
+    }
+
+    dt {
+        font-weight: bold;
+    }
+
+    dd {
+        padding-bottom: 1em;
+    }
+</style>
+
+<div id="sleep_status">
+  <% time_now = Time.now #現在時刻 %>
+  <% date_now = 9.hours.ago(Time.now) #日付(タイムゾーン調整済) %>
+  <% app_condition_now = @app_condition %>
+  <h2>現在休止モードです。</h2>
+  <br />
+  <dl>
+    <dt>稼働状況 (1:通常, 2:強制稼働, 3:強制休止)</dt><dd><%= @app_condition %></dd>
+    <dt>平日ですか？</dt><dd><%= date_now.workday? %></dd>
+    <dt>営業時間内ですか？</dt><dd><%= time_now.during_business_hours? %></dd>
+    <dt>現在時刻</dt><dd><%= Time.now %></dd>
+  </dl>
+</div>

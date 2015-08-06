@@ -19,6 +19,8 @@ gem 'phony_rails'
 gem 'twilio-ruby'
 # SlackBot
 gem 'slack_bot'
+# business_time
+gem 'business_time'
 
 
 group :development, :test do
