@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :app_conditions
+
   resources :users
 
   # The priority is based upon order of creation: first created -> highest priority.
