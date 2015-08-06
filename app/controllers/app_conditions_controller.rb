@@ -1,10 +1,11 @@
 class AppConditionsController < ApplicationController
+  http_basic_authenticate_with :name => 'noname', :password => 'twilio' if Rails.env == "production"
   before_action :set_app_condition, only: [:show, :edit, :update, :destroy]
 
   # GET /app_conditions
   # GET /app_conditions.json
   def index
-    @app_conditions = AppCondition.all
+    @app_conditions = AppCondition.all.reverse_order
   end
 
   # GET /app_conditions/1
