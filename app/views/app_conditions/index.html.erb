@@ -1,0 +1,38 @@
+<h2>稼働ステータス変更履歴</h2>
+<h5>一番上のステータスが受付アプリに反映されています</h5>
+
+<style>
+    td, th {
+        padding: 10px 10px;
+    }
+</style>
+
+<table>
+  <thead>
+    <tr>
+      <th>ステータス<br />(1:通常, 2:強制稼働, 3:強制休止)</th>
+      <th>変更者</th>
+      <th>変更理由</th>
+      <th>変更日時</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @app_conditions.each do |app_condition| %>
+      <tr>
+        <td><%= app_condition.status %></td>
+        <td><%= app_condition.user %></td>
+        <td><%= app_condition.reason %></td>
+        <td><%= app_condition.created_at %></td>
+        <!--<td><%# link_to 'Show', app_condition %></td>-->
+        <td><%= link_to '編集', edit_app_condition_path(app_condition) %></td>
+        <td><%= link_to '削除', app_condition, method: :delete, data: { confirm: '本当に削除しますか？' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<h4><%= link_to '新規追加', new_app_condition_path %></h4>
