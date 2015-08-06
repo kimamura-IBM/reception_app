@@ -12,15 +12,15 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :status %><br>
-    <%= f.number_field :status %>
+    <%= f.label :status, 'ステータス(1:通常, 2:強制稼働, 3:強制休止)' %><br>
+    <%= f.select :status, {'1:通常' => 1, '2:強制稼働' => 2, '3:強制休止' => 3}, { include_blank: '--選択してください--　'} %>
   </div>
   <div class="field">
-    <%= f.label :user %><br>
+    <%= f.label :user, '変更者' %><br>
     <%= f.text_field :user %>
   </div>
   <div class="field">
-    <%= f.label :reason %><br>
+    <%= f.label :reason, '変更理由' %><br>
     <%= f.text_area :reason %>
   </div>
   <div class="actions">
