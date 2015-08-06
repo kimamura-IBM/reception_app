@@ -1,47 +1,42 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="initial-scale=0.5,user-scalable=no">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta http-equiv="Refresh" content="300"> <!-- 5分(=300秒)に一回リロードする設定。営業時間判定に使う。 -->
-  <title>受付 | N2P</title>
-  <link rel="icon" type="image/png" href="http://n2p.co.jp/favicon.ico">
-  <!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" type="text/css">
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" type="text/css">
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.5/paper/bootstrap.min.css" type="text/css">-->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <%= stylesheet_link_tag 'application' %>
-</head>
-<body>
-
-<!-- 稼働状況分岐。状態に応じて部分テンプレートを呼び出し。  -->
-<!--<div class="container text-center">-->
-  <!--<div class="row">-->
-    <% time_now = Time.now #現在時刻 %>
-    <% date_now = 9.hours.ago(Time.now) #日付(タイムゾーン調整済) %>
-    <!--<p>ステータス：<%# @app_condition %><br />(1:通常, 2:強制稼働, 3:強制休止)<br />平日ですか？：<%# date_now.workday? %><br />営業時間内ですか？：<%# time_now.during_business_hours? %><br />現在時刻：<%# Time.now %></p>-->
-    <% if @app_condition == 1 %>
-        <% if date_now.workday? == true %>
-            <% if time_now.during_business_hours? == true %>
-                <%= render 'active' %>
+	<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta http-equiv="Refresh" content="300"> <!-- 5分(=300秒)に一回リロードする設定。営業時間判定に使う。 -->
+    <title>受付 | N2P</title>
+    <link rel="icon" type="image/png" href="http://n2p.co.jp/favicon.ico">
+    <!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" type="text/css">-->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" type="text/css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.5/paper/bootstrap.min.css" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <%= stylesheet_link_tag 'application' %>
+  </head>
+  <body>
+    <div class="container text-center">
+      <div class="row">
+        <% time_now = Time.now #現在時刻 %>
+        <% date_now = 9.hours.ago(Time.now) #日付(タイムゾーン調整済) %>
+        <p>ステータス：<%= @app_condition %><br />(1:通常, 2:強制稼働, 3:強制休止)<br />平日ですか？：<%= date_now.workday? %><br />営業時間内ですか？：<%= time_now.during_business_hours? %><br />現在時刻：<%= Time.now %></p>
+        <% if @app_condition == 1 %>
+            <% if date_now.workday? == true %>
+                <% if time_now.during_business_hours? == true %>
+                    <%= render 'active' %>
+                <% else %>
+                    <%= render 'sleep' %>
+                <% end %>
             <% else %>
                 <%= render 'sleep' %>
             <% end %>
-        <% else %>
+        <% elsif @app_condition == 2 %>
+            <%= render 'active' %>
+        <% elsif @app_condition == 3 %>
             <%= render 'sleep' %>
         <% end %>
-    <% elsif @app_condition == 2 %>
-        <%= render 'active' %>
-    <% elsif @app_condition == 3 %>
-        <%= render 'sleep' %>
-    <% end %>
-  <!--</div>-->
-<!--</div>--> <!-- /page -->
-
-</body>
-<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+      </div>
+	  </div><!-- /page -->
+	</body>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 </html>
