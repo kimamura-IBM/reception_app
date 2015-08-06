@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<<<<<<< HEAD
 <head>
   <meta charset="utf-8">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,117 +17,30 @@
   <%= stylesheet_link_tag 'application' %>
 </head>
 <body>
-<div id="wrapper">
-  <div class="rect rect1"></div>
-  <div class="rect rect2"></div>
-  <div class="rect rect3"></div>
-  <div class="rect rect4"></div>
-</div>
-<div id="waiting">
-  <h1><img src="/assets/images/logo01.svg" alt="n2p"></h1>
-  <div class='loader-ring'>
-    <div class='loader-ring-light'></div>
-    <div class='loader-ring-track'></div>
-    <div class='loader-ring-text'>CALL</div>
-  </div>
-  <p class="maintxt">ようこそお越しくださいました!!<br>画面をタップしてください</p>
-</div>
-<div id="modal_window">
-  <div id="main_window">
-    <p></p>
-    <div class="clearfix">
-      <button type="button" id="call">
-      呼び出す
-      </button>
-      <button type="button" id="cancel">
-      キャンセル
-      </button>
-    </div>
-  </div>
-</div>
-<div id="alert_success">
-  <h1><img src="/assets/images/logo01.svg" alt="n2p"></h1>
-  <img src="/assets/images/response.svg" alt="" class="img-response" />
-  <img src="http://www.herrokkin.jp/images/Icon.jpg" alt="" class="img-rounded" />
-  <p class="nametxt">Keiichi Tsuneyama</p>
-  <p class="maintxt">を呼び出しています<span class="dot01">･</span><span class="dot02">･</span><span class="dot03">･</span></p>
-  <p class="maintxt-response">おっと、気づいたようです。<br>いましばらくお待ちください。</p>
-  <div class="loader">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-  <button type="button" class="cancelbtn">
-    キャンセル
-  </button>
-</div>
-<div id="alert_warning">
-  <h1><img src="/assets/images/logo01.svg" alt="n2p"></h1>
-  <p class="maintxt">
-    うまくつながらないようです<br>
-    あらためて呼び出してください<br>
-    それでもつながらない場合はドアからお入りいただき、<br>
-    エントランスの呼び鈴を鳴らしてください
-  </p>
-  <button type="button" class="cancelbtn">
-    呼び出し画面へ戻る
-  </button>
-</div>
-<div id="form_main" class="container text-center">
-  <div class="row">
-    <div class="col-md-12 col-sm-12">
-      <div id="header">
-        <h1><img src="/assets/images/logo01.svg" width="384" alt="n2p"></h1>
-        <p class="maintxt">画面をタップして担当者を呼び出してください</p>
-        <!--<div id="alert_success" class="alert alert-success col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8" role="alert"><strong>呼び出し中です。そのまましばらくお待ちください</strong>。</div>
-        <div id="alert_warning" class="alert alert-warning col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8" role="alert"><strong>エラーが発生しました。もう一度やり直してみてください。</strong></div>-->
-        <hr />
-      </div>
-      <div id="radio_area">
-        <%= form_tag({action: "call"}, method: "POST", class: "form-horizontal", id: "contactform" , role: "form") do %>
-            <!-- <form id="contactform" class="form-horizontal" role="form" action="#" method="POST"> -->
-            <% @users.each do |user| %>
-                <div class="form-group">
-                  <div class="col-md-12 col-sm-12">
-                    <div class="radio">
-                      <label><input type="radio" name="phone" value="<%= user.phonenumber %>"><img src="<%= user.profilepicture %>" alt="" class="img-rounded" width="36" height="36" /><%= user.username %></label>
-                    </div>
-                  </div>
-                </div>
-            <% end %>
-            <!-- <div class="form-group text">
-            <div class="col-md-6 col-sm-6">
-              <input type="text" class="form-control" name="namae" placeholder="お名前">
-            </div>
-            </div>
-            <div class="form-group text">
-                <div class="col-md-6 col-sm-6">
-                  <input type="text" class="form-control" name="issue" placeholder="ご用件">
-                </div>
-            </div> -->
-            <div class="form-group" id="submit_btn">
-              <!-- <button type="submit" class="btn btn-success btn-lg">呼び出し</button> -->
-              <%= submit_tag("呼び出し", class: "btn btn-success btn-lg text-center") %>
-            </div>
-            <!-- </form> -->
-        <% end %>
 
-      </div><!-- /radioArea -->
-    </div>
+<div class="container text-center">
+  <div class="row">
+    <% time_now = Time.now #現在時刻 %>
+    <% date_now = 9.hours.ago(Time.now) #日付(タイムゾーン調整済) %>
+    <p>ステータス：<%= @app_condition %><br />(1:通常, 2:強制稼働, 3:強制休止)<br />平日ですか？：<%= date_now.workday? %><br />営業時間内ですか？：<%= time_now.during_business_hours? %><br />現在時刻：<%= Time.now %></p>
+    <% if @app_condition == 1 %>
+        <% if date_now.workday? == true %>
+            <% if time_now.during_business_hours? == true %>
+                <%= render 'active' %>
+            <% else %>
+                <%= render 'sleep' %>
+            <% end %>
+        <% else %>
+            <%= render 'sleep' %>
+        <% end %>
+    <% elsif @app_condition == 2 %>
+        <%= render 'active' %>
+    <% elsif @app_condition == 3 %>
+        <%= render 'sleep' %>
+    <% end %>
   </div>
 </div><!-- /page -->
+
 </body>
 <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 </html>

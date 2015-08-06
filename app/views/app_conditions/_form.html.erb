@@ -1,0 +1,29 @@
+<%= form_for(@app_condition) do |f| %>
+  <% if @app_condition.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@app_condition.errors.count, "error") %> prohibited this app_condition from being saved:</h2>
+
+      <ul>
+      <% @app_condition.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :status, 'ステータス(1:通常, 2:強制稼働, 3:強制休止)' %><br>
+    <%= f.select :status, {'1:通常' => 1, '2:強制稼働' => 2, '3:強制休止' => 3}, { include_blank: '--選択してください--　'} %>
+  </div>
+  <div class="field">
+    <%= f.label :user, '変更者' %><br>
+    <%= f.text_field :user %>
+  </div>
+  <div class="field">
+    <%= f.label :reason, '変更理由' %><br>
+    <%= f.text_area :reason %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
