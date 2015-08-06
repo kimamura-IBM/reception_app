@@ -209,7 +209,6 @@ var timerRefresh,
 
 /*
 $(function() {
-<<<<<<< HEAD
 		$('#phoneNumber').intlTelInput({
 				responsiveDropdown: true,
 				autoFormat: true,
