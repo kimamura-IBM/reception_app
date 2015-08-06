@@ -15,6 +15,8 @@
  *= require intl-phone/css/intlTelInput.css
  */
 
+/*
+既存ソース
 .container {
     margin-top: 100px;
 }
@@ -41,4 +43,647 @@
 .alert-warning {
     color: #c09853;
     background-color: #fcf8e3;
+}
+*/
+
+
+/*基本画面配置*/
+#waiting,
+#alert_success,
+#alert_warning,
+#modal_window{
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+}
+
+#waiting{
+  z-index: 2;
+}
+
+#alert_success{
+  z-index: 3;
+}
+
+#alert_warning{
+  z-index: 3;
+}
+
+#modal_window{
+  z-index: 10;
+}
+
+/*基本画面パーツ*/
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
+.container{
+  position: relative;
+  z-index: 2;
+  margin: 0;
+}
+
+h1{
+  width: 425px;
+  padding: 172px 0 0;
+  margin:0 auto;
+}
+
+h1 img{
+  width: 425px;
+}
+
+.maintxt{
+  font-size: 52px;
+  line-height: 72px;
+  color: #fff;
+  text-align: center;
+  margin:144px auto;
+}
+
+hr{
+  border-top: #fff solid 1px;
+}
+
+#contactform .radio, #contactform .text {
+  font-size: 1em;
+  text-align: left;
+  padding-left: 20%;
+  padding: 0;
+}
+
+.form-group{
+  width: 100%;
+  border-bottom: #fff solid 1px;
+}
+
+.form-group label{
+  position: relative;
+  font-size: 90px;
+  line-height: 150px;
+  color: #fff;
+  padding: 20px 0;
+  display: block;
+  width: 80%;
+}
+
+.form-group label input[type=radio]{
+  z-index: 1;
+  position: absolute;
+  top: 75px;
+  left: 75px;
+  visibility: hidden;
+}
+
+.form-group .img-rounded{
+  width: 150px;
+  height: 150px;
+  margin: 0 55px 0 75px !important;
+  vertical-align: middle;
+  z-index: 2;
+  border-radius: 50%;
+}
+
+#submit_btn{
+  visibility: hidden;
+}
+
+#radio_area{
+  overflow: scroll;
+}
+
+/*待機画面*/
+
+#waiting h1{
+  width: 1024px;
+  padding: 172px 0 0;
+  margin:0 auto;
+}
+
+#waiting h1 img{
+  width: 1024px;
+}
+
+/*呼び出しモーダルウインドウ*/
+#modal_window{
+  position: fixed;
+  background-color: rgba(0,0,0,.5);
+}
+
+#modal_window #main_window{
+  position: absolute;
+  background-color: #fff;
+  width: 1080px;
+  height: 640px;
+  padding: 90px 120px 65px;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+#modal_window p{
+  color: #c8bf8a;
+  font-size: 60px;
+  line-height: 84px;
+  margin: 0 0 55px;
+  word-break: break-all;
+}
+
+#modal_window .clearfix{
+  overflow: hidden;
+  width: 840px;
+  position: absolute;
+  bottom: 65px;
+  left: 120px;
+}
+
+#modal_window #call{
+  text-align: center;
+  font-size: 60px;
+  line-height: 94px;
+  height: 94px;
+  width: 370px;
+  border:#c8bf8a 4px solid;
+  background-color:#c8bf8a;
+  color:#fff;
+  float: left;
+  outline: none;
+}
+
+#modal_window #cancel{
+  text-align: center;
+  font-size: 60px;
+  line-height: 94px;
+  height: 94px;
+  width: 370px;
+  border:#c8bf8a 4px solid;
+  background-color:#fff;
+  color:#c8bf8a;
+  float: right;
+  outline: none;
+}
+
+
+
+
+/*エラー画面*/
+#alert_warning{
+  text-align: center;
+}
+
+#alert_warning h1{
+  width: 275px;
+  padding: 120px 0 370px;
+  margin:0 auto;
+}
+
+#alert_warning h1 img{
+  width: 275px;
+}
+
+#alert_warning .maintxt{
+  display: inline-block;
+  font-size: 52px;
+  line-height: 72px;
+  color: #fff;
+  padding: 52px 0 52px;
+  margin: 0 auto 370px;
+  border-top: 4px solid #fff;
+  border-bottom: 4px solid #fff;
+}
+
+#alert_warning .cancelbtn{
+  border:4px #fff solid;
+  color: #fff;
+  font-size: 72px;
+  line-height: 114px;
+  text-align: center;
+  width: 750px;
+  margin:auto;
+  display: block;
+  outline: none;
+  background-color: inherit;
+}
+
+/*呼び出し中画面*/
+#alert_success h1{
+  width: 275px;
+  padding: 120px 0 132px;
+  margin:0 auto;
+}
+
+#alert_success h1 img{
+  width: 275px;
+}
+
+#alert_success .img-rounded{
+  width: 325px;
+  height: 325px;
+  margin: 0 auto 80px auto !important;
+  vertical-align: middle;
+  border-radius: 50%;
+  display: block;
+}
+
+#alert_success .nametxt{
+  font-size: 90px;
+  line-height: 90px;
+  color: #fff;
+  padding: 0;
+  display: block;
+  margin:0 auto 150px;
+  text-align: center;
+}
+
+#alert_success .maintxt,
+#alert_success .maintxt-response{
+  font-size: 52px;
+  line-height: 72px;
+  height: 72px;
+  overflow: visible;
+  color: #fff;
+  margin:0 auto 150px;
+  text-align: center;
+}
+
+#alert_success .maintxt-response{
+  display: none;
+}
+
+#alert_success .cancelbtn{
+  border:4px #fff solid;
+  color: #fff;
+  font-size: 72px;
+  line-height: 114px;
+  text-align: center;
+  width: 585px;
+  margin:auto;
+  display: block;
+  background-color: inherit;
+}
+
+#alert_success .img-response{
+  position: absolute;
+  left: 950px;
+  top: 360px;
+  width: 190px;
+}
+
+.dot01{
+  opacity: 0;
+  -webkit-animation: dotsonoff 3s 0.5s infinite;
+  animation: dotsonoff 3s 0.5s infinite;
+}
+
+.dot02{
+  opacity: 0;
+  -webkit-animation: dotsonoff 3s 1s infinite;
+  animation: dotsonoff 3s 1s infinite;
+}
+
+.dot03{
+  opacity: 0;
+  -webkit-animation: dotsonoff 3s 1.5s infinite;
+  animation: dotsonoff 3s 1.5s infinite;
+}
+
+@-webkit-keyframes dotsonoff {
+  0% {
+    opacity: 0;
+  }
+  33% {
+    opacity: 1;
+  }
+  66% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes dotsonoff {
+  0% {
+    opacity: 0;
+  }
+  33% {
+    opacity: 1;
+  }
+  66% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/*背景アニメパーツ*/
+body{
+  background-color: #fefef6;
+}
+
+#wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.rect {
+  position: absolute;
+  top: 0;
+  left: 0;
+/*  opacity: 0;*/
+  background-color: #ddc242;
+}
+/*
+@-webkit-keyframes dissolve {
+  0% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0.1;
+  }
+}
+
+@keyframes dissolve {
+  0% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0.1;
+  }
+}
+
+.rect1 {
+  -webkit-animation: dissolve 3s ease-in-out 0s infinite alternate;
+  animation: dissolve 3s ease-in-out 0s infinite alternate;
+}
+
+.rect2 {
+  -webkit-animation: dissolve 3s ease-in-out 1.5s infinite alternate;
+  animation: dissolve 3s ease-in-out 1.5s infinite alternate;
+}
+
+.rect3 {
+  -webkit-animation: dissolve 3s ease-in-out 1s infinite alternate;
+  animation: dissolve 3s ease-in-out 1s infinite alternate;
+}
+
+.rect4 {
+  -webkit-animation: dissolve 3s ease-in-out 0.75s infinite alternate;
+  animation: dissolve 3s ease-in-out 0.75s infinite alternate;
+}
+
+.rect1 {
+  background: -moz-linear-gradient(-989.94% 1089.94% 45deg, #fefef6 0%, #877003 100%);
+  background: -webkit-linear-gradient(45deg, #fefef6 0%, #877003 100%);
+  background: -webkit-gradient(linear, -989.94% 1089.94%, -913.2% 1013.2%, color-stop(0, #fefef6), color-stop(1, #877003));
+  background: -o-linear-gradient(45deg, #fefef6 0%, #877003 100%);
+  background: -ms-linear-gradient(45deg, #fefef6 0%, #877003 100%);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefef6', endColorstr='#877003' ,GradientType=0)";
+  background: linear-gradient(45deg, #fefef6 0%, #877003 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefef6',endColorstr='#877003' , GradientType=1);
+}
+
+.rect2 {
+  background: -moz-linear-gradient(-988.63% 1014.03% -46.94deg, #fefef6 0%, #877003 100%);
+  background: -webkit-linear-gradient(-46.94deg, #fefef6 0%, #877003 100%);
+  background: -webkit-gradient(linear, -988.63% 1014.03%, -914.58% 1093.29%, color-stop(0, #fefef6), color-stop(1, #877003));
+  background: -o-linear-gradient(-46.94deg, #fefef6 0%, #877003 100%);
+  background: -ms-linear-gradient(-46.94deg, #fefef6 0%, #877003 100%);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefef6', endColorstr='#877003' ,GradientType=0)";
+  background: linear-gradient(136.94deg, #fefef6 0%, #877003 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefef6',endColorstr='#877003' , GradientType=1);
+}
+
+.rect3 {
+  background: -moz-linear-gradient(-915.26% 1015.26% -135deg, #fefef6 0%, #877003 100%);
+  background: -webkit-linear-gradient(-135deg, #fefef6 0%, #877003 100%);
+  background: -webkit-gradient(linear, -915.26% 1015.26%, -992% 1092%, color-stop(0, #fefef6), color-stop(1, #877003));
+  background: -o-linear-gradient(-135deg, #fefef6 0%, #877003 100%);
+  background: -ms-linear-gradient(-135deg, #fefef6 0%, #877003 100%);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefef6', endColorstr='#877003' ,GradientType=0)";
+  background: linear-gradient(225deg, #fefef6 0%, #877003 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefef6',endColorstr='#877003' , GradientType=1);
+}
+
+.rect4 {
+  background: -moz-linear-gradient(-988.63% 1014.03% -46.94deg, #fefef6 0%, #877003 100%);
+  background: -webkit-linear-gradient(-46.94deg, #fefef6 0%, #877003 100%);
+  background: -webkit-gradient(linear, -988.63% 1014.03%, -914.58% 1093.29%, color-stop(0, #fefef6), color-stop(1, #877003));
+  background: -o-linear-gradient(-46.94deg, #fefef6 0%, #877003 100%);
+  background: -ms-linear-gradient(-46.94deg, #fefef6 0%, #877003 100%);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefef6', endColorstr='#877003' ,GradientType=0)";
+  background: linear-gradient(136.94deg, #fefef6 0%, #877003 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefef6',endColorstr='#877003' , GradientType=1);
+}
+*/
+
+/*待機中アニメパーツ*/
+.loader-ring {
+  position: relative;
+  margin: 240px auto 180px;
+  width: 470px;
+  height: 470px;
+}
+
+.loader-ring-light {
+  width: 470px;
+  height: 470px;
+  -moz-border-radius: 470px;
+  -webkit-border-radius: 470px;
+  border-radius: 470px;
+  -moz-box-shadow: 0 4px 0 #fff inset;
+  -webkit-box-shadow: 0 4px 0 #fff inset;
+  box-shadow: 0 4px 0 #fff inset;
+  -webkit-animation: rotate-360 2s linear infinite;
+  animation: rotate-360 2s linear infinite;
+}
+
+.loader-ring-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 470px;
+  height: 470px;
+  -moz-border-radius: 470px;
+  -webkit-border-radius: 470px;
+  border-radius: 470px;
+  -moz-box-shadow: 0 0 10px 4px rgba(255, 255, 255, 0.3) inset;
+  -webkit-box-shadow: 0 0 10px 4px rgba(255, 255, 255, 0.3) inset;
+  box-shadow: 0 0 10px 4px rgba(255, 255, 255, 0.3) inset;
+}
+
+.loader-ring-text{
+  position: absolute;
+  width: 470px;
+  top: 0;
+  left: 0;
+  font-size: 90px;
+  line-height: 470px;
+  text-align: center;
+  color: #fff;
+}
+
+@-webkit-keyframes rotate-360 {
+  from {
+    -moz-transform: rotate(0);
+    -ms-transform: rotate(0);
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+  to {
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate-360 {
+  from {
+    -moz-transform: rotate(0);
+    -ms-transform: rotate(0);
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+  to {
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+
+/*呼び出し中アニメパーツ*/
+.loader {
+  position: relative;
+  margin:0 auto 220px;
+  width: 350px;
+  height: 200px;
+}
+.loader span {
+  display: block;
+  background: rgba(255,255,255,.7);
+  width: 14px;
+  height: 10%;
+  border-radius: 28px;
+  margin-right: 10px;
+  float: left;
+  margin-top: 25%;
+}
+.loader span:last-child {
+  margin-right: 0px;
+}
+.loader span:nth-child(1) {
+  -webkit-animation: load 2.5s 1.4s infinite linear;
+  animation: load 2.5s 1.4s infinite linear;
+}
+.loader span:nth-child(2) {
+  -webkit-animation: load 2.5s 1.2s infinite linear;
+  animation: load 2.5s 1.2s infinite linear;
+}
+.loader span:nth-child(3) {
+  -webkit-animation: load 2.5s 1s infinite linear;
+  animation: load 2.5s 1s infinite linear;
+}
+.loader span:nth-child(4) {
+  -webkit-animation: load 2.5s 0.8s infinite linear;
+  animation: load 2.5s 0.8s infinite linear;
+}
+.loader span:nth-child(5) {
+  -webkit-animation: load 2.5s 0.6s infinite linear;
+  animation: load 2.5s 0.6s infinite linear;
+}
+.loader span:nth-child(6) {
+  -webkit-animation: load 2.5s 0.4s infinite linear;
+  animation: load 2.5s 0.4s infinite linear;
+}
+.loader span:nth-child(7) {
+  -webkit-animation: load 2.5s 0.2s infinite linear;
+  animation: load 2.5s 0.2s infinite linear;
+}
+.loader span:nth-child(8) {
+  -webkit-animation: load 2.5s 0s infinite linear;
+  animation: load 2.5s 0s infinite linear;
+}
+.loader span:nth-child(9) {
+  -webkit-animation: load 2.5s 0.2s infinite linear;
+  animation: load 2.5s 0.2s infinite linear;
+}
+.loader span:nth-child(10) {
+  -webkit-animation: load 2.5s 0.4s infinite linear;
+  animation: load 2.5s 0.4s infinite linear;
+}
+.loader span:nth-child(11) {
+  -webkit-animation: load 2.5s 0.6s infinite linear;
+  animation: load 2.5s 0.6s infinite linear;
+}
+.loader span:nth-child(12) {
+  -webkit-animation: load 2.5s 0.8s infinite linear;
+  animation: load 2.5s 0.8s infinite linear;
+}
+.loader span:nth-child(13) {
+  -webkit-animation: load 2.5s 1s infinite linear;
+  animation: load 2.5s 1s infinite linear;
+}
+.loader span:nth-child(14) {
+  -webkit-animation: load 2.5s 1.2s infinite linear;
+  animation: load 2.5s 1.2s infinite linear;
+}
+.loader span:nth-child(15) {
+  -webkit-animation: load 2.5s 1.4s infinite linear;
+  animation: load 2.5s 1.4s infinite linear;
+}
+
+@-webkit-keyframes load {
+  0% {
+    background: rgba(255,255,255,.7);
+    margin-top: 25%;
+    height: 10%;
+  }
+  50% {
+    background: rgba(255,255,255,.4);
+    height: 100%;
+    margin-top: 0%;
+  }
+  100% {
+    background: rgba(255,255,255,.7);
+    height: 10%;
+    margin-top: 25%;
+  }
+}
+
+@keyframes load {
+  0% {
+    background: rgba(255,255,255,.7);
+    margin-top: 25%;
+    height: 10%;
+  }
+  50% {
+    background: rgba(255,255,255,.4);
+    height: 100%;
+    margin-top: 0%;
+  }
+  100% {
+    background: rgba(255,255,255,.7);
+    height: 10%;
+    margin-top: 25%;
+  }
 }
