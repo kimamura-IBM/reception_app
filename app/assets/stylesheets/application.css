@@ -401,9 +401,10 @@ body{
   position: absolute;
   top: 0;
   left: 0;
-  opacity: 0;
+/*  opacity: 0;*/
+  background-color: #ddc242;
 }
-
+/*
 @-webkit-keyframes dissolve {
   0% {
     opacity: 0.1;
@@ -491,7 +492,7 @@ body{
   background: linear-gradient(136.94deg, #fefef6 0%, #877003 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefef6',endColorstr='#877003' , GradientType=1);
 }
-
+*/
 
 /*待機中アニメパーツ*/
 .loader-ring {
