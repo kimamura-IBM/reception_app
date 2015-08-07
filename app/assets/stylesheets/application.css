@@ -654,3 +654,24 @@ body{
     margin-top: 25%;
   }
 }
+
+
+/*休止モード*/
+
+#sleep_status {
+    border: dashed 1px #000;
+    margin: 2em;
+    padding: 2em;
+}
+
+#sleep_status dt {
+    font-weight: bold;
+}
+
+#sleep_status dd {
+    padding-bottom: 1em;
+}
+
+
+
+
