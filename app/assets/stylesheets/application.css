@@ -657,11 +657,46 @@ body{
 
 
 /*休止モード*/
+#sleep_wrapper{
+  background-color: rgba(0,0,0,.7);
+}
+
+#sleep_attention,
+#sleep_status{
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#sleep_attention .cancelbtn{
+  color: #fff;
+  font-size: 24px;
+  line-height: 114px;
+  text-align: right;
+  width: 100%;
+  margin:auto;
+  display: block;
+  background-color: inherit;
+}
+
+#sleep_status .cancelbtn{
+  border:4px #fff solid;
+  color: #fff;
+  font-size: 72px;
+  line-height: 114px;
+  text-align: center;
+  width: 585px;
+  margin:auto;
+  display: block;
+  background-color: inherit;
+}
 
 #sleep_status {
-    border: dashed 1px #000;
-    margin: 2em;
-    padding: 2em;
+  border: dashed 1px #fff;
+  margin: 2em;
+  padding: 2em;
+  display: none;
+  color: #fff;
 }
 
 #sleep_status dt {
