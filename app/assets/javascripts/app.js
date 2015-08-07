@@ -207,9 +207,11 @@ var timerRefresh,
 
 //休止モード
 
+		console.log(hei);
+
 		$('#sleep_wrapper').css({
 			'width': wid,
-			'min-height': hei + 'px'
+			'min-height': hei
 		});
 
 
