@@ -658,10 +658,24 @@ body{
 
 /*休止モード*/
 #sleep_wrapper{
+  position: relative;
   background-color: rgba(0,0,0,.7);
+  margin: 0;
+  padding: 0;
+}
+
+#sleep_status,
+#sleep_attention{
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 #sleep_attention .cancelbtn{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  outline: none;
   color: #fff;
   font-size: 24px;
   line-height: 114px;
@@ -685,11 +699,9 @@ body{
 }
 
 #sleep_status {
-  border: dashed 1px #fff;
-  margin: 2em;
-  padding: 2em;
-  display: none;
+  font-size: 52px;
   color: #fff;
+  display: none;
 }
 
 #sleep_status dt {
