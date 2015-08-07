@@ -204,5 +204,16 @@ var timerRefresh,
 				console.log('callFlag'+callFlag);
 			});
 		});
+
+//休止モード
+		$('#sleep_attention .cancelbtn').on('touchstart', function(e) {
+			e.preventDefault();
+			changeLayer('#sleep_attention','#sleep_status');
+		});
+
+		$('#sleep_status .cancelbtn').on('touchstart', function(e) {
+			e.preventDefault();
+			changeLayer('#sleep_status','#sleep_attention');
+		});
 	});
 }());
