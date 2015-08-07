@@ -206,7 +206,7 @@ var timerRefresh,
 		});
 
 //休止モード
-		$('#sleep_wrapper').css({
+		$('#sleep_wrapper,#sleep_status,#sleep_attention').css({
 			'width': wid,
 			'min-height': hei
 		});
