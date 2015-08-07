@@ -661,13 +661,6 @@ body{
   background-color: rgba(0,0,0,.7);
 }
 
-#sleep_attention,
-#sleep_status{
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
 #sleep_attention .cancelbtn{
   color: #fff;
   font-size: 24px;

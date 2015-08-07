@@ -206,6 +206,13 @@ var timerRefresh,
 		});
 
 //休止モード
+
+		$('#sleep_wrapper').css({
+			'width': wid,
+			'min-height': hei + 'px'
+		});
+
+
 		$('#sleep_attention .cancelbtn').on('touchstart', function(e) {
 			e.preventDefault();
 			changeLayer('#sleep_attention','#sleep_status');
