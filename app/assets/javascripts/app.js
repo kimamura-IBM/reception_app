@@ -70,7 +70,78 @@ var timerRefresh,
 		});
 
 //呼び出し起動
-		$('.form-group label').on('touchend', function(e) {
+/* hoge のイベントを jQuery.bind で捕獲します。 */
+$('.form-group label').on({
+	var startLeft,startTop;
+	/* タッチの開始、マウスボタンを押したとき */
+	'touchstart': function(e) {
+		// ページが動いたり、反応を止める
+		e.preventDefault();
+		// 開始位置 X,Y 座標を覚えておく
+		// （touchmove イベントを通らず終了したときのために必ず覚えておくこと）
+		this.pageX = (isTouch ? event.changedTouches[0].pageX : e.pageX);
+		this.pageY = (isTouch ? event.changedTouches[0].pageY : e.pageY);
+		// 現在の場所を覚えておく
+		startLeft = $(this).position().left;
+		startTop = $(this).position().top;
+		this.left = $(this).position().left;
+		this.top = $(this).position().top;
+		// タッチ処理を開始したフラグをたてる
+		this.touched = true;
+	},
+	/* タッチしながら移動、マウスのドラッグ */
+	'touchmove': function(e) {
+		// 開始していない場合は動かないようにする
+		// 過剰動作の防止
+		if (!this.touched) {
+			return;
+		}
+		// ページが動くのを止める
+		e.preventDefault();
+		// 移動先の hoge の位置を取得する
+		this.left = this.left - (this.pageX - (isTouch ? event.changedTouches[0].pageX : e.pageX) );
+		this.top = this.top - (this.pageY - (isTouch ? event.changedTouches[0].pageY : e.pageY) );
+		// hoge を移動させる
+		$(this).css({left:this.left, top:this.top});
+		// 位置 X,Y 座標を覚えておく
+		this.pageX = (isTouch ? event.changedTouches[0].pageX : e.pageX);
+		this.pageY = (isTouch ? event.changedTouches[0].pageY : e.pageY);
+	},
+	/* タッチの終了、マウスのドラッグの終了 */
+	'touchend': function(e) {
+		if (!this.touched) {
+			return;
+		}
+		// タッチ処理は終了したため、フラグをたたむ
+		this.touched = false;
+		// 必要なら以下で最終の hoge の位置を取得し何かに使う
+		moveLeft = startLeft - this.pageX;
+		moveTop = startTop - this.pageY;
+		console.log(moveLeft);
+		console.log(moveTop);
+
+		//タップ位置が動いているか判定し、動いてなければコンソール呼び出し
+		if( -50 <= moveLeft ||moveLeft <= 50 || moveTop <= 50 || -50 <= moveTop ){
+			var callName,
+				callImg;
+			timerWaiting01.reject();
+			timerRefresh = $.wait(40000).done(function(){
+				$('#modal_window').hide();
+				timerWaiting01Func();
+			}).fail(function(){
+				console.log('timerRefreshreject');
+			});
+			callName = $(this).text().replace(/[\n\r]/g,'');
+			callImg = $(this).find('img').attr('src');
+			$('#modal_window p').html(callName+'を<br>呼び出しますか？');
+			$('#alert_success .nametxt').text(callName);
+			$('#alert_success .img-rounded').attr('src',callImg);
+			$(this).find('input').prop('checked', true);
+			$('#modal_window').show();
+		}
+	}
+});
+/*		$('.form-group label').on('touchend', function(e) {
 			var callName,
 				callImg;
 			timerWaiting01.reject();
@@ -88,6 +159,7 @@ var timerRefresh,
 			$(this).find('input').prop('checked', true);
 			$('#modal_window').show();
 		});
+*/
 
 		$('#modal_window #call').on('touchstart', function(e) {
 			e.preventDefault();
