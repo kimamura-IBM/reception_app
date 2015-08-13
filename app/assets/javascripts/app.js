@@ -70,7 +70,7 @@ var timerRefresh,
 		});
 
 //呼び出し起動
-		$('.form-group label').on('touchstart', function(e) {
+		$('.form-group label').on('touchend', function(e) {
 			var callName,
 				callImg;
 			timerWaiting01.reject();
