@@ -111,7 +111,7 @@ $('.form-group label').on({
 		moveTop = startTop - this.pageY;
 
 		//タップ位置が動いているか判定し、動きが50px未満なら呼び出し動作に入る
-		if( -50 <= moveLeft && moveLeft <= 50 && -50 <= moveTop && moveTop <= 50  ){
+		if( -50 <= moveLeft && moveLeft <= 50 && -50 <= moveTop && moveTop <= 50 ){
 			var callName,
 				callImg;
 			timerWaiting01.reject();
