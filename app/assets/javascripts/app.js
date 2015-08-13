@@ -70,9 +70,9 @@ var timerRefresh,
 		});
 
 //呼び出し起動
-/* hoge のイベントを jQuery.bind で捕獲します。 */
+var startLeft, startTop;
+/* hoge のイベントを jQuery.on で捕獲します。 */
 $('.form-group label').on({
-	var startLeft,startTop;
 	/* タッチの開始、マウスボタンを押したとき */
 	'touchstart': function(e) {
 		// ページが動いたり、反応を止める
