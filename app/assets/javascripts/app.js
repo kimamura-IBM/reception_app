@@ -80,7 +80,7 @@ $('.form-group label').on({
 	/* タッチの開始、マウスボタンを押したとき */
 	'touchstart': function(e) {
 		// ページが動いたり、反応を止める
-		e.preventDefault();
+		//e.preventDefault();
 		// 開始位置 X,Y 座標を覚えておく
 		// （touchmove イベントを通らず終了したときのために必ず覚えておくこと）
 		this.pageX = (isTouch ? event.changedTouches[0].pageX : e.pageX);
@@ -101,7 +101,7 @@ $('.form-group label').on({
 			return;
 		}
 		// ページが動くのを止める
-		e.preventDefault();
+		//e.preventDefault();
 		// 移動先の hoge の位置を取得する
 		this.left = this.left - (this.pageX - (isTouch ? event.changedTouches[0].pageX : e.pageX) );
 		this.top = this.top - (this.pageY - (isTouch ? event.changedTouches[0].pageY : e.pageY) );
@@ -125,7 +125,7 @@ $('.form-group label').on({
 		console.log(moveTop);
 
 		//タップ位置が動いているか判定し、動いてなければコンソール呼び出し
-		if( -50 <= moveLeft ||moveLeft <= 50 || moveTop <= 50 || -50 <= moveTop ){
+		if( -50 <= moveLeft || moveLeft <= 50 || -50 <= moveTop || moveTop <= 50  ){
 			var callName,
 				callImg;
 			timerWaiting01.reject();
