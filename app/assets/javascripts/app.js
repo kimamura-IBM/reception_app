@@ -119,6 +119,10 @@ $('.form-group label').on({
 		// タッチ処理は終了したため、フラグをたたむ
 		this.touched = false;
 		// 必要なら以下で最終の hoge の位置を取得し何かに使う
+		console.log(startLeft);
+		console.log(this.pageX);
+		console.log(startTop);
+		console.log(this.pageY);
 		moveLeft = startLeft - this.pageX;
 		moveTop = startTop - this.pageY;
 		console.log(moveLeft);
