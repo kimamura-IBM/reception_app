@@ -71,6 +71,10 @@ var timerRefresh,
 
 //呼び出し起動
 var startLeft, startTop;
+/* タッチできる環境なら true、そうでないなら false 。
+   ここで先に判別しておきます。 */
+var isTouch = ('ontouchstart' in window);
+
 /* hoge のイベントを jQuery.on で捕獲します。 */
 $('.form-group label').on({
 	/* タッチの開始、マウスボタンを押したとき */
