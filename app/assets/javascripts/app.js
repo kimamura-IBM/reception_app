@@ -85,6 +85,11 @@ $('.form-group label').on({
 		// （touchmove イベントを通らず終了したときのために必ず覚えておくこと）
 		this.pageX = (isTouch ? event.changedTouches[0].pageX : e.pageX);
 		this.pageY = (isTouch ? event.changedTouches[0].pageY : e.pageY);
+		// 現在の場所を覚えておく
+		startLeft = $(this).position().left;
+		startTop = $(this).position().top;
+		this.left = $(this).position().left;
+		this.top = $(this).position().top;
 		// タッチ処理を開始したフラグをたてる
 		this.touched = true;
 	},
@@ -100,6 +105,8 @@ $('.form-group label').on({
 		// 移動先の hoge の位置を取得する
 		this.left = this.left - (this.pageX - (isTouch ? event.changedTouches[0].pageX : e.pageX) );
 		this.top = this.top - (this.pageY - (isTouch ? event.changedTouches[0].pageY : e.pageY) );
+		// hoge を移動させる
+		//$(this).css({left:this.left, top:this.top});
 		// 位置 X,Y 座標を覚えておく
 		this.pageX = (isTouch ? event.changedTouches[0].pageX : e.pageX);
 		this.pageY = (isTouch ? event.changedTouches[0].pageY : e.pageY);
