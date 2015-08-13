@@ -86,10 +86,10 @@ $('.form-group label').on({
 		this.pageX = (isTouch ? event.changedTouches[0].pageX : e.pageX);
 		this.pageY = (isTouch ? event.changedTouches[0].pageY : e.pageY);
 		// 現在の場所を覚えておく
-		startLeft = $(this).position().left;
-		startTop = $(this).position().top;
-		this.left = $(this).position().left;
-		this.top = $(this).position().top;
+		startLeft = this.pageX
+		startTop = this.pageY
+		//this.left = this.pageX
+		//this.top = this.pageY
 		// タッチ処理を開始したフラグをたてる
 		this.touched = true;
 	},
@@ -102,9 +102,9 @@ $('.form-group label').on({
 		}
 		// ページが動くのを止める
 		//e.preventDefault();
-		// 移動先の hoge の位置を取得する
-		this.left = this.left - (this.pageX - (isTouch ? event.changedTouches[0].pageX : e.pageX) );
-		this.top = this.top - (this.pageY - (isTouch ? event.changedTouches[0].pageY : e.pageY) );
+		// 移動先の位置を取得する
+		//this.left = this.left - (this.pageX - (isTouch ? event.changedTouches[0].pageX : e.pageX) );
+		//this.top = this.top - (this.pageY - (isTouch ? event.changedTouches[0].pageY : e.pageY) );
 		// hoge を移動させる
 		//$(this).css({left:this.left, top:this.top});
 		// 位置 X,Y 座標を覚えておく
@@ -119,7 +119,7 @@ $('.form-group label').on({
 		// タッチ処理は終了したため、フラグをたたむ
 		this.touched = false;
 		// 必要なら以下で最終の hoge の位置を取得し何かに使う
-		console.log(startLeft);
+		console.log('startLeft='+startLeft);
 		console.log(this.pageX);
 		console.log(startTop);
 		console.log(this.pageY);
