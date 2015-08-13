@@ -75,21 +75,16 @@ var startLeft, startTop;
    ここで先に判別しておきます。 */
 var isTouch = ('ontouchstart' in window);
 
-/* hoge のイベントを jQuery.on で捕獲します。 */
+/* イベントを jQuery.on で捕獲します。 */
 $('.form-group label').on({
 	/* タッチの開始、マウスボタンを押したとき */
 	'touchstart': function(e) {
-		// ページが動いたり、反応を止める
-		//e.preventDefault();
 		// 開始位置 X,Y 座標を覚えておく
-		// （touchmove イベントを通らず終了したときのために必ず覚えておくこと）
 		this.pageX = (isTouch ? event.changedTouches[0].pageX : e.pageX);
 		this.pageY = (isTouch ? event.changedTouches[0].pageY : e.pageY);
 		// 現在の場所を覚えておく
 		startLeft = this.pageX
 		startTop = this.pageY
-		//this.left = this.pageX
-		//this.top = this.pageY
 		// タッチ処理を開始したフラグをたてる
 		this.touched = true;
 	},
@@ -100,13 +95,6 @@ $('.form-group label').on({
 		if (!this.touched) {
 			return;
 		}
-		// ページが動くのを止める
-		//e.preventDefault();
-		// 移動先の位置を取得する
-		//this.left = this.left - (this.pageX - (isTouch ? event.changedTouches[0].pageX : e.pageX) );
-		//this.top = this.top - (this.pageY - (isTouch ? event.changedTouches[0].pageY : e.pageY) );
-		// hoge を移動させる
-		//$(this).css({left:this.left, top:this.top});
 		// 位置 X,Y 座標を覚えておく
 		this.pageX = (isTouch ? event.changedTouches[0].pageX : e.pageX);
 		this.pageY = (isTouch ? event.changedTouches[0].pageY : e.pageY);
@@ -118,17 +106,11 @@ $('.form-group label').on({
 		}
 		// タッチ処理は終了したため、フラグをたたむ
 		this.touched = false;
-		// 必要なら以下で最終の hoge の位置を取得し何かに使う
-		console.log('startLeft='+startLeft);
-		console.log(this.pageX);
-		console.log(startTop);
-		console.log(this.pageY);
+		// 必要なら以下で最終の位置を取得し初期状態との差を出す。
 		moveLeft = startLeft - this.pageX;
 		moveTop = startTop - this.pageY;
-		console.log(moveLeft);
-		console.log(moveTop);
 
-		//タップ位置が動いているか判定し、動いてなければコンソール呼び出し
+		//タップ位置が動いているか判定し、動きが50px未満なら呼び出し動作に入る
 		if( -50 <= moveLeft && moveLeft <= 50 && -50 <= moveTop && moveTop <= 50  ){
 			var callName,
 				callImg;
