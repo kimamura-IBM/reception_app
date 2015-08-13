@@ -125,7 +125,7 @@ $('.form-group label').on({
 		console.log(moveTop);
 
 		//タップ位置が動いているか判定し、動いてなければコンソール呼び出し
-		if( -50 <= moveLeft || moveLeft <= 50 || -50 <= moveTop || moveTop <= 50  ){
+		if( -50 <= moveLeft && moveLeft <= 50 && -50 <= moveTop && moveTop <= 50  ){
 			var callName,
 				callImg;
 			timerWaiting01.reject();
