@@ -13,7 +13,7 @@
 <h5>一番上のステータスが受付アプリに反映されています</h5>
 <div id="app_status_area">
   <% time_now = Time.now #現在時刻 %>
-  <% date_now = 9.hours.ago(Time.now) #日付(タイムゾーン調整済) %>
+  <% date_now = Date.today #日付 %>
   <% app_condition_now = @app_conditions.first.status %>
   <h4>
     現在の稼働状況：
