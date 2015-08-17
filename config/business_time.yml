@@ -1,10 +1,11 @@
 business_time:
-  # タイムゾーン考慮しない時
-  beginning_of_workday: 10:30 am
-  end_of_workday: 10:00 pm
-#  # タイムゾーン考慮する時(-9時間)
-#  beginning_of_workday: 1:30 am
-#  end_of_workday: 1:00 pm
+#  # タイムゾーン考慮しない時
+#  beginning_of_workday: 10:30 am
+#  end_of_workday: 10:00 pm
+  # タイムゾーン考慮する時(-9時間)
+  # サーバーが日本時間でも、営業時間は何故か標準時で取ってくる模様。日付は日本時間でそのまま取得。
+  beginning_of_workday: 1:30 am
+  end_of_workday: 1:00 pm
 
 holidays:
   # 整形した休日データ。ソース => https://raw.githubusercontent.com/komagata/holiday_jp/master/holidays.yml
