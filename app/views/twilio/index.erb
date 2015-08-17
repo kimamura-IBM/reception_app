@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="initial-scale=0.5,user-scalable=no">
@@ -22,7 +22,7 @@
 <!--<div class="container text-center">-->
   <!--<div class="row">-->
     <% time_now = Time.now #現在時刻 %>
-    <% date_now = 9.hours.ago(Time.now) #日付(タイムゾーン調整済) %>
+    <% date_now = Date.today #日付 %>
     <!--<p>ステータス：<%# @app_condition %><br />(1:通常, 2:強制稼働, 3:強制休止)<br />平日ですか？：<%# date_now.workday? %><br />営業時間内ですか？：<%# time_now.during_business_hours? %><br />現在時刻：<%# Time.now %></p>-->
     <% if @app_condition == 1 %>
         <% if date_now.workday? == true %>
