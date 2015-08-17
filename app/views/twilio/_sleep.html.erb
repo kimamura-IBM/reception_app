@@ -1,0 +1,36 @@
+<div id="sleep_wrapper">
+  <div id="sleep_attention">
+    <h1><img src="/assets/images/logo01.svg" alt="n2p"></h1>
+    <p class="maintxt">
+      ご来社ありがとうございます。<br>
+      大変申し訳ございませんが、只今の時間帯は営業時間外です。<br>
+<br>
+      n2pの営業時間は<br>
+      平日10:30より20:00までとなっております。<br>
+<br>
+      御用の方は改めてご来社いただくか、<br>
+      担当の人間に直接ご連絡ください。<br>
+<br>
+      またのご来社を心よりお待ちしております。<br>
+    </p>
+    <button type="button" class="cancelbtn">
+      check status
+    </button>
+  </div>
+  <div id="sleep_status">
+    <% time_now = Time.now #現在時刻 %>
+    <% date_now = 9.hours.ago(Time.now) #日付(タイムゾーン調整済) %>
+    <% app_condition_now = @app_condition %>
+    <h2>現在休止モードです。</h2>
+    <br />
+    <dl>
+      <dt>稼働状況 (1:通常, 2:強制稼働, 3:強制休止)</dt><dd><%= @app_condition %></dd>
+      <dt>平日ですか？</dt><dd><%= date_now.workday? %></dd>
+      <dt>営業時間内ですか？</dt><dd><%= time_now.during_business_hours? %></dd>
+      <dt>現在時刻</dt><dd><%= Time.now %></dd>
+    </dl>
+    <button type="button" class="cancelbtn">
+      back attention
+    </button>
+  </div>
+</div>

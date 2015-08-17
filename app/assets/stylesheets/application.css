@@ -15,38 +15,6 @@
  *= require intl-phone/css/intlTelInput.css
  */
 
-/*
-既存ソース
-.container {
-    margin-top: 100px;
-}
-
-#contactform .radio, #contactform .text {
-    font-size: 1.5em;
-    text-align: left;
-    padding-left: 35%;
-}
-
-#contactform .radio img {
-    margin: 0 1em;
-}
-
-#alert_success, #alert_warning {
-    display: none;
-}
-
-.alert-success {
-    color: #468847;
-    background-color: #dff0d8;
-}
-
-.alert-warning {
-    color: #c09853;
-    background-color: #fcf8e3;
-}
-*/
-
-
 /*基本画面配置*/
 #waiting,
 #alert_success,
@@ -129,7 +97,7 @@ hr{
   color: #fff;
   padding: 20px 0;
   display: block;
-  width: 80%;
+  width: 100%;
 }
 
 .form-group label input[type=radio]{
@@ -401,10 +369,9 @@ body{
   position: absolute;
   top: 0;
   left: 0;
-/*  opacity: 0;*/
-  background-color: #ddc242;
+  opacity: 0;
 }
-/*
+
 @-webkit-keyframes dissolve {
   0% {
     opacity: 0.1;
@@ -492,7 +459,7 @@ body{
   background: linear-gradient(136.94deg, #fefef6 0%, #877003 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefef6',endColorstr='#877003' , GradientType=1);
 }
-*/
+
 
 /*待機中アニメパーツ*/
 .loader-ring {
@@ -687,3 +654,65 @@ body{
     margin-top: 25%;
   }
 }
+
+
+/*休止モード*/
+#sleep_wrapper{
+  position: relative;
+  background-color: rgba(0,0,0,.7);
+  margin: 0;
+  padding: 0;
+}
+
+#sleep_status,
+#sleep_attention{
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#sleep_attention .cancelbtn{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  outline: none;
+  color: #fff;
+  font-size: 24px;
+  line-height: 114px;
+  text-align: right;
+  width: 100%;
+  margin:auto;
+  display: block;
+  background-color: inherit;
+}
+
+#sleep_status .cancelbtn{
+  border:4px #fff solid;
+  color: #fff;
+  font-size: 72px;
+  line-height: 114px;
+  text-align: center;
+  width: 585px;
+  margin:auto;
+  display: block;
+  background-color: inherit;
+}
+
+#sleep_status {
+  font-size: 52px;
+  line-height: 72px;
+  color: #fff;
+  display: none;
+}
+
+#sleep_status dt {
+    font-weight: bold;
+}
+
+#sleep_status dd {
+    padding-bottom: 1em;
+}
+
+
+
+
