@@ -70,7 +70,68 @@ var timerRefresh,
 		});
 
 //呼び出し起動
-		$('.form-group label').on('touchstart', function(e) {
+var startLeft, startTop;
+/* タッチできる環境なら true、そうでないなら false 。
+   ここで先に判別しておきます。 */
+var isTouch = ('ontouchstart' in window);
+
+/* イベントを jQuery.on で捕獲します。 */
+$('.form-group label').on({
+	/* タッチの開始、マウスボタンを押したとき */
+	'touchstart': function(e) {
+		// 開始位置 X,Y 座標を覚えておく
+		this.pageX = (isTouch ? event.changedTouches[0].pageX : e.pageX);
+		this.pageY = (isTouch ? event.changedTouches[0].pageY : e.pageY);
+		// 現在の場所を覚えておく
+		startLeft = this.pageX
+		startTop = this.pageY
+		// タッチ処理を開始したフラグをたてる
+		this.touched = true;
+	},
+	/* タッチしながら移動、マウスのドラッグ */
+	'touchmove': function(e) {
+		// 開始していない場合は動かないようにする
+		// 過剰動作の防止
+		if (!this.touched) {
+			return;
+		}
+		// 位置 X,Y 座標を覚えておく
+		this.pageX = (isTouch ? event.changedTouches[0].pageX : e.pageX);
+		this.pageY = (isTouch ? event.changedTouches[0].pageY : e.pageY);
+	},
+	/* タッチの終了、マウスのドラッグの終了 */
+	'touchend': function(e) {
+		if (!this.touched) {
+			return;
+		}
+		// タッチ処理は終了したため、フラグをたたむ
+		this.touched = false;
+		// 必要なら以下で最終の位置を取得し初期状態との差を出す。
+		moveLeft = startLeft - this.pageX;
+		moveTop = startTop - this.pageY;
+
+		//タップ位置が動いているか判定し、動きが50px未満なら呼び出し動作に入る
+		if( -50 <= moveLeft && moveLeft <= 50 && -50 <= moveTop && moveTop <= 50 ){
+			var callName,
+				callImg;
+			timerWaiting01.reject();
+			timerRefresh = $.wait(40000).done(function(){
+				$('#modal_window').hide();
+				timerWaiting01Func();
+			}).fail(function(){
+				console.log('timerRefreshreject');
+			});
+			callName = $(this).text().replace(/[\n\r]/g,'');
+			callImg = $(this).find('img').attr('src');
+			$('#modal_window p').html(callName+'を<br>呼び出しますか？');
+			$('#alert_success .nametxt').text(callName);
+			$('#alert_success .img-rounded').attr('src',callImg);
+			$(this).find('input').prop('checked', true);
+			$('#modal_window').show();
+		}
+	}
+});
+/*		$('.form-group label').on('touchend', function(e) {
 			var callName,
 				callImg;
 			timerWaiting01.reject();
@@ -88,6 +149,7 @@ var timerRefresh,
 			$(this).find('input').prop('checked', true);
 			$('#modal_window').show();
 		});
+*/
 
 		$('#modal_window #call').on('touchstart', function(e) {
 			e.preventDefault();
@@ -204,46 +266,22 @@ var timerRefresh,
 				console.log('callFlag'+callFlag);
 			});
 		});
+
+//休止モード
+		$('#sleep_wrapper,#sleep_status,#sleep_attention').css({
+			'width': wid,
+			'min-height': hei
+		});
+
+
+		$('#sleep_attention .cancelbtn').on('touchstart', function(e) {
+			e.preventDefault();
+			changeLayer('#sleep_attention','#sleep_status');
+		});
+
+		$('#sleep_status .cancelbtn').on('touchstart', function(e) {
+			e.preventDefault();
+			changeLayer('#sleep_status','#sleep_attention');
+		});
 	});
 }());
-
-/*
-$(function() {
-		$('#phoneNumber').intlTelInput({
-				responsiveDropdown: true,
-				autoFormat: true,
-				utilsScript: 'assets/intl-phone/libphonenumber/build/utils.js'
-		});
-		var $form = $('#contactform'),
-				$submit = $('#contactform input[type=submit]');
-
-		// Intercept form submission
-		$form.on('submit', function(e) {
-				// Prevent form submission and repeat clicks
-				e.preventDefault();
-				$submit.attr('disabled', 'disabled');
-
-				// Submit the form via ajax
-				$.ajax({
-						url:'/call',
-						method:'POST',
-						data: $form.serialize()
-				}).done(function(data) {
-						//alert('呼び出し中です。しばらくお待ちください。');
-						$('#alert_success').show();
-						setTimeout(function(){
-								$('#alert_success').hide();
-						},10000);
-				}).fail(function() {
-						//alert('エラーが発生しました。');
-						$('#alert_warning').show();
-						setTimeout(function(){
-								$('#alert_warning').hide();
-						},10000);
-				}).always(function() {
-						$submit.removeAttr('disabled');
-				});
-
-		});
-});
-*/
