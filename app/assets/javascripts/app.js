@@ -24,7 +24,7 @@ var timerRefresh,
 
 //待機画面の予約(セット時点より60s後)
 	function timerWaiting01Func(){
-		timerWaiting01 = $.wait(3000).done(function(){
+		timerWaiting01 = $.wait(60000).done(function(){
 			changeLayer('#form_main','#waiting');
 		}).fail(function(){
 			console.log('timerWaiting01reject');
