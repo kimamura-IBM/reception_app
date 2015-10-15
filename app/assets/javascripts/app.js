@@ -226,7 +226,7 @@ $('.form-group label').on({
 					$('#alert_success .maintxt-response,#alert_success .img-response').show();
 					timerMain01 = $.wait(30000).done(function(){
 						changeLayer('#alert_success','#form_main');
-            // 20151015修正。timerWaiting01FuncをtimerMain02と同時発火させると、画面遷移がが乱れることがある為。
+            // 20151015修正。timerWaiting01FuncをtimerMain02と同時発火させると、画面遷移が乱れることがある為。
             timerWaiting01Func();
 					}).fail(function(){
 						console.log('timerMain01reject');
@@ -238,7 +238,7 @@ $('.form-group label').on({
 					changeLayer('#alert_success,#form_main','#alert_warning');
 					timerMain02 = $.wait(30000).done(function(){
 						changeLayer('#alert_warning','#form_main');
-            // 20151015修正。timerWaiting01FuncをtimerMain02と同時発火させると、画面遷移がが乱れることがある為。
+            // 20151015修正。timerWaiting01FuncをtimerMain02と同時発火させると、画面遷移が乱れることがある為。
             timerWaiting01Func();
 					}).fail(function(){
 						console.log('timerMain02reject');
