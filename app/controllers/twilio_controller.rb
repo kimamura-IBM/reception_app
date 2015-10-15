@@ -70,13 +70,13 @@ class TwilioController < ApplicationController
       if @calling.status == 'in-progress' || @calling.status == 'completed' # 電話に出ている(='in-progress')か、通話が完了している(='completed')場合
         # SlackBotからメッセージ送信.電話を取った旨を#visitorに.
         SlackBot.notify(
-            body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：電話を取りました。"
+            body: "【テスト送信_staging】受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：電話を取りました。"
         )
         @msg = { :message => "yes", :status => 'ok' } # data.messageに"yes"を追加.その後jsで分岐処理.
       else # 電話に出れなかった場合
         # SlackBotからメッセージ送信.電話を取れなかった旨を#visitorに.
         SlackBot.notify(
-            body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：電話を取ることができませんでした。"
+            body: "【テスト送信_staging】受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：電話を取ることができませんでした。"
         )
         @msg = { :message => "no", :status => 'ok' } # data.messageに"no"を追加.その後jsで分岐処理.
       end
