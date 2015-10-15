@@ -47,7 +47,7 @@ class TwilioController < ApplicationController
 
     # SlackBotからメッセージ送信.まず呼び出された旨を#visitorに.
     SlackBot.notify(
-        body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：呼び出し中。20秒後に通話ステータスを再確認します。"
+        body: "【テスト送信_staging】受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：呼び出し中。20秒後に通話ステータスを再確認します。"
     )
 
     # Validate contact
