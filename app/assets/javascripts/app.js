@@ -24,7 +24,7 @@ var timerRefresh,
 
 //待機画面の予約(セット時点より60s後)
 	function timerWaiting01Func(){
-		timerWaiting01 = $.wait(60000).done(function(){
+		timerWaiting01 = $.wait(3000).done(function(){
 			changeLayer('#form_main','#waiting');
 		}).fail(function(){
 			console.log('timerWaiting01reject');
@@ -221,24 +221,28 @@ $('.form-group label').on({
 //呼び出し成功;
 				console.log(data.message);
 				if(data.message == 'yes'){
+          // 電話を取れた時
 					$('#alert_success .maintxt').hide();
 					$('#alert_success .maintxt-response,#alert_success .img-response').show();
 					timerMain01 = $.wait(30000).done(function(){
 						changeLayer('#alert_success','#form_main');
+            // 20151015修正。timerWaiting01FuncをtimerMain02と同時発火させると、画面遷移がが乱れることがある為。
+            timerWaiting01Func();
 					}).fail(function(){
 						console.log('timerMain01reject');
 					});
-					timerWaiting01Func();
 				}else{
+          // 電話を取れなかった時
 					$('#alert_warning .maintxt').html('誰もいないようです<br>弊社の営業時間は月曜日から金曜日の<br>10時半から20時までです');
 					timerSuccess01.reject();
 					changeLayer('#alert_success,#form_main','#alert_warning');
 					timerMain02 = $.wait(30000).done(function(){
 						changeLayer('#alert_warning','#form_main');
+            // 20151015修正。timerWaiting01FuncをtimerMain02と同時発火させると、画面遷移がが乱れることがある為。
+            timerWaiting01Func();
 					}).fail(function(){
 						console.log('timerMain02reject');
 					});
-					timerWaiting01Func();
 				}
 			}).fail(function(XMLHttpRequest) {
 //エラー処理
