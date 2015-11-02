@@ -15,7 +15,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 # Validate phone numbers easily
 gem 'phony_rails'
-# Twilio REST API. 
+# Twilio REST API.
 gem 'twilio-ruby'
 # SlackBot
 gem 'slack_bot'
