@@ -29,8 +29,8 @@
 <div id="alert_success">
   <h1><img src="/assets/images/logo01.svg" alt="n2p"></h1>
   <img src="/assets/images/response.svg" alt="" class="img-response" />
-  <img src="http://www.herrokkin.jp/images/Icon.jpg" alt="" class="img-rounded" />
-  <p class="nametxt">Keiichi Tsuneyama</p>
+  <img src="http://n2p.co.jp/img/receptionicons/daidaihyou.png" alt="" class="img-rounded" />
+  <p class="nametxt">N2P</p>
   <p class="maintxt">を呼び出しています<span class="dot01">･</span><span class="dot02">･</span><span class="dot03">･</span></p>
   <p class="maintxt-response">おっと、気づいたようです。<br>いましばらくお待ちください。</p>
   <div class="loader">
@@ -72,13 +72,10 @@
       <div id="header">
         <h1><img src="/assets/images/logo01.svg" width="384" alt="n2p"></h1>
         <p class="maintxt">画面をタップして担当者を呼び出してください</p>
-        <!--<div id="alert_success" class="alert alert-success col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8" role="alert"><strong>呼び出し中です。そのまましばらくお待ちください</strong>。</div>
-        <div id="alert_warning" class="alert alert-warning col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8" role="alert"><strong>エラーが発生しました。もう一度やり直してみてください。</strong></div>-->
         <hr />
       </div>
       <div id="radio_area">
         <%= form_tag({action: "call"}, method: "POST", class: "form-horizontal", id: "contactform" , role: "form") do %>
-            <!-- <form id="contactform" class="form-horizontal" role="form" action="#" method="POST"> -->
             <% @users.each do |user| %>
                 <div class="form-group">
                   <div class="col-md-12 col-sm-12">
@@ -88,23 +85,10 @@
                   </div>
                 </div>
             <% end %>
-            <!-- <div class="form-group text">
-            <div class="col-md-6 col-sm-6">
-              <input type="text" class="form-control" name="namae" placeholder="お名前">
-            </div>
-            </div>
-            <div class="form-group text">
-                <div class="col-md-6 col-sm-6">
-                  <input type="text" class="form-control" name="issue" placeholder="ご用件">
-                </div>
-            </div> -->
             <div class="form-group" id="submit_btn">
-              <!-- <button type="submit" class="btn btn-success btn-lg">呼び出し</button> -->
               <%= submit_tag("呼び出し", class: "btn btn-success btn-lg text-center") %>
             </div>
-            <!-- </form> -->
         <% end %>
-
       </div><!-- /radioArea -->
     </div>
   </div>
