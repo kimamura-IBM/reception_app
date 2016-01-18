@@ -46,12 +46,8 @@ class TwilioController < ApplicationController
     @contact_to_url = URI.escape(@contact_to) # 呼び出された人の名前(Twilio用, URLにエンコード)
 
     # SlackBotからメッセージ送信.まず呼び出された旨を#visitorに.
-    # channelm bot_name, tokenはHeroku用環境変数を使用
     SlackBot.notify(
-        body: "【テスト送信_staging】受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：呼び出し中。20秒後に通話ステータスを再確認します。",
-        channel: "visitor",
-        bot_name: "UketsukeApp",
-        token: ENV['slack_token']
+        body: "【テスト送信_staging】受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：呼び出し中。20秒後に通話ステータスを再確認します。"
     )
 
     # Validate contact
@@ -73,22 +69,14 @@ class TwilioController < ApplicationController
       @calling = @client.account.calls.get(@call.sid) # 通話ステータス問い合わせ
       if @calling.status == 'in-progress' || @calling.status == 'completed' # 電話に出ている(='in-progress')か、通話が完了している(='completed')場合
         # SlackBotからメッセージ送信.電話を取った旨を#visitorに.
-        # channelm bot_name, tokenはHeroku用環境変数を使用
         SlackBot.notify(
-            body: "【テスト送信_staging】受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：電話を取りました。",
-            channel: "visitor",
-            bot_name: "UketsukeApp",
-            token: ENV['slack_token']
+            body: "【テスト送信_staging】受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：電話を取りました。"
         )
         @msg = { :message => "yes", :status => 'ok' } # data.messageに"yes"を追加.その後jsで分岐処理.
       else # 電話に出れなかった場合
         # SlackBotからメッセージ送信.電話を取れなかった旨を#visitorに.
-        # channelm bot_name, tokenはHeroku用環境変数を使用
         SlackBot.notify(
-            body: "【テスト送信_staging】受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：電話を取ることができませんでした。",
-            channel: "visitor",
-            bot_name: "UketsukeApp",
-            token: ENV['slack_token']
+            body: "【テスト送信_staging】受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：電話を取ることができませんでした。"
         )
         @msg = { :message => "no", :status => 'ok' } # data.messageに"no"を追加.その後jsで分岐処理.
       end
