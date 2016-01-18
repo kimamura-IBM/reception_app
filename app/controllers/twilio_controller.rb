@@ -45,6 +45,13 @@ class TwilioController < ApplicationController
     @contact_to = User.find_by(phonenumber: contact.phone).username # 呼び出された人の名前(Slack用)
     @contact_to_url = URI.escape(@contact_to) # 呼び出された人の名前(Twilio用, URLにエンコード)
 
+    SlackBot.setup do |config|
+          config.token = ENV['slack_token']
+          config.channel = '#visitor' #n2p
+          config.bot_name = 'UketsukeApp'
+          config.body = '受付Webアプリからの送信です。'
+    end
+
     # SlackBotからメッセージ送信.まず呼び出された旨を#visitorに.
     SlackBot.notify(
         body: "【テスト送信_staging】受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：呼び出し中。20秒後に通話ステータスを再確認します。"
