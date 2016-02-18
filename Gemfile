@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+ruby '2.2.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.4'
@@ -15,7 +16,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 # Validate phone numbers easily
 gem 'phony_rails'
-# Twilio REST API. 
+# Twilio REST API.
 gem 'twilio-ruby'
 # SlackBot
 gem 'slack_bot'
