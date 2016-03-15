@@ -267,6 +267,13 @@ $('.form-group label').on({
 			});
 		});
 
+//ロゴをタップしたらリロード
+		$('#waiting h1,#header h1,#sleep_attention h1').on('touchstart', function(e) {
+			e.preventDefault();
+			document.location.reload(true);
+		});
+
+
 //休止モード
 		$('#sleep_wrapper,#sleep_status,#sleep_attention').css({
 			'width': wid,
