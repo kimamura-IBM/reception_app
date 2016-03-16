@@ -21,10 +21,6 @@ function dateString(d){
 
 function businessTimeFunc(timeDataArray){
 //日付の配列
-	console.log(timeDataArray);
-	console.log(timeDataArray['business_time']);
-	console.log();
-	console.log(timeDataArray['work_week']);
 	var holidaysArray = timeDataArray['holidays'];
 	var workWeekArray = timeDataArray['work_week'];
 	var businessTimeArray = ttimeDataArray['business_time'];
@@ -37,7 +33,7 @@ function businessTimeFunc(timeDataArray){
 //日付の判定　今日は祝日に含まれていないか
 	today = dateString(d);
 
-	$.each(validParameterData,
+	$.each(holidaysArray,
 		function(index, elem) {
 			if( today == elem ){
 				console.log(elem);
