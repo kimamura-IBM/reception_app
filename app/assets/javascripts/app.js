@@ -1,4 +1,10 @@
 (function () {
+//時間を取得する
+var timeData = $.ajax({
+    url: '/config/business_time.json',
+    dataType: 'json'
+  });
+
 //共通仕様フラグ
 var callFlag = true;
 
@@ -33,6 +39,14 @@ var timerRefresh,
 
 
 	$(function() {
+//通常モードなら、時間を取得して表示を切り替える
+		timeData.done(function(timeDataArray) {
+			consle.log(timeDataArray);
+		});
+		timeData.fail(function() {
+			alert('ファイルがうまく読み込めませんでした。<br>お手数ですが再読み込みをお願いします。');
+		});
+
 //読み込み時の処理
 //画面組み立て
 		var wid = $(window).width() + 'px',
