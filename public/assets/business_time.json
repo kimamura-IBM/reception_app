@@ -1,7 +1,9 @@
 {
   "business_time": {
-    "beginning_of_workday": "1:30 am",
-    "end_of_workday": "1:00 pm"
+    "beginning_of_workday_time": "10",
+    "beginning_of_workday_minute": "30",
+    "end_of_workday_time": "22",
+    "end_of_workday_minute": "00",
   },
   "holidays": [
     "January 01, 1970",

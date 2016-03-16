@@ -63,6 +63,8 @@ function businessTimeFunc(timeDataArray){
 //時間の判定　今は勤務時間か
 	timenow = d.getHours();
 	nowminute = d.getMinutes();
+	console.log(timenow);
+	console.log(nowminute);
 	if( businessTimeArray['beginning_of_workday_time'] <= timenow && timenow < businessTimeArray['end_of_workday_time']){
 		if( businessTimeArray['beginning_of_workday_time'] == timenow){
 			if( businessTimeArray['beginning_of_workday_minute'] <= nowminute){
