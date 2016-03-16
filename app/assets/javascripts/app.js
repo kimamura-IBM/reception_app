@@ -20,13 +20,13 @@ function dateString(d){
 
 function businessTimeFunc(timeDataArray){
 	console.log(timeDataArray);
-	console.log(timeDataArray[0]);
-	console.log(timeDataArray[1]);
-	console.log(timeDataArray[2]);
-
-//日付の判定　今日は祝日に含まれていないか
-console.log(dateString(d));
-console.log('January 01, 1970');
+	console.log(timeDataArray["business_time"]);
+	console.log(timeDataArray["holidays"]);
+	console.log(timeDataArray["work_week"]);
+	d = new Date();
+	//日付の判定　今日は祝日に含まれていないか
+	console.log(dateString(d));
+	console.log('January 01, 1970');
 
 /*
 	$.each(validParameterData,
