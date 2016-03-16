@@ -9,7 +9,8 @@ var monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
 
-var d;
+var d,
+	today;
 
 function dateString(d){
 	function pad(n){return n<10 ? '0'+n : n}
@@ -19,14 +20,35 @@ function dateString(d){
 }
 
 function businessTimeFunc(timeDataArray){
+//日付の配列
 	console.log(timeDataArray);
-	console.log(timeDataArray["business_time"]);
-	console.log(timeDataArray["holidays"]);
-	console.log(timeDataArray["work_week"]);
-	d = new Date();
-	//日付の判定　今日は祝日に含まれていないか
-	console.log(dateString(d));
-	console.log('January 01, 1970');
+	console.log(timeDataArray['business_time']);
+	console.log();
+	console.log(timeDataArray['work_week']);
+	var holidaysArray = timeDataArray['holidays'];
+	var workWeekArray = timeDataArray['work_week'];
+	var businessTimeArray = ttimeDataArray['business_time'];
+	var workdayFlag = true;
+
+//テスト用の日付
+//	d = new Date();
+	d = new Date('Wed Mar 21 2016 19:30:09 GMT+0900 (JST)');
+
+//日付の判定　今日は祝日に含まれていないか
+	today = dateString(d);
+
+	$.each(validParameterData,
+		function(index, elem) {
+			if( today == elem ){
+				console.log(elem);
+				workdayFlag = false;
+				console.log(workdayFlag);
+				return false;
+			}
+		}
+	);
+
+
 
 /*
 	$.each(validParameterData,
