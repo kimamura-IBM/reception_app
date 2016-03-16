@@ -1,7 +1,7 @@
 (function () {
 //時間を取得する
 var timeData = $.ajax({
-    url: '/public/business_time.json',
+    url: '/assets/business_time.json',
     dataType: 'json'
   });
 
