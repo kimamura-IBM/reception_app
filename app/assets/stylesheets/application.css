@@ -15,6 +15,15 @@
  *= require intl-phone/css/intlTelInput.css
  */
 
+
+/*通常モード*/
+#active_wrapper{
+  position: relative;
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
 /*基本画面配置*/
 #waiting,
 #alert_success,

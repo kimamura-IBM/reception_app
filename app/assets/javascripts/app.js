@@ -32,10 +32,7 @@ function businessTimeFunc(timeDataArray){
 	var workdayFlag = true;
 	var workWeekFlag = false;
 	var workTimeFlag = false;
-
-
-//テスト用の日付
-//	d = new Date();
+//現在時刻
 	d = new Date('Wed Mar 22 2016 22:00:09 GMT+0900 (JST)');
 
 //日付の判定　今日は祝日に含まれていないか
@@ -90,22 +87,26 @@ function businessTimeFunc(timeDataArray){
 	if(workdayFlag){
 		if(workWeekFlag){
 			if(workTimeFlag){
+				$('#sleep_wrapper').hide();
 				console.log('勤務時間中です。ウェルカム！');
 			}else{
+				$('#active_wrapper').hide();
 				console.log('勤務時間外');
 			}
 		}else{
+			$('#active_wrapper').hide();
 			console.log('今日は休みの曜日');
 		}
 	}else{
+		$('#active_wrapper').hide();
 		console.log('今日は祝日');
 	}
 
-/*
+//テストなので30秒ごとに更新
 	setTimeout(function(){
 		businessTimeFunc();
-	},1000*60*10);
-*/
+	},1000*30*);
+
 }
 
 
