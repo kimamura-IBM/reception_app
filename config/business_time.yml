@@ -1,3 +1,9 @@
+##################
+# こちらの内容はJavaScript側では使っていません。
+# JavaScript側では
+# config/business_time.json
+# にて、変換したものを使っています。
+##################
 business_time:
 #  # タイムゾーン考慮しない時
 #  beginning_of_workday: 10:30 am
