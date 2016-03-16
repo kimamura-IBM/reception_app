@@ -41,7 +41,7 @@ var timerRefresh,
 	$(function() {
 //通常モードなら、時間を取得して表示を切り替える
 		timeData.done(function(timeDataArray) {
-			consle.log(timeDataArray);
+			console.log(timeDataArray);
 		});
 		timeData.fail(function() {
 			alert('ファイルがうまく読み込めませんでした。お手数ですが再読み込みをお願いします。');
