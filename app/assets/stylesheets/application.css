@@ -17,7 +17,8 @@
 
 
 /*通常モード*/
-#active_wrapper{
+#active_wrapper_normal,
+#active_wrapper_forced{
   position: relative;
   background-color: #fff;
   margin: 0;
@@ -666,7 +667,8 @@ body{
 
 
 /*休止モード*/
-#sleep_wrapper{
+#sleep_wrapper_normal,
+#sleep_wrapper_forced{
   position: relative;
   background-color: rgba(0,0,0,.7);
   margin: 0;

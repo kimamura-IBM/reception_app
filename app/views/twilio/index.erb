@@ -24,20 +24,20 @@
     <% date_now = 9.hours.ago(Time.now) #日付(タイムゾーン調整済) %>
     <!--<p>ステータス：<%# @app_condition %><br />(1:通常, 2:強制稼働, 3:強制休止)<br />平日ですか？：<%# date_now.workday? %><br />営業時間内ですか？：<%# time_now.during_business_hours? %><br />現在時刻：<%# Time.now %></p>-->
     <% if @app_condition == 1 %>
-<div id="active_wrapper" class="normal">
+        <div id="active_wrapper_normal">
         <%= render 'active' %>
-</div>
-<div id="sleep_wrapper" class="normal">
+        </div>
+        <div id="sleep_wrapper_normal">
         <%= render 'sleep' %>
-</div>
+        </div>
     <% elsif @app_condition == 2 %>
-<div id="active_wrapper" class="forced">
+        <div id="active_wrapper_forced">
         <%= render 'active' %>
-</div>
+        </div>
     <% elsif @app_condition == 3 %>
-<div id="sleep_wrapper" class="forced">
+        <div id="sleep_wrapper_forced">
         <%= render 'sleep' %>
-</div>
+        </div>
     <% end %>
   <!--</div>-->
 <!--</div>--> <!-- /page -->
