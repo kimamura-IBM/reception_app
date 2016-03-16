@@ -9,7 +9,10 @@ var monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
 
+var dayNames = ["sun","mon","tue","wed","thu","fri","sat"];
+
 var d,
+	todate,
 	today;
 
 function dateString(d){
@@ -25,18 +28,21 @@ function businessTimeFunc(timeDataArray){
 	var workWeekArray = timeDataArray['work_week'];
 	var businessTimeArray = timeDataArray['business_time'];
 	var workdayFlag = true;
+	var workWeekFlag = false;
+	var workTimeFlag = false;
+
 
 //テスト用の日付
 //	d = new Date();
 	d = new Date('Wed Mar 21 2016 19:30:09 GMT+0900 (JST)');
 
 //日付の判定　今日は祝日に含まれていないか
-	today = dateString(d);
-	console.log(today);
+	todate = dateString(d);
+	console.log(todate);
 
 	$.each(holidaysArray,
 		function(index, elem) {
-			if( today == elem ){
+			if( todate == elem ){
 				console.log(elem);
 				workdayFlag = false;
 				console.log(workdayFlag);
@@ -45,6 +51,22 @@ function businessTimeFunc(timeDataArray){
 		}
 	);
 
+//曜日の判定　今日は勤務曜日か
+	today = dayNames[d.getDay()];
+	console.log(today);
+
+	$.each(workWeekArray,
+		function(index, elem) {
+			if( today == elem ){
+				console.log(elem);
+				workWeekArray = true;
+				console.log(workWeekArray);
+				return false;
+			}
+		}
+	);
+
+//時間の判定　今は勤務時間か
 
 
 /*
