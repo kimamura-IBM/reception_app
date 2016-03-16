@@ -13,7 +13,9 @@ var dayNames = ["sun","mon","tue","wed","thu","fri","sat"];
 
 var d,
 	todate,
-	today;
+	today,
+	timenow,
+	nowminute;
 
 function dateString(d){
 	function pad(n){return n<10 ? '0'+n : n}
@@ -67,25 +69,49 @@ function businessTimeFunc(timeDataArray){
 	);
 
 //時間の判定　今は勤務時間か
+	timenow = d.getHours();
+	console.log(timenow);
+	nowminute = d.getMinutes();
+	console.log(nowminute);
 
+	if( businessTimeArray['beginning_of_workday_time'] <= timenow && timenow < businessTimeArray['end_of_workday_time']){
+		if( businessTimeArray['beginning_of_workday_time'] == timenow){
+			if( businessTimeArray['beginning_of_workday_minute'] <= nowminute){
+				workTimeFlag = true;
+			}else{
+				workTimeFlag = false;
+			}
+		}else if( timenow == businessTimeArray['end_of_workday_time']){
+			if(nowminute <= businessTimeArray['end_of_workday_minute']){
+				workTimeFlag = false;
+			}else{
+				workTimeFlag = true;
+			}
+		}else{
+			workTimeFlag = true;
+		}
+	}else{
+		workTimeFlag = false;
+	}
+
+
+//表示設定
+
+	if(workdayFlag){
+		if(workWeekFlag){
+			if(workTimeFlag){
+				console.log('勤務時間中です。ウェルカム！');
+			}else{
+				console.log('勤務時間外');
+			}
+		}else{
+			console.log('今日は休みの曜日');
+		}
+	}else{
+		console.log('今日は祝日');
+	}
 
 /*
-	$.each(validParameterData,
-	function(index, elem) {
-		var nowId = elem.id;
-		var nowTotal = Math.abs(elem.vitality - dataset[0][0]) + Math.abs(elem.sense - dataset[0][1]) + Math.abs(elem.intelligence - dataset[0][2])+ Math.abs(elem.communication - dataset[0][3]) + Math.abs(elem.power - dataset[0][4]);
-		var nowArray = [ nowId , nowTotal];
-		minArray.push(nowTotal);
-		totalArray.push(nowArray);
-	});
-
-
-	if(){
-//曜日
-//時間
-	}else{
-
-	}
 	setTimeout(function(){
 		businessTimeFunc();
 	},1000*60*10);
