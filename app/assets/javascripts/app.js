@@ -26,7 +26,7 @@ function businessTimeFunc(timeDataArray){
 
 //日付の判定　今日は祝日に含まれていないか
 console.log(dateString(d));
-console.log(January 01, 1970);
+console.log('January 01, 1970');
 
 /*
 	$.each(validParameterData,
