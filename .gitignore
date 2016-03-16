@@ -21,6 +21,3 @@
 # Ignore settings
 config/initializers/slack_bot.rb
 config/initializers/slack_bot.rb.bak
-
-# Ignore Gemfile.lock
-Gemfile.lock
