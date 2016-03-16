@@ -1,9 +1,41 @@
 (function () {
 //時間を取得する
 var timeData = $.ajax({
-    url: '/assets/business_time.json',
-    dataType: 'json'
-  });
+		url: '/assets/business_time.json',
+		dataType: 'json'
+	});
+
+var monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
+var d;
+
+function dateString(d){
+	function pad(n){return n<10 ? '0'+n : n}
+	return monthNames[d.getMonth()]+' '
+		+ pad(d.getUTCDate())+', '
+		+ d.getUTCFullYear()
+}
+
+function businessTimeFunc(timeDataArray){
+//日付の判定　今日は祝日に含まれていないか
+console.log(dateString(d));
+console.log(January 01, 1970);
+
+/*
+	if(){
+//曜日
+//時間
+	}else{
+
+	}
+	setTimeout(function(){
+		businessTimeFunc();
+	},1000*60*10);
+*/
+}
+
 
 //共通仕様フラグ
 var callFlag = true;
