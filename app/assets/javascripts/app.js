@@ -19,11 +19,26 @@ function dateString(d){
 }
 
 function businessTimeFunc(timeDataArray){
+	console.log(timeDataArray);
+	console.log(timeDataArray[0]);
+	console.log(timeDataArray[1]);
+	console.log(timeDataArray[2]);
+
 //日付の判定　今日は祝日に含まれていないか
 console.log(dateString(d));
 console.log(January 01, 1970);
 
 /*
+	$.each(validParameterData,
+	function(index, elem) {
+		var nowId = elem.id;
+		var nowTotal = Math.abs(elem.vitality - dataset[0][0]) + Math.abs(elem.sense - dataset[0][1]) + Math.abs(elem.intelligence - dataset[0][2])+ Math.abs(elem.communication - dataset[0][3]) + Math.abs(elem.power - dataset[0][4]);
+		var nowArray = [ nowId , nowTotal];
+		minArray.push(nowTotal);
+		totalArray.push(nowArray);
+	});
+
+
 	if(){
 //曜日
 //時間
@@ -73,7 +88,7 @@ var timerRefresh,
 	$(function() {
 //通常モードなら、時間を取得して表示を切り替える
 		timeData.done(function(timeDataArray) {
-			console.log(timeDataArray);
+			businessTimeFunc(timeDataArray);
 		});
 		timeData.fail(function() {
 			alert('ファイルがうまく読み込めませんでした。お手数ですが再読み込みをお願いします。');
