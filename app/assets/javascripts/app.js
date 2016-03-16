@@ -36,7 +36,7 @@ function businessTimeFunc(timeDataArray){
 
 //テスト用の日付
 //	d = new Date();
-	d = new Date('Wed Mar 22 2016 10:30:09 GMT+0900 (JST)');
+	d = new Date('Wed Mar 22 2016 22:00:09 GMT+0900 (JST)');
 
 //日付の判定　今日は祝日に含まれていないか
 	todate = dateString(d);
