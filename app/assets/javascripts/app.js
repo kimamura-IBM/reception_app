@@ -1,7 +1,7 @@
 (function () {
 //時間を取得する
 var timeData = $.ajax({
-    url: '/config/business_time.json',
+    url: '/public/business_time.json',
     dataType: 'json'
   });
 
@@ -44,7 +44,7 @@ var timerRefresh,
 			consle.log(timeDataArray);
 		});
 		timeData.fail(function() {
-			alert('ファイルがうまく読み込めませんでした。<br>お手数ですが再読み込みをお願いします。');
+			alert('ファイルがうまく読み込めませんでした。お手数ですが再読み込みをお願いします。');
 		});
 
 //読み込み時の処理
