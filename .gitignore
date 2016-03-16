@@ -19,6 +19,6 @@
 .idea/dataSources.xml
 
 # Ignore settings
-config/initializers/slack_bot.rb
-config/initializers/slack_bot.rb.bak
-config_bak
+/config/initializers/slack_bot.rb
+/config/initializers/slack_bot.rb.bak
+/config_bak
