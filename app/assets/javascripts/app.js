@@ -32,6 +32,7 @@ function businessTimeFunc(timeDataArray){
 
 //日付の判定　今日は祝日に含まれていないか
 	today = dateString(d);
+	console.log(today);
 
 	$.each(holidaysArray,
 		function(index, elem) {
