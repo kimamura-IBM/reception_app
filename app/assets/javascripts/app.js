@@ -40,14 +40,10 @@ function businessTimeFunc(timeDataArray){
 
 //日付の判定　今日は祝日に含まれていないか
 	todate = dateString(d);
-	console.log(todate);
-
 	$.each(holidaysArray,
 		function(index, elem) {
 			if( todate == elem ){
-				console.log(elem);
 				workdayFlag = false;
-				console.log(workdayFlag);
 				return false;
 			}
 		}
@@ -55,14 +51,10 @@ function businessTimeFunc(timeDataArray){
 
 //曜日の判定　今日は勤務曜日か
 	today = dayNames[d.getDay()];
-	console.log(today);
-
 	$.each(workWeekArray,
 		function(index, elem) {
 			if( today == elem ){
-				console.log(elem);
-				workWeekArray = true;
-				console.log(workWeekArray);
+				workWeekFlag = true;
 				return false;
 			}
 		}
@@ -70,10 +62,7 @@ function businessTimeFunc(timeDataArray){
 
 //時間の判定　今は勤務時間か
 	timenow = d.getHours();
-	console.log(timenow);
 	nowminute = d.getMinutes();
-	console.log(nowminute);
-
 	if( businessTimeArray['beginning_of_workday_time'] <= timenow && timenow < businessTimeArray['end_of_workday_time']){
 		if( businessTimeArray['beginning_of_workday_time'] == timenow){
 			if( businessTimeArray['beginning_of_workday_minute'] <= nowminute){
@@ -96,7 +85,6 @@ function businessTimeFunc(timeDataArray){
 
 
 //表示設定
-
 	if(workdayFlag){
 		if(workWeekFlag){
 			if(workTimeFlag){
