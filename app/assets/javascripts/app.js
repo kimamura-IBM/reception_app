@@ -23,7 +23,7 @@ function businessTimeFunc(timeDataArray){
 //日付の配列
 	var holidaysArray = timeDataArray['holidays'];
 	var workWeekArray = timeDataArray['work_week'];
-	var businessTimeArray = ttimeDataArray['business_time'];
+	var businessTimeArray = timeDataArray['business_time'];
 	var workdayFlag = true;
 
 //テスト用の日付
