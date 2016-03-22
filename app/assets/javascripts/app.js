@@ -16,7 +16,7 @@ var d,
 	today,
 	timenow,
 	nowminute,
-	updateTimer = 1000*3;
+	updateTimer = 1000*60*15;
 
 function dateString(d){
   function pad(n){return n<10 ? '0'+n : n;}
@@ -32,7 +32,7 @@ function businessTimeFunc(timeDataArray){
 	var workWeekFlag = false;
 	var workTimeFlag = false;
 //現在時刻
-	d = new Date('Wed Mar 22 2016 22:00:09 GMT+0900 (JST)');
+	d = new Date();
 
 //日付の判定　今日は祝日に含まれていないか
 	todate = dateString(d);
@@ -59,8 +59,6 @@ function businessTimeFunc(timeDataArray){
 //時間の判定　今は勤務時間か
 	timenow = d.getHours();
 	nowminute = d.getMinutes();
-	console.log(timenow);
-	console.log(nowminute);
 	if( businessTimeArray['beginning_of_workday_time'] <= timenow && timenow < businessTimeArray['end_of_workday_time']){
 		if( businessTimeArray['beginning_of_workday_time'] == timenow){
 			if( businessTimeArray['beginning_of_workday_minute'] <= nowminute){
@@ -101,10 +99,8 @@ function businessTimeFunc(timeDataArray){
 		console.log('今日は祝日');
 	}
 
-//テストなので3秒ごとに更新
 	setTimeout(function(){
 		businessTimeFunc(timeDataArray);
-		console.log('test');
 	},updateTimer);
 }
 
