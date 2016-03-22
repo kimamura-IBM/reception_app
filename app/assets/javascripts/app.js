@@ -18,10 +18,8 @@ var d,
 	nowminute;
 
 function dateString(d){
-	function pad(n){return n<10 ? '0'+n : n}
-	return monthNames[d.getMonth()]+' '
-		+ pad(d.getUTCDate())+', '
-		+ d.getUTCFullYear()
+  function pad(n){return n<10 ? '0'+n : n;}
+	return monthNames[d.getMonth()]+' ' + pad(d.getUTCDate())+', ' + d.getUTCFullYear();
 }
 
 function businessTimeFunc(timeDataArray){
@@ -105,8 +103,7 @@ function businessTimeFunc(timeDataArray){
 //テストなので30秒ごとに更新
 	setTimeout(function(){
 		businessTimeFunc();
-	},1000*30*);
-
+	},1000*30);
 }
 
 
