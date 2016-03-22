@@ -100,10 +100,11 @@ function businessTimeFunc(timeDataArray){
 		console.log('今日は祝日');
 	}
 
-//テストなので30秒ごとに更新
+//テストなので3秒ごとに更新
 	setTimeout(function(){
 		businessTimeFunc();
-	},1000*30);
+		console.log('test');
+	},1000*3);
 }
 
 
