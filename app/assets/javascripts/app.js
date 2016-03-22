@@ -103,7 +103,7 @@ function businessTimeFunc(timeDataArray){
 
 //テストなので3秒ごとに更新
 	setTimeout(function(){
-		businessTimeFunc();
+		businessTimeFunc(timeDataArray);
 		console.log('test');
 	},updateTimer);
 }
