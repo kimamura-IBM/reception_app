@@ -15,7 +15,8 @@ var d,
 	todate,
 	today,
 	timenow,
-	nowminute;
+	nowminute,
+	updateTimer = 1000*3;
 
 function dateString(d){
   function pad(n){return n<10 ? '0'+n : n;}
@@ -104,7 +105,7 @@ function businessTimeFunc(timeDataArray){
 	setTimeout(function(){
 		businessTimeFunc();
 		console.log('test');
-	},1000*3);
+	},updateTimer);
 }
 
 
