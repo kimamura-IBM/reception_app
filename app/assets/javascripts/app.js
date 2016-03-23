@@ -102,7 +102,7 @@ function businessTimeFunc(timeDataArray){
 		$('#sleep_wrapper_normal').show();
 		console.log('今日は祝日');
 	}
-	$('body').append('再読み込み！');
+	$('body').append('<p class="reloadsample">再読み込み！<p>');
 	setTimeout(function(){
 		businessTimeFunc(timeDataArray);
 	},updateTimer);
