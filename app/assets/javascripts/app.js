@@ -85,17 +85,21 @@ function businessTimeFunc(timeDataArray){
 		if(workWeekFlag){
 			if(workTimeFlag){
 				$('#sleep_wrapper_normal').hide();
+				$('#active_wrapper_normal').show();
 				console.log('勤務時間中です。ウェルカム！');
 			}else{
 				$('#active_wrapper_normal').hide();
+				$('#sleep_wrapper_normal').show();
 				console.log('勤務時間外');
 			}
 		}else{
 			$('#active_wrapper_normal').hide();
+			$('#sleep_wrapper_normal').show();
 			console.log('今日は休みの曜日');
 		}
 	}else{
 		$('#active_wrapper_normal').hide();
+		$('#sleep_wrapper_normal').show();
 		console.log('今日は祝日');
 	}
 
