@@ -16,7 +16,7 @@ var d,
 	today,
 	timenow,
 	nowminute,
-	updateTimer = 1000*6;
+	updateTimer = 1000*60*15;
 
 function dateString(d){
   function pad(n){return n<10 ? '0'+n : n;}
@@ -102,7 +102,7 @@ function businessTimeFunc(timeDataArray){
 		$('#sleep_wrapper_normal').show();
 		console.log('今日は祝日');
 	}
-	$('#active_wrapper_normal').prepend('再読み込み！');
+
 	setTimeout(function(){
 		businessTimeFunc(timeDataArray);
 	},updateTimer);
