@@ -1,4 +1,139 @@
-(function () {
+ (function () {
+//時間を取得する
+var timeData = $.ajax({
+		url: '/assets/business_time.json',
+		dataType: 'json'
+	});
+
+var monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
+var dayNames = ["sun","mon","tue","wed","thu","fri","sat"];
+
+//normalTimerは、通常時の時間取得間隔
+//beforeimerは、指定時直前の時間取得間隔
+var d,
+	todate,
+	today,
+	timenow,
+	nowminute,
+	updateTimer,
+	normalTimer = 1000*60*20,
+	beforeimer = 1000*60*5;
+
+function dateString(d){
+  function pad(n){return n<10 ? '0'+n : n;}
+	return monthNames[d.getMonth()]+' ' + pad(d.getUTCDate())+', ' + d.getUTCFullYear();
+}
+
+function businessTimeFunc(timeDataArray){
+//日付の配列
+	var holidaysArray = timeDataArray['holidays'];
+	var workWeekArray = timeDataArray['work_week'];
+	var businessTimeArray = timeDataArray['business_time'];
+	var workdayFlag = true;
+	var workWeekFlag = false;
+	var workTimeFlag = false;
+//現在時刻
+	d = new Date();
+
+//日付の判定　今日は祝日に含まれていないか
+	todate = dateString(d);
+	$.each(holidaysArray,
+		function(index, elem) {
+			if( todate == elem ){
+				workdayFlag = false;
+				return false;
+			}
+		}
+	);
+
+//曜日の判定　今日は勤務曜日か
+	today = dayNames[d.getDay()];
+	$.each(workWeekArray,
+		function(index, elem) {
+			if( today == elem ){
+				workWeekFlag = true;
+				return false;
+			}
+		}
+	);
+
+//時間の判定　今は勤務時間か
+	timenow = d.getHours();
+	nowminute = d.getMinutes();
+	if( businessTimeArray['beginning_of_workday_time'] <= timenow && timenow < businessTimeArray['end_of_workday_time']){
+		if( businessTimeArray['beginning_of_workday_time'] == timenow){
+			if( businessTimeArray['beginning_of_workday_minute'] <= nowminute){
+				updateTimer = normalTimer;
+				workTimeFlag = true;
+			}else{
+				updateTimer = beforeimer;
+				workTimeFlag = false;
+			}
+		}else if( timenow == businessTimeArray['end_of_workday_time']){
+			if(nowminute <= businessTimeArray['end_of_workday_minute']){
+				updateTimer = normalTimer;
+				workTimeFlag = false;
+			}else{
+				updateTimer = beforeimer;
+				workTimeFlag = true;
+			}
+		}else{
+			updateTimer = normalTimer;
+			workTimeFlag = true;
+		}
+	}else if( businessTimeArray['beginning_of_workday_time']-1 == timenow){
+		if( nowminute <= 40){
+			updateTimer = beforeimer;
+		}else{
+			updateTimer = normalTimer;
+		}
+		workTimeFlag = false;
+	}else if(businessTimeArray['end_of_workday_time']-1 == timenow){
+		if( nowminute <= 40){
+			updateTimer = beforeimer;
+		}else{
+			updateTimer = normalTimer;
+		}
+		workTimeFlag = true;
+	}else{
+		updateTimer = normalTimer;
+		workTimeFlag = false;
+	}
+
+
+//表示設定
+	if(workdayFlag){
+		if(workWeekFlag){
+			if(workTimeFlag){
+				$('#sleep_wrapper_normal').hide();
+				$('#active_wrapper_normal').show();
+				console.log('勤務時間中です。ウェルカム！');
+			}else{
+				$('#active_wrapper_normal').hide();
+				$('#sleep_wrapper_normal').show();
+				console.log('勤務時間外');
+			}
+		}else{
+			$('#active_wrapper_normal').hide();
+			$('#sleep_wrapper_normal').show();
+			console.log('今日は休みの曜日');
+		}
+	}else{
+		$('#active_wrapper_normal').hide();
+		$('#sleep_wrapper_normal').show();
+		console.log('今日は祝日');
+	}
+
+	console.log(updateTimer);
+	setTimeout(function(){
+		businessTimeFunc(timeDataArray);
+	},updateTimer);
+}
+
+
 //共通仕様フラグ
 var callFlag = true;
 
@@ -33,6 +168,14 @@ var timerRefresh,
 
 
 	$(function() {
+//通常モードなら、時間を取得して表示を切り替える
+		timeData.done(function(timeDataArray) {
+			businessTimeFunc(timeDataArray);
+		});
+		timeData.fail(function() {
+			alert('ファイルがうまく読み込めませんでした。お手数ですが再読み込みをお願いします。');
+		});
+
 //読み込み時の処理
 //画面組み立て
 		var wid = $(window).width() + 'px',
@@ -221,28 +364,24 @@ $('.form-group label').on({
 //呼び出し成功;
 				console.log(data.message);
 				if(data.message == 'yes'){
-          // 電話を取れた時
 					$('#alert_success .maintxt').hide();
 					$('#alert_success .maintxt-response,#alert_success .img-response').show();
 					timerMain01 = $.wait(30000).done(function(){
 						changeLayer('#alert_success','#form_main');
-            // 20151015修正。timerWaiting01FuncをtimerMain02と同時発火させると、画面遷移が乱れることがある為。
-            timerWaiting01Func();
 					}).fail(function(){
 						console.log('timerMain01reject');
 					});
+					timerWaiting01Func();
 				}else{
-          // 電話を取れなかった時
 					$('#alert_warning .maintxt').html('誰もいないようです<br>弊社の営業時間は月曜日から金曜日の<br>10時半から20時までです');
 					timerSuccess01.reject();
 					changeLayer('#alert_success,#form_main','#alert_warning');
 					timerMain02 = $.wait(30000).done(function(){
 						changeLayer('#alert_warning','#form_main');
-            // 20151015修正。timerWaiting01FuncをtimerMain02と同時発火させると、画面遷移が乱れることがある為。
-            timerWaiting01Func();
 					}).fail(function(){
 						console.log('timerMain02reject');
 					});
+					timerWaiting01Func();
 				}
 			}).fail(function(XMLHttpRequest) {
 //エラー処理
@@ -270,6 +409,13 @@ $('.form-group label').on({
 				console.log('callFlag'+callFlag);
 			});
 		});
+
+//ロゴをタップしたらリロード
+		$('#waiting h1,#header h1,#sleep_attention h1').on('touchstart', function(e) {
+			e.preventDefault();
+			document.location.reload(true);
+		});
+
 
 //休止モード
 		$('#sleep_wrapper,#sleep_status,#sleep_attention').css({

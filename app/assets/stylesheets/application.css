@@ -15,6 +15,16 @@
  *= require intl-phone/css/intlTelInput.css
  */
 
+
+/*通常モード*/
+#active_wrapper_normal,
+#active_wrapper_forced{
+  position: relative;
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
 /*基本画面配置*/
 #waiting,
 #alert_success,
@@ -657,9 +667,10 @@ body{
 
 
 /*休止モード*/
-#sleep_wrapper{
+#sleep_wrapper_normal,
+#sleep_wrapper_forced{
   position: relative;
-  background-color: rgba(0,0,0,.7);
+  background-color: #444;
   margin: 0;
   padding: 0;
 }
@@ -669,6 +680,7 @@ body{
   position: absolute;
   top: 0;
   left: 0;
+  background-color: inherit;
 }
 
 #sleep_attention .cancelbtn{
