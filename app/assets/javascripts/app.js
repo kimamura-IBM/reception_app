@@ -11,6 +11,8 @@ var monthNames = ["January", "February", "March", "April", "May", "June",
 
 var dayNames = ["sun","mon","tue","wed","thu","fri","sat"];
 
+//normalTimerは、通常時の時間取得間隔
+//beforeimerは、指定時直前の時間取得間隔
 var d,
 	todate,
 	today,
