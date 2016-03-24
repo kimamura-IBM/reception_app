@@ -1,4 +1,4 @@
-(function () {
+ (function () {
 //時間を取得する
 var timeData = $.ajax({
 		url: '/assets/business_time.json',
@@ -16,7 +16,9 @@ var d,
 	today,
 	timenow,
 	nowminute,
-	updateTimer = 1000*60*15;
+	updateTimer,
+	normalTimer = 1000*60*20,
+	beforeimer = 1000*60*5;
 
 function dateString(d){
   function pad(n){return n<10 ? '0'+n : n;}
@@ -62,20 +64,40 @@ function businessTimeFunc(timeDataArray){
 	if( businessTimeArray['beginning_of_workday_time'] <= timenow && timenow < businessTimeArray['end_of_workday_time']){
 		if( businessTimeArray['beginning_of_workday_time'] == timenow){
 			if( businessTimeArray['beginning_of_workday_minute'] <= nowminute){
+				updateTimer = normalTimer;
 				workTimeFlag = true;
 			}else{
+				updateTimer = beforeimer;
 				workTimeFlag = false;
 			}
 		}else if( timenow == businessTimeArray['end_of_workday_time']){
 			if(nowminute <= businessTimeArray['end_of_workday_minute']){
+				updateTimer = normalTimer;
 				workTimeFlag = false;
 			}else{
+				updateTimer = beforeimer;
 				workTimeFlag = true;
 			}
 		}else{
+			updateTimer = normalTimer;
 			workTimeFlag = true;
 		}
+	}else if( businessTimeArray['beginning_of_workday_time']-1 == timenow){
+		if( nowminute <= 40){
+			updateTimer = beforeimer;
+		}else{
+			updateTimer = normalTimer;
+		}
+		workTimeFlag = false;
+	}else if(businessTimeArray['end_of_workday_time']-1 == timenow){
+		if( nowminute <= 40){
+			updateTimer = beforeimer;
+		}else{
+			updateTimer = normalTimer;
+		}
+		workTimeFlag = true;
 	}else{
+		updateTimer = normalTimer;
 		workTimeFlag = false;
 	}
 
@@ -103,6 +125,7 @@ function businessTimeFunc(timeDataArray){
 		console.log('今日は祝日');
 	}
 
+	console.log(updateTimer);
 	setTimeout(function(){
 		businessTimeFunc(timeDataArray);
 	},updateTimer);
