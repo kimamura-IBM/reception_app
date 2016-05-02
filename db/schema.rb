@@ -11,22 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150803104905) do
+ActiveRecord::Schema.define(version: 20160502024423) do
 
-  create_table "app_conditions", force: true do |t|
+  create_table "app_conditions", force: :cascade do |t|
     t.integer  "status"
-    t.string   "user"
+    t.string   "user",       limit: 255
     t.text     "reason"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "users", force: true do |t|
-    t.string   "username"
-    t.string   "phonenumber"
-    t.string   "profilepicture"
+  create_table "users", force: :cascade do |t|
+    t.string   "username",       limit: 255
+    t.string   "phonenumber",    limit: 255
+    t.string   "profilepicture", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "slack_id"
   end
 
 end

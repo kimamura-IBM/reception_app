@@ -13,7 +13,8 @@ td, th {
       <th>表示名</th>
       <th>電話番号</th>
       <th>プロフィール画像</th>
-      <th>更新日時<br />(並び替えに利用。古いものが上にきます)</th>
+      <th>Slack用ID</th>
+      <th>更新日時<br />(並び替えに利用。新しいものが上にきます)</th>
       <th colspan="2"></th>
     </tr>
   </thead>
@@ -24,6 +25,7 @@ td, th {
         <td><%= user.username %></td>
         <td><%= user.phonenumber %></td>
         <td><a href="<%= user.profilepicture %>" target="_blank"><img src="<%= user.profilepicture %>" height="30" /><br /><%= user.profilepicture %></a></td>
+        <td><%= user.slack_id %></td>
         <td><%= user.updated_at %></td>
         <!--<td><%# link_to 'Show', user %></td>-->
         <td><%= link_to '編集', edit_user_path(user) %></td>
