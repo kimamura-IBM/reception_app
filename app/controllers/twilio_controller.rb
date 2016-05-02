@@ -44,10 +44,11 @@ class TwilioController < ApplicationController
     contact.phone = params[:phone]
     @contact_to = User.find_by(phonenumber: contact.phone).username # 呼び出された人の名前(Slack用)
     @contact_to_url = URI.escape(@contact_to) # 呼び出された人の名前(Twilio用, URLにエンコード)
+    @contact_to_slack_id = User.find_by(phonenumber: contact.phone).slack_id # 呼び出された人のSlackID
 
     # SlackBotからメッセージ送信.まず呼び出された旨を#visitorに.
     SlackBot.notify(
-        body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：呼び出し中。20秒後に通話ステータスを再確認します。"
+        body: "<@#{@contact_to_slack_id }> 受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：呼び出し中。20秒後に通話ステータスを再確認します。"
     )
 
     # Validate contact
