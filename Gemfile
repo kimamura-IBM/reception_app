@@ -23,12 +23,12 @@ gem 'slack_bot'
 # business_time
 gem 'business_time'
 
-gem 'therubyracer'
 
 group :development, :test do
   gem 'sqlite3'
 end
 
 group :production do
-  gem 'mysql2'
+  gem 'pg'
+  gem 'thin'
 end
