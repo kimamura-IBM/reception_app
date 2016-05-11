@@ -25,9 +25,9 @@ class TwilioController < ApplicationController
   # @@twilio_number = '+81345895605'
 
   ##### n2p #####
-  @@twilio_sid = 'AC2be2f6548663497c67056293e1cf885a'
-  @@twilio_token = 'b2e54961e22bc77ab25c3f555dd3d054'
-  @@twilio_number = '+815031353908'
+  @@twilio_sid = ENV['TWILIO_SID']
+  @@twilio_token = ENV['TWILIO_TOKEN']
+  @@twilio_number = ENV['TWILIO_NUMBER']
   ########## Twilioアカウント設定ここまで ##########
 
   # Render home page
@@ -48,7 +48,7 @@ class TwilioController < ApplicationController
 
     # ----------stagingのみ、Heroku用環境変数を設定-----
     SlackBot.setup do |config|
-          config.token = ENV['slack_token']
+          config.token = ENV['SLACK_TOKEN']
           config.channel = '#visitor' #n2p
           config.bot_name = 'UketsukeApp'
           config.body = '受付Webアプリからの送信です。'
