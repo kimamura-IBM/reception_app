@@ -51,7 +51,7 @@ class TwilioController < ApplicationController
 
     # ----------チャットツールへ1回目の通知, 呼び出された旨をメンション付きで通知----------
     # HIPCHAT
-    hipchat_client['Visitor'].send('UketsukeApp', "@#{@contact_to_hipchat} 【テスト送信_STAGING】受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：呼び出し中。20秒後に通話ステータスを再確認します。", :message_format => 'text', :notify => true)
+    hipchat_client['Visitor'].send('UketsukeApp', "@#{@contact_to_hipchat} 受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：呼び出し中。20秒後に通話ステータスを再確認します。", :message_format => 'text', :notify => true)
 
     # ----------Twilio API呼び出し.(タイムアウトを10秒に設定)----------
     # Validate contact
