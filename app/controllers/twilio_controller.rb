@@ -74,12 +74,12 @@ class TwilioController < ApplicationController
       @calling = @client.account.calls.get(@call.sid) # 通話ステータス問い合わせ
       if @calling.status == 'in-progress' || @calling.status == 'completed' # 電話に出ている(='in-progress')か、通話が完了している(='completed')場合
         # HIPCHAT
-        hipchat_client['Visitor'].send('UketsukeApp', "@#{@contact_to}さんが呼び出されました。ステータス：電話を取りました。", :message_format => 'text', :notify => true)
+        hipchat_client['Visitor'].send('UketsukeApp', "#{@contact_to}さんが呼び出されました。ステータス：電話を取りました。", :message_format => 'text', :notify => true)
         # Ajax
         @msg = { :message => "yes", :status => 'ok' } # data.messageに"yes"を追加.その後jsで分岐処理.
       else # 電話に出れなかった場合
         # HIPCHAT
-        hipchat_client['Visitor'].send('UketsukeApp', "@#{@contact_to}さんが呼び出されました。ステータス：電話を取ることができませんでした。", :message_format => 'text', :notify => true)
+        hipchat_client['Visitor'].send('UketsukeApp', "#{@contact_to}さんが呼び出されました。ステータス：電話を取ることができませんでした。", :message_format => 'text', :notify => true)
         # Ajax
         @msg = { :message => "no", :status => 'ok' } # data.messageに"no"を追加.その後jsで分岐処理.
       end
