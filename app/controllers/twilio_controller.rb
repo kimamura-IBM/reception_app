@@ -46,19 +46,26 @@ class TwilioController < ApplicationController
     @contact_to_url = URI.escape(@contact_to) # 呼び出された人の名前(Twilio用, URLにエンコード)
     @contact_to_slack_id = User.find_by(phonenumber: contact.phone).slack_id # 呼び出された人のSlackID
 
-    # ----------devのみ、Heroku用環境変数を設定-----
-    SlackBot.setup do |config|
-          config.token = ENV['SLACK_TOKEN']
-          config.channel = '#visitor' #n2p
-          config.bot_name = 'UketsukeApp'
-          config.body = '受付Webアプリからの送信です。'
-    end
-    # ----------devのみ、Heroku用環境変数を設定-----
+    # # ----------devのみ、Heroku用環境変数を設定-----
+    # SlackBot.setup do |config|
+    #       config.token = ENV['SLACK_TOKEN']
+    #       config.channel = '#visitor' #n2p
+    #       config.bot_name = 'UketsukeApp'
+    #       config.body = '受付Webアプリからの送信です。'
+    # end
+    # # ----------devのみ、Heroku用環境変数を設定-----
+    #
+    # # SlackBotからメッセージ送信.まず呼び出された旨を#visitorに.
+    # SlackBot.notify(
+    #     body: "<@#{@contact_to_slack_id }> 【テスト送信_dev】受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：呼び出し中。20秒後に通話ステータスを再確認します。"
+    # )
 
-    # SlackBotからメッセージ送信.まず呼び出された旨を#visitorに.
-    SlackBot.notify(
-        body: "<@#{@contact_to_slack_id }> 【テスト送信_dev】受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：呼び出し中。20秒後に通話ステータスを再確認します。"
-    )
+    # ----------HIPCHAT----------
+    # HIPCHAT Notification
+    client = HipChat::Client.new(ENV['HIPCHAT_TOKEN'], :api_version => 'v2')
+    message_body = "<@#{@contact_to_slack_id }> 【テスト送信_dev】受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：呼び出し中。20秒後に通話ステータスを再確認します。"
+    client['Visitor_test'].send('UketsukeApp', message_body, :message_format => 'text', :notify => true)
+    # ----------HIPCHAT----------
 
     # Validate contact
     if contact.valid?
@@ -78,16 +85,16 @@ class TwilioController < ApplicationController
       sleep(20) # 通話開始から20秒でステータスを確認
       @calling = @client.account.calls.get(@call.sid) # 通話ステータス問い合わせ
       if @calling.status == 'in-progress' || @calling.status == 'completed' # 電話に出ている(='in-progress')か、通話が完了している(='completed')場合
-        # SlackBotからメッセージ送信.電話を取った旨を#visitorに.
-        SlackBot.notify(
-            body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：電話を取りました。"
-        )
+        # # SlackBotからメッセージ送信.電話を取った旨を#visitorに.
+        # SlackBot.notify(
+        #     body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：電話を取りました。"
+        # )
         @msg = { :message => "yes", :status => 'ok' } # data.messageに"yes"を追加.その後jsで分岐処理.
       else # 電話に出れなかった場合
-        # SlackBotからメッセージ送信.電話を取れなかった旨を#visitorに.
-        SlackBot.notify(
-            body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：電話を取ることができませんでした。"
-        )
+        # # SlackBotからメッセージ送信.電話を取れなかった旨を#visitorに.
+        # SlackBot.notify(
+        #     body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：電話を取ることができませんでした。"
+        # )
         @msg = { :message => "no", :status => 'ok' } # data.messageに"no"を追加.その後jsで分岐処理.
       end
 
