@@ -17,18 +17,14 @@ class TwilioController < ApplicationController
     :connect
   ]
 
-  ########## Twilioアカウント設定ここから ##########
+  # ----------API Tokenの設定----------
   # Define our Twilio credentials as instance variables for later use
-  ##### Herrokkin #####
-  # @@twilio_sid = 'AC2791363715b8f1abc21fc62cd21bc279'
-  # @@twilio_token = '100b1d7a8374e3286b944ae391d278fc'
-  # @@twilio_number = '+81345895605'
-
-  ##### n2p #####
   @@twilio_sid = ENV['TWILIO_SID']
   @@twilio_token = ENV['TWILIO_TOKEN']
   @@twilio_number = ENV['TWILIO_NUMBER']
-  ########## Twilioアカウント設定ここまで ##########
+  @@slack_token = ENV['SLACK_TOKEN']
+  @@hipchat_token = ENV['HIPCHAT_TOKEN']
+  # ----------API Tokenの設定----------
 
   # Render home page
   def index
@@ -47,27 +43,27 @@ class TwilioController < ApplicationController
     @contact_to_slack_id = User.find_by(phonenumber: contact.phone).slack_id # 呼び出された人のSlackID
     @contact_to_hipchat = User.find_by(phonenumber: contact.phone).hipchat_mention_name # 呼び出された人のHipchat Mention Name
 
-    # # ----------devのみ、Heroku用環境変数を設定-----
-    # SlackBot.setup do |config|
-    #       config.token = ENV['SLACK_TOKEN']
-    #       config.channel = '#visitor' #n2p
-    #       config.bot_name = 'UketsukeApp'
-    #       config.body = '受付Webアプリからの送信です。'
-    # end
-    # # ----------devのみ、Heroku用環境変数を設定-----
-    #
-    # # SlackBotからメッセージ送信.まず呼び出された旨を#visitorに.
+    # ----------Heroku用環境変数にてAPI Tokenセット----------
+    # ----------SLACK----------
+    SlackBot.setup do |config|
+          config.token = @@slack_token
+          config.channel = '#visitor' #n2p
+          config.bot_name = 'UketsukeApp'
+          config.body = '受付Webアプリからの送信です。'
+    end
+    # ----------HIPCHAT----------
+    hipchat_client = HipChat::Client.new(@@hipchat_token, :api_version => 'v2')
+
+
+    # ----------1. メッセージ送信, 呼び出された旨をメンション付きで通知----------
+    # # ----------SLACK----------
     # SlackBot.notify(
     #     body: "<@#{@contact_to_slack_id }> 【テスト送信_dev】受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：呼び出し中。20秒後に通話ステータスを再確認します。"
     # )
-
     # ----------HIPCHAT----------
-    # HIPCHAT Notification
-    client = HipChat::Client.new(ENV['HIPCHAT_TOKEN'], :api_version => 'v2')
-    message_body = "@#{@contact_to_hipchat} 【テスト送信_dev】受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：呼び出し中。20秒後に通話ステータスを再確認します。"
-    client['Visitor_test'].send('UketsukeApp', message_body, :message_format => 'text', :notify => true)
-    # ----------HIPCHAT----------
+    hipchat_client['Visitor_test'].send('UketsukeApp', "@#{@contact_to_hipchat} 【テスト送信_dev】受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：呼び出し中。20秒後に通話ステータスを再確認します。", :message_format => 'text', :notify => true)
 
+    # ----------2. Twilio ----------
     # Validate contact
     if contact.valid?
       @client = Twilio::REST::Client.new @@twilio_sid, @@twilio_token
@@ -90,12 +86,14 @@ class TwilioController < ApplicationController
         # SlackBot.notify(
         #     body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：電話を取りました。"
         # )
+        hipchat_client['Visitor_test'].send('UketsukeApp', "#{@contact_to_hipchat}さんが呼び出されました。ステータス：電話を取りました。", :message_format => 'text', :notify => true)
         @msg = { :message => "yes", :status => 'ok' } # data.messageに"yes"を追加.その後jsで分岐処理.
       else # 電話に出れなかった場合
         # # SlackBotからメッセージ送信.電話を取れなかった旨を#visitorに.
         # SlackBot.notify(
         #     body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：電話を取ることができませんでした。"
         # )
+        hipchat_client['Visitor_test'].send('UketsukeApp', "#{@contact_to_hipchat}さんが呼び出されました。ステータス：電話を取ることができませんでした。", :message_format => 'text', :notify => true)
         @msg = { :message => "no", :status => 'ok' } # data.messageに"no"を追加.その後jsで分岐処理.
       end
 
