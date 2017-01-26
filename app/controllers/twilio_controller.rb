@@ -1,12 +1,12 @@
-##### Twilio APIの操作及びSlackへの投稿を行うコントローラー #####
+##### Twilio APIの操作及びチャットツールへの通知を行うコントローラー #####
 # 動作の流れ
 # (1)indexのフォームから電話番号をajaxで取得
 # (2)callアクション呼び出し
-# (3)Slackへの最初の投稿
+# (3)チャットツールへ1回目の通知
 # (4)Twilio API呼び出し.(タイムアウトを10秒に設定)
 # (5)通話開始から20秒後に通話ステータスを確認
-# (6)Slackへの投稿,ajaxでのステータス引き渡し.(ステータスによって文言を変更)
-##### Twilio APIの操作及びSlackへの投稿を行うコントローラー #####
+# (6)チャットツールへ2回目の通知,ajaxでのステータス引き渡し.(ステータスによって文言を変更)
+##### Twilio APIの操作及びチャットツールへの通知を行うコントローラー #####
 
 require 'twilio-ruby'
 
@@ -44,26 +44,15 @@ class TwilioController < ApplicationController
     @contact_to_hipchat = User.find_by(phonenumber: contact.phone).hipchat_mention_name # 呼び出された人のHipchat Mention Name
 
     # ----------Heroku用環境変数にてAPI Tokenセット----------
-    # ----------SLACK----------
-    SlackBot.setup do |config|
-          config.token = @@slack_token
-          config.channel = '#visitor' #n2p
-          config.bot_name = 'UketsukeApp'
-          config.body = '受付Webアプリからの送信です。'
-    end
-    # ----------HIPCHAT----------
+    # HIPCHAT
     hipchat_client = HipChat::Client.new(@@hipchat_token, :api_version => 'v2')
 
 
-    # ----------1. メッセージ送信, 呼び出された旨をメンション付きで通知----------
-    # # ----------SLACK----------
-    # SlackBot.notify(
-    #     body: "<@#{@contact_to_slack_id }> 【テスト送信_dev】受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：呼び出し中。20秒後に通話ステータスを再確認します。"
-    # )
-    # ----------HIPCHAT----------
+    # ----------チャットツールへ1回目の通知, 呼び出された旨をメンション付きで通知----------
+    # HIPCHAT
     hipchat_client['Visitor_test'].send('UketsukeApp', "@#{@contact_to_hipchat} 【テスト送信_dev】受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：呼び出し中。20秒後に通話ステータスを再確認します。", :message_format => 'text', :notify => true)
 
-    # ----------2. Twilio ----------
+    # ----------Twilio API呼び出し.(タイムアウトを10秒に設定)----------
     # Validate contact
     if contact.valid?
       @client = Twilio::REST::Client.new @@twilio_sid, @@twilio_token
@@ -79,21 +68,20 @@ class TwilioController < ApplicationController
         :timeout => 10 # 呼び出しタイムアウトを10秒に設定. => 20秒後に通話ステータスを確認後viewに@msgで通話状態を
       )
 
-      sleep(20) # 通話開始から20秒でステータスを確認
+      # ----------通話開始から20秒後に通話ステータスを確認----------
+      sleep(20)
+
+      # ----------チャットツールへ2回目の通知----------
       @calling = @client.account.calls.get(@call.sid) # 通話ステータス問い合わせ
       if @calling.status == 'in-progress' || @calling.status == 'completed' # 電話に出ている(='in-progress')か、通話が完了している(='completed')場合
-        # # SlackBotからメッセージ送信.電話を取った旨を#visitorに.
-        # SlackBot.notify(
-        #     body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：電話を取りました。"
-        # )
-        hipchat_client['Visitor_test'].send('UketsukeApp', "#{@contact_to_hipchat}さんが呼び出されました。ステータス：電話を取りました。", :message_format => 'text', :notify => true)
+        # HIPCHAT
+        hipchat_client['Visitor_test'].send('UketsukeApp', "@#{@contact_to_hipchat}さんが呼び出されました。ステータス：電話を取りました。", :message_format => 'text', :notify => true)
+        # Ajax
         @msg = { :message => "yes", :status => 'ok' } # data.messageに"yes"を追加.その後jsで分岐処理.
       else # 電話に出れなかった場合
-        # # SlackBotからメッセージ送信.電話を取れなかった旨を#visitorに.
-        # SlackBot.notify(
-        #     body: "受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：電話を取ることができませんでした。"
-        # )
-        hipchat_client['Visitor_test'].send('UketsukeApp', "#{@contact_to_hipchat}さんが呼び出されました。ステータス：電話を取ることができませんでした。", :message_format => 'text', :notify => true)
+        # HIPCHAT
+        hipchat_client['Visitor_test'].send('UketsukeApp', "@#{@contact_to_hipchat}さんが呼び出されました。ステータス：電話を取ることができませんでした。", :message_format => 'text', :notify => true)
+        # Ajax
         @msg = { :message => "no", :status => 'ok' } # data.messageに"no"を追加.その後jsで分岐処理.
       end
 
