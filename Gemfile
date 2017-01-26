@@ -20,6 +20,8 @@ gem 'phony_rails'
 gem 'twilio-ruby'
 # SlackBot
 gem 'slack_bot'
+# hipchat
+gem 'hipchat'
 # business_time
 gem 'business_time'
 

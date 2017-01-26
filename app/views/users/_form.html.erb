@@ -26,8 +26,12 @@
         <%= f.text_field :phonenumber, placeholder: "+819012345678" %>
     </div>
     <div class="field">
-        <%= f.label :slack_id, 'Slack用ID。ID|表示名で管理。 (例1)@U06US8RDH|herrokkin (例2)!channel|channel' %><br>
-        <%= f.text_field :slack_id, placeholder: "@U06US8RDH|herrokkin" %>
+        <%= f.label :slack_id, 'Slack用ID。ID|表示名で管理。 (例)U06US8RDH|herrokkin' %><br>
+        <%= f.text_field :slack_id, placeholder: "U06US8RDH|herrokkin" %>
+    </div>
+    <div class="field">
+        <%= f.label :hipchat_mention_name, 'Hipchat Mention name。(例)herrokkin' %><br>
+        <%= f.text_field :hipchat_mention_name, placeholder: "herrokkin" %>
     </div>
     <div class="field">
         <%= f.label :profilepicture, 'プロフィール画像 ※URLで入力' %><br>

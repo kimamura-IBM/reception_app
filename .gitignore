@@ -15,8 +15,7 @@
 /log/*.log
 /tmp
 .DS_Store
-.idea/workspace.xml
-.idea/dataSources.xml
+.idea/
 
 # Ignore settings
 /config/initializers/slack_bot.rb

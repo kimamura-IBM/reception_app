@@ -1,45 +1,11 @@
+<h2>稼働ステータス変更履歴</h2>
+<h5>一番上のステータスが受付アプリに反映されています</h5>
+
 <style>
     td, th {
         padding: 10px 10px;
     }
-        
-    #app_status_area {
-        border: dashed 1px #000;
-        padding: 2em;
-    }
 </style>
-
-<h2>稼働ステータス変更履歴</h2>
-<h5>一番上のステータスが受付アプリに反映されています</h5>
-<div id="app_status_area">
-  <% time_now = Time.now #現在時刻 %>
-  <% date_now = Date.today #日付 %>
-  <% app_condition_now = @app_conditions.first.status %>
-  <h4>
-    現在の稼働状況：
-    <% if app_condition_now == 1 %>
-        <% if date_now.workday? == true %>
-            <% if time_now.during_business_hours? == true %>
-                稼働中
-            <% else %>
-                休止モード
-            <% end %>
-        <% else %>
-            休止モード
-        <% end %>
-    <% elsif app_condition_now == 2 %>
-        稼働中
-    <% elsif app_condition_now == 3 %>
-        休止モード
-    <% end %>
-  </h4>
-  <dl>
-      <dt>ステータス (1:通常, 2:強制稼働, 3:強制休止)</dt><dd><%= app_condition_now %></dd>
-      <dt>平日ですか？</dt><dd><%= date_now.workday? %></dd>
-      <dt>営業時間内ですか？</dt><dd><%= time_now.during_business_hours? %></dd>
-      <dt>現在時刻</dt><dd><%= Time.now %></dd>
-  </dl>
-</div>
 
 <table>
   <thead>
