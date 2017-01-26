@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.order("updated_at ASC") # DBからユーザー全員分取得。更新日時で並び替え。
+    @users = User.all
   end
 
   # GET /users/1
@@ -70,6 +70,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:username, :phonenumber, :profilepicture)
+      params.require(:user).permit(:username, :phonenumber, :profilepicture, :slack_id, :hipchat_mention_name)
     end
 end
