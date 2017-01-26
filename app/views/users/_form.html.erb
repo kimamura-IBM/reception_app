@@ -30,6 +30,10 @@
         <%= f.text_field :slack_id, placeholder: "U06US8RDH|herrokkin" %>
     </div>
     <div class="field">
+        <%= f.label :hipchat_mention_name, 'Hipchat Mention name。(例)herrokkin' %><br>
+        <%= f.text_field :hipchat_mention_name, placeholder: "herrokkin" %>
+    </div>
+    <div class="field">
         <%= f.label :profilepicture, 'プロフィール画像 ※URLで入力' %><br>
         <%= f.text_field :profilepicture, placeholder: "http://***.jpg" %><br />
         <a href="<%= @user.profilepicture %>" target="_blank"><img src="<%= @user.profilepicture %>" height="100" /></a>

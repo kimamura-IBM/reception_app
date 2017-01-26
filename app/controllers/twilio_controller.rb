@@ -45,6 +45,7 @@ class TwilioController < ApplicationController
     @contact_to = User.find_by(phonenumber: contact.phone).username # 呼び出された人の名前(Slack用)
     @contact_to_url = URI.escape(@contact_to) # 呼び出された人の名前(Twilio用, URLにエンコード)
     @contact_to_slack_id = User.find_by(phonenumber: contact.phone).slack_id # 呼び出された人のSlackID
+    @contact_to_hipchat = User.find_by(phonenumber: contact.phone).hipchat_mention_name # 呼び出された人のHipchat Mention Name
 
     # # ----------devのみ、Heroku用環境変数を設定-----
     # SlackBot.setup do |config|
@@ -63,7 +64,7 @@ class TwilioController < ApplicationController
     # ----------HIPCHAT----------
     # HIPCHAT Notification
     client = HipChat::Client.new(ENV['HIPCHAT_TOKEN'], :api_version => 'v2')
-    message_body = "<@#{@contact_to_slack_id }> 【テスト送信_dev】受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：呼び出し中。20秒後に通話ステータスを再確認します。"
+    message_body = "@#{@contact_to_hipchat} 【テスト送信_dev】受付Webアプリからの送信です。#{@contact_to}さんが呼び出されました。ステータス：呼び出し中。20秒後に通話ステータスを再確認します。"
     client['Visitor_test'].send('UketsukeApp', message_body, :message_format => 'text', :notify => true)
     # ----------HIPCHAT----------
 
