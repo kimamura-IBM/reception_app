@@ -11,3 +11,5 @@
 AppCondition.create(:status => 2, :user => 'test', :reason => '休日出勤')
 AppCondition.create(:status => 3, :user => 'test', :reason => '臨時休業')
 AppCondition.create(:status => 1, :user => 'test', :reason => '通常に戻す')
+
+User.create(:username => 'test', :phonenumber => '+81344058445', :profilepicture => 'http://n2p.co.jp/img/receptionicons/daidaihyou.png', :slack_id => '!channel|channel', :hipchat_mention_name => 'here',)
